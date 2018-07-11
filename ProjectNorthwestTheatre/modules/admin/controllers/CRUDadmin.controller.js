@@ -1,10 +1,12 @@
+/* Author: santhosh Bonala */
+
 var mongoose = require('mongoose');
 var AdminModel = require('../../../models/Admin.model')
 
 let addadmin = (req,res,next) => {
 
     AdminModel.findOne({ Username: req.body.RegUsername }, function(err,admin){
-        if(err || admin) return res.status(400).send('Already a user exists with that username')
+        if(err || admin) return res.status(403).send('Already a user exists with that username')
         var admin = new AdminModel({
             Username: req.body.RegUsername,
             Email: req.body.RegEmail,
@@ -15,7 +17,7 @@ let addadmin = (req,res,next) => {
                 return res.send('Admin Added successfully')
             })
             .catch(function (err) {
-                return res.status(400).send('error while adding a show')
+                return res.status(400).send('error while adding a admin')
             })
     })
    

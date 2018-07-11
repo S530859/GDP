@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <Navbar></Navbar>
-    <router-view/>
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Navbar from './components/User/UserNavbar.vue'
 export default {
-  name: 'App',
-  components: {
-    Navbar
-  }
+  name: 'App'
 }
 </script>
 
@@ -23,4 +18,10 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+.container-fluid {
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto
+ }
 </style>

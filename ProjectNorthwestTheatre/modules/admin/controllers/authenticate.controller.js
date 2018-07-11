@@ -1,3 +1,5 @@
+/* Author: santhosh Bonala */
+
 var mongoose = require('mongoose')
 var adminModel = require('../../../models/Admin.model')
 
@@ -20,3 +22,13 @@ let authenticate = (req,res,next) => {
 }
 
 module.exports.authenticate = authenticate;
+
+let guard = (req, res, next) => {
+
+           res.json({
+                message: "Login Successful"
+            })
+
+}
+
+module.exports.guard = guard;

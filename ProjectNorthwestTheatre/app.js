@@ -1,3 +1,5 @@
+/* Author: santhosh Bonala */
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -28,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ 
   secret: config.sessionsecret,
   resave: false, 
@@ -39,9 +42,9 @@ app.use('/users', users);
 app.use('/register', audienceRoutes);
 
 let tokenAuthentication = (req, res, next) => {
-  if (req.headers.token) {
+  if (req.headers.token || req.query.token) {
     try {
-      jwt.verify(req.headers.token, config.tokensecret)
+      jwt.verify(req.headers.token || req.query.token, config.tokensecret)
       next()
     } catch (err) {
       res.status(401).send("Unauthorized")

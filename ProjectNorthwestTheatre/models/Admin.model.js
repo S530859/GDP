@@ -1,3 +1,5 @@
+/* Author: santhosh Bonala */
+
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 var AdminSchema = new mongoose.Schema({
