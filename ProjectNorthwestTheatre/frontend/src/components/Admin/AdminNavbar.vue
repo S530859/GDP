@@ -53,7 +53,7 @@
           <div class="modal-body">
             <form @submit.prevent="addshow" id="addshow">
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Show Name:</label>
+                <label class="col-sm-4 form-label required">Show Name:</label>
                 <input class="col-sm-7 form-control" type="text" placeholder="Show Name" id="showname" name="ShowTitle" required>
               </div>
               <div class="form-group row">
@@ -66,19 +66,19 @@
                 </textarea>
               </div>
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Show Date:</label>
+                <label class="col-sm-4 form-label required">Show Date:</label>
                 <input class="col-sm-7 form-control" type="date" id="showdate" name="ShowDate" required>
               </div>
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Show Time:</label>
+                <label class="col-sm-4 form-label required">Show Time:</label>
                  <input class="col-sm-7 form-control" type="time" name="ShowTime" id="showtime" required>
               </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 form-label">Total Seats:</label>
+                  <label class="col-sm-4 form-label required">Total Seats:</label>
                   <input class="col-sm-7 form-control" type="number" placeholder="Total No. of Tickets" id="totalseats" name="NumberOfTickets" min="1" required>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 form-label">Venue:</label>
+                  <label class="col-sm-4 form-label required">Venue:</label>
                   <input class="col-sm-7 form-control" type="text" placeholder="Venue" id="showvenue" name="ShowVenue" required>
                 </div>
                 <div class="form-group row">
@@ -91,21 +91,21 @@
                   </select>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 form-label">Adult Ticket:</label>
+                  <label class="col-sm-4 form-label required">Adult Ticket:</label>
                     <div class="input-group-prepend">
                       <div class="input-group-text">$</div>
                     </div>
                   <input class="col-sm-6 form-control" type="number" placeholder="Ticket Cost for Adult" id="adultprice" name="ShowPriceForAdult" min="1" required>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 form-label">Children Ticket:</label>
+                  <label class="col-sm-4 form-label required">Children Ticket:</label>
                     <div class="input-group-prepend">
                       <div class="input-group-text">$</div>
                     </div>
                   <input class="col-sm-6 form-control" type="number" placeholder="Ticket Cost for children" id="childrenprice" min="1" name="ShowPriceForChildren" required>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 form-label">Upload Image:</label>
+                  <label class="col-sm-4 form-label required">Upload Image:</label>
                   <div class="form-group col-sm-7">
                     <input type="file" accept="image/*" class="form-control-file" id="InputFile" aria-describedby="fileHelp" name="ShowImage" required>
                     <small id="fileHelp" class="form-text text-muted"></small>

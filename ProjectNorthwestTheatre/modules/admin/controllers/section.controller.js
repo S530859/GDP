@@ -40,7 +40,7 @@ module.exports.GetSectionList = GetSectionList
 
 let UpdateSection = (req, res, next) => {
     SectionModel.findByIdAndUpdate(req.body.id, req.body, function (err, Section) {
-        if (err || !Section) return res.status(400).send('Show not found')
+        if (err || !Section) return res.status(400).send('Section not found')
         res.send("Updated Successfully")
     })
 }
