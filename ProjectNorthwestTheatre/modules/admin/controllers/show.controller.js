@@ -1,12 +1,15 @@
 /* Author: santhosh Bonala */
 
-var mongoose = require('mongoose')
-var ShowModel = require('../../../models/Show.model')
-var fs = require('fs')
-var path = require('path')
+let mongoose = require('mongoose')
+let ShowModel = require('../../../models/Show.model')
+let fs = require('fs')
+let path = require('path')
+let StudentModel = require('../../../models/TheatreAppreciationStudent.model')
+let GeneralAudienceModel = require('../../../models/Audience.model')
 
 let addShow = (req, res, next) => {
-    var Show = new ShowModel(req.body)
+    req.body.Ticketdetails = JSON.parse(req.body.Ticketdetails)
+    let Show = new ShowModel(req.body)
     Show.ShowImage = null
     buffer = req.file.buffer
     Show.save()
@@ -82,10 +85,68 @@ let UpdateShow = (req, res, next) => {
 
 module.exports.UpdateShow = UpdateShow
 
- var imagebyid = (req, res) => {
+ let imagebyid = (req, res) => {
      res.sendFile(path.join(__dirname, '../../../images', req.query._id.trim()), function(err){
          console.log(err)
      })
 }
 
 module.exports.imagebyid = imagebyid
+
+let isPublished = (req,res) => {
+        ShowModel.findByIdAndUpdate(req.body.id, req.body, function (err, Show) {
+            if (err || !Show) return res.status(400).send('Show not found')
+            return res.send("Updated Successfully")
+        })
+}
+
+module.exports.isPublished = isPublished
+
+let GetduplicateShow = (req, res, next) => {
+            delete req.body._id
+        let duplicateshow = new ShowModel(req.body)
+        duplicateshow
+        .save()
+        .then( res => {
+            next()
+        })
+        .catch( err => {
+             return res.status(400).send('error while duplicating a show', err)
+        })              
+}
+module.exports.GetduplicateShow = GetduplicateShow
+let reserveTickets = (req,res) => {
+    let TheatreAppreciationStudent = req.body.isStudent
+    if(TheatreAppreciationStudent){
+        let Student = new StudentModel(req.body)
+        Student.save()
+        .then(
+            result => {
+                console.log(result)
+                return res.send(200, "Ticket reserved")
+            }
+        )
+        .catch(
+            err => {
+                console.log(err)
+                return res.send(400, "Error while reserving Ticket For Theatre Appreciation Student")
+            }
+        ) 
+    }else{
+        let GeneralAudience = new GeneralAudienceModel(req.body)
+        GeneralAudience.save()
+            .then(
+                result => {
+                    console.log(result)
+                    return res.send(200, "Ticket reserved")
+                }
+            )
+            .catch(
+                err => {
+                    console.log(err)
+                    return res.send(400, "Error while reserving Ticket For General Audience")
+                }
+            )
+    }
+}
+module.exports.reserveTickets = reserveTickets

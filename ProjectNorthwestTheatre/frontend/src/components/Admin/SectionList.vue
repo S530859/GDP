@@ -149,36 +149,36 @@ export default {
       this.section.ClassDaylist = this.section.ClassDay.split('')
       $('#editSectionadminmodal').modal('show')
     },
-    alert(header, msg, type) {
-      swal(header, msg, type);
+    alert (header, msg, type) {
+      swal(header, msg, type)
     },
     editSectionform () {
-        var formdata = new FormData(document.querySelector("#editSectionadminform"));
-        var data = {
-          ProfessorName: formdata.get('ProfessorName'),
-          ClassDay: '' + (formdata.get('M') ? formdata.get('M') : '' )  + (formdata.get('T') ? formdata.get('T') : '' ) + (formdata.get('W') ? formdata.get('W') : '' ) + (formdata.get('R') ? formdata.get('R') : '' ) + (formdata.get('F') ? formdata.get('F') : '' ),
-          ClassTime: formdata.get('ClassTime'),
-          SectionNumber: formdata.get('SectionNumber'),
-          Semester: formdata.get('Semester'),
-          Year: formdata.get('Year'),
-          id: this.section._id
-        }
-        /* global axios url swal $ */
-        var _this = this
-        axios.create({
-          baseURL: url,
-          headers: { 'token': window.localStorage.getItem('AccessToken') }
-        }).post('/updatesection', data)
-          .then(res => {
-             $('#editSectionadminform')[0].reset()
-            $('#editSectionadminmodal').modal('hide')
-            _this.alert('Congratulations!', 'Section has been added successfully', 'success')
-            _this.refreshData()
-          })
-          .catch(error => {
-             console.log(error);
-            _this.alert(error.response.data, "Please try again", "error");
-          })
+      var formdata = new FormData(document.querySelector('#editSectionadminform'))
+      var data = {
+        ProfessorName: formdata.get('ProfessorName'),
+        ClassDay: '' + (formdata.get('M') ? formdata.get('M') : '') + (formdata.get('T') ? formdata.get('T') : '') + (formdata.get('W') ? formdata.get('W') : '') + (formdata.get('R') ? formdata.get('R') : '') + (formdata.get('F') ? formdata.get('F') : ''),
+        ClassTime: formdata.get('ClassTime'),
+        SectionNumber: formdata.get('SectionNumber'),
+        Semester: formdata.get('Semester'),
+        Year: formdata.get('Year'),
+        id: this.section._id
+      }
+      /* global axios url swal $ */
+      var _this = this
+      axios.create({
+        baseURL: url,
+        headers: { 'token': window.localStorage.getItem('AccessToken') }
+      }).post('/updatesection', data)
+        .then(res => {
+          $('#editSectionadminform')[0].reset()
+          $('#editSectionadminmodal').modal('hide')
+          _this.alert('Congratulations!', 'Section has been added successfully', 'success')
+          _this.refreshData()
+        })
+        .catch(error => {
+          console.log(error)
+          _this.alert(error.response.data, 'Please try again', 'error')
+        })
     },
     deletesection (sectionid) {
       var _this = this
@@ -226,7 +226,7 @@ export default {
         .then(function (response) {
           console.log(response.data)
           _this.sectionlist = response.data
-          _.each(_this.sectionlist, function(section){
+          _.each(_this.sectionlist, function (section) {
             section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
           })
         })

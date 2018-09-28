@@ -6,38 +6,70 @@
       </button>
     </div> -->
     <div class="row col-sm-12 ">
-      <AdminShow v-for="ele of showlist" :key="ele._id"  :show="ele" @showmodal="showmodal()" @showemailmodal="showemailmodal()" >
+      <div class="fixed bg">
+      </div>
+               <div class=" offset-sm-6 col-sm-3 fixed">
+            <div class="input-group mt-3 ">
+                <input class="form-control py-2 border-right-0 border " type="search" v-model="search"  placeholder="Search" id="example-search-input">
+                <span class="input-group-append">
+                    <div class="input-group-text bg-dark text-light "><i class="fa fa-search"></i></div>
+                </span>
+            </div>
+
+    </div>
+ 
+         <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal()" @showemailmodal="showemailmodal" >
       </AdminShow>
+ 
+     
+    </div>
+    <div class="modal" id="descriptionmodal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Playwright: {{ show.ShowPlayWright ? show.ShowPlayWright : '' }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ show.ShowDescription ? show.ShowDescription : '' }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!--Saivarun Illendula - Added Email Model to Dashboard-->
     <!-- The Modal -->
     <div class="modal fade" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">Email</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
-          <!-- Modal body -->
-          <!-- Rahul Reddy Lankala - Added placeholders -->
-          <div class="modal-body">
-            <form>
-              <div class="form-group row">
-                <label class="col-sm-3 form-label">Subject:</label>
-                <input class="col-sm-8 form-control" type="text" placeholder="Subject">
-              </div>
-              <div class="form-group row">
-                <label for="Email1msg" class="col-sm-3 form-label">Message:</label>
-                  <textarea class="form-control inputstl col-sm-8" placeholder="Type the mesaage here...." rows="10"></textarea>
-              </div>
-            </form>
-          </div>
-          <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
-      </div>
+            <!-- Modal body -->
+            <!-- Rahul Reddy Lankala - Added placeholders -->
+            <div class="modal-body">
+              <form>
+                <div class="form-group row">
+                  <label class="col-sm-3 form-label" >Subject:</label>
+                  <input class="col-sm-8 form-control" id="subject" type="text" placeholder="Subject" :value="email.subject">
+                </div>
+                <div class="form-group row">
+                  <label for="Email1msg" class="col-sm-3 form-label">Message:</label>
+                    <textarea class="form-control inputstl col-sm-8" id="body" placeholder="Type the mesaage here...." rows="10" :value="email.body"></textarea>
+                </div>
+              </form>
+            </div>
+                <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal" @click="saveEmailContent()">Save</button>              
+              <button type="button" class="btn btn-danger" data-dismiss="modal" @click="sendMail()">Save &amp; Email</button>
+            </div>
         </div>
       </div>
     </div>
@@ -81,7 +113,16 @@
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'true' }">
                           <label class="col-sm-4 form-label">Section Number:</label>
-                          <input class="col-sm-7 form-control" type="text" id="sectionnumber">
+                          <select id="inputState" class="form-control col-sm-7">
+                              <option selected value="default">--Select--</option>
+                              <option v-for="ele of sectionlist" :key="ele._id"> 
+                                 {{ ele.ProfessorName }}: 
+                                 {{ ele.ClassTime12hrs }} - 
+                                 {{ ele.ClassDay }} -  
+                                 {{ ele.Semester }} {{ ele.Year }}
+                                </option>
+                            </select>
+                          <!-- <input class="col-sm-7 form-control" type="text" id="sectionnumber">
                           <a tabindex="0"
                             id="pop"
                             class="btn col-sm-1"
@@ -92,7 +133,7 @@
                             data-placement="right"
                             title="Schedule For Current Semester">
                             <i class="fas fa-info-circle"></i>
-                        </a>
+                        </a> -->
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'false' }">
                             <label class="col-sm-4 form-label">No. Of Tickets:</label>
@@ -108,7 +149,7 @@
         </div>
       </div>
     </div>
-    <table :class="{'d-none': check }">
+    <!-- <table :class="{'d-none': check }">
       <thead>
         <tr>
           <th >Semester</th>
@@ -141,7 +182,7 @@
             <td>Mark Richael</td>
           </tr>
       </tbody>
-    </table>
+    </table> -->
     </div>
 </template>
 
@@ -156,7 +197,13 @@ export default {
       check: false,
       isTheatreAppreciationStudent: '',
       sectionlist: [],
-      showlist: []
+      showlist: [],
+      show: '',
+      search: '',
+      email: {
+        subject: 'Attention!!',
+        body: 'Thank you for your interest in the show.\n The show has been delayed by two days due to bad weather conditions. \n Sorry for the inconvenience'
+      }
     }
   },
   components: {
@@ -166,29 +213,52 @@ export default {
     showmodal () {
       $('#ReserveTickets').modal('show')
     },
-    showemailmodal () {
+    showemailmodal (v) {
+      this.show = v
       $('#emailmodal').modal('show')
+    },
+    showdescriptionmodal () {
+      $('#descriptionmodal').modal('show')
+    },
+    saveEmailContent () {
+
+    },
+    sendMail () {
+      this.email.subject = $('#subject').val()
+      this.email.body = $('#body').val()
+      axios.post( url + '/sendemail',{
+          show: this.show,
+          message: this.message
+        }, {
+          headers: { token: window.localStorage.getItem('AccessToken') }
+        })
+        .then(res => {
+            console.log('mail sent ' + res)
+        })
+        .catch(err => {
+            console.log('error in sending Email' + err)
+        })
     },
     refreshData () {
       var _this = this
        /* global axios moment _ */
         axios({
-          method: 'get',
-          headers: {
-            token: window.localStorage.getItem('AccessToken')
-          },
-          url: url + '/sectionlist'
+        method: 'get',
+        headers: {
+          token: window.localStorage.getItem('AccessToken')
+        },
+        url: url + '/sectionlist'
+      })
+        .then(function (response) {
+          console.log(response.data)
+          _this.sectionlist = response.data
+          _.each(_this.sectionlist, function (section) {
+            section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
+          })
         })
-          .then(function (response) {
-            console.log(response.data)
-            _this.sectionlist = response.data
-            _.each(_this.sectionlist, function(section){
-              section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')             
-            })
-          })
-          .catch(function (err) {
-            console.log('error while getting section list', err)
-          })
+        .catch(function (err) {
+          console.log('error while getting section list', err)
+        })
       axios({
         method: 'get',
         headers: {
@@ -203,16 +273,15 @@ export default {
         .catch(function (err) {
           console.log('error while getting show list', err)
         })
-       
     }
   },
   mounted () {
     console.log('mounted')
     this.check = true
-    console.log($('table')[0].outerHTML)
-    $('#pop').popover({
-        content: $('table')[0].outerHTML
-      })
+    // console.log($('table')[0].outerHTML)
+    // $('#pop').popover({
+    //   content: $('table')[0].outerHTML
+    // })
   },
   created () {
     this.refreshData()
@@ -220,15 +289,48 @@ export default {
       this.showlist = data
       console.log(data, this.showlist)
     }.bind(this))
+
+    this.$eventbus.$on('showdescription', function (showclicked) {
+      this.show = showclicked
+      console.log('show description', this.show)
+      this.showdescriptionmodal()
+    }.bind(this))
   },
   watch: {
     showlist: function () {
       console.log('changed')
+    }
+  },
+
+  computed: {
+    updatedShowList: function () {
+      return this.showlist.filter(show => {
+          return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+.fixed{
+    position: fixed;
+    z-index: 100; 
+}
+
+.down{
+  top:70px;
+}
+
+.bg{
+  height: 70px;
+  background-color: rgba(182, 221, 208, 0.9);
+   background-image: linear-gradient(#f6f4ef, #f6f4ef);
+   /* background-image: linear-gradient(207deg, rgba(182, 221, 208, 0.6) , #f6f4ef); */
+  width: 100%;
+   /* border-bottom: 5px solid rgba(4, 224, 151, 0.521); */
+     /* border-bottom-left-radius: 50px ; */
+     box-shadow: 0px 10px 5px #f6f4ef;
+}
 
 </style>

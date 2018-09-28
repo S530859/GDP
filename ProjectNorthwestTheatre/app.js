@@ -80,6 +80,7 @@ let tokenAuthentication = (req, res, next) => {
 
 app.use('/admin', tokenAuthentication, adminRoutes);
 
+app.use('/user', audienceRoutes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -96,7 +97,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(404, 'no route configured')
 });
 
 module.exports = app;

@@ -10,13 +10,13 @@
           <div class="d-inline-block component float-right">
             <span class="mx-5" >
               <div class="btn-group rounded" id="status" data-toggle="buttons">
-                <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }">
+                <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }" @click="showstatuschanged(true)">
                   <input class="d-none" type="radio" value="1">
                   <strong>Publish</strong>
                 </label>
-                <label class="btn btn-default btn-off" style="border:2px solid white" :class="{ active: !show.isPublished }">
+                <label class="btn btn-default btn-off" style="border:2px solid white" :class="{ active: !show.isPublished }" @click="showstatuschanged(false)">
                   <input class="d-none" type="radio" value="0" >
-                  <strong>Un Publish</strong>
+                  <strong>UnPublish</strong>
                 </label>
               </div>
             </span>
@@ -30,21 +30,11 @@
             <div class="row justify-content-around m-3 rounded  bg-light">
               <!-- image column -->
               <div class="col-lg align-self-center" id="imagediv">
-                <img :src="'http://localhost:3000/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-50" alt="Image" id="imagesrc" />
+                <img :src="'http://localhost:3000/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
               </div>
               <!-- image column end -->
               <!-- details of the show -->
               <div class="col-lg lead text-left font" style="border:1px  ">
-                <!-- Playwright -->
-                <span class="font-weight-bold">Playwright :
-                  <span class="font-weight-normal">{{ show.ShowPlayWright }}</span>
-                </span>
-                <br>
-                <!-- Description -->
-                <span class="font-weight-bold">Description :
-                  <span class="font-weight-normal">{{ show.ShowDescription }}</span>
-                </span>
-                <br>
                 <!-- Date -->
                 <span class="font-weight-bold">Date :
                   <span class="font-weight-normal">{{ ShowDate }}</span>
@@ -63,6 +53,13 @@
                 <!-- Rating -->
                 <span class="font-weight-bold">Rating :
                   <span class="font-weight-normal">{{ show.ShowRating}}</span>
+                </span>
+                <br>
+                <!-- Description -->
+                <span>
+                  <button type="button" class="btn btn-light font-weight-bold" @click="emitshowdescription(show)">
+                    Description
+                  </button>
                 </span>
                 <br>
               </div>
@@ -90,14 +87,9 @@
                   <br>
                 </div>
                 <!-- Adult Ticket -->
-                <h1 class="mt-2 text-danger text-center lead">
-                    <span class="font-weight-bold display"> $ {{ show.ShowPriceForAdult }} </span>
-                    <span class="font-weight-normal">For Adult</span>
-                </h1>
-                <!-- Children Ticket -->
-                <h1 class="text-danger text-center lead">
-                    <span class="font-weight-bold display"> $ {{ show.ShowPriceForChildren }} </span>
-                    <span class="font-weight-normal">For Children</span>
+                <h1 class="mt-2 text-danger text-center lead" v-for="ele in show.Ticketdetails" :key="ele.TicketType" >
+                    <span class="font-weight-bold display"> $ {{ ele.TicketPrice }} </span>
+                    <span class="font-weight-normal">For {{ ele.TicketType }}</span>
                 </h1>
               </div>
             </div>
@@ -116,6 +108,10 @@
               <button class="col-sm m-2 btn btn-outline-secondary" type="button"
               @click="editevent()">
                 <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Edit Show</strong>
+              </button>
+               <button class="col-sm m-2 btn btn-outline-secondary" type="button"
+              @click="duplicateEvent(show)">
+                <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Duplicate Show</strong>
               </button>
             </div>
           <!-- end buttons inside card -->
@@ -235,23 +231,23 @@ export default {
       this.$emit('showmodal')
     },
     emailevent () {
-      this.$emit('showemailmodal')
+      this.$emit('showemailmodal', this.show)
     },
     editevent () {
       /* global $ */
-      console.log("editclicked",this.show._id)
-      $('#editshow'+ this.show._id).modal('show')
+      console.log('editclicked', this.show._id)
+      $('#editshow' + this.show._id).modal('show')
     },
     editshow () {
-      console.log("editclicked")
-      var formdata = new FormData(document.querySelector('#editshowform'+ this.show._id))
-      var _this = this
+      console.log('editclicked')
+      var formdata = new FormData(document.querySelector('#editshowform' + this.show._id))
+      // var _this = this
       axios.create({
         baseURL: url,
         headers: { 'token': window.localStorage.getItem('AccessToken') }
       }).post('/updateshow', formdata)
-        .then(function(res){
-          $('#editshow'+ this.show._id).modal('hide')
+        .then(function (res) {
+          $('#editshow' + this.show._id).modal('hide')
           swal(
             'Updated!',
             'Show has been successfully updated.',
@@ -318,6 +314,70 @@ export default {
               })
           }
         })
+    },
+    showstatuschanged (isPublished) {
+      axios.create({
+        baseURL: url,
+        headers: { 'token': window.localStorage.getItem('AccessToken') }
+      })
+        .post('/ispublished', {
+          id: this.show._id,
+          isPublished: isPublished
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    emitshowdescription (showclicked) {
+      this.$eventbus.$emit('showdescription', showclicked)
+    },
+    duplicateEvent (show) {
+      console.log('duplicate show clicked')
+      swal({
+        title: 'Duplicate Show',
+        text: 'Do you want to duplicate the show!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Sure!'
+      })
+        .then(res => {
+          console.log(res.value)
+          if (res.value) {
+            axios.create(
+              {
+                baseURL: url,
+                headers: {'token': window.localStorage.getItem('AccessToken')}
+              }
+            ).post('/duplicateShow', show)
+              .then(res => {
+                console.log(res)
+              })
+              .catch(err => {
+                console.log(error)
+              })
+          }
+        })
+      // .then(result => {
+      //   console.log(result.value)
+      //   if(result.value) {
+      //     axios.create({
+      //       baseURL: url,
+      //       headers: { 'token': window.localStorage.getItem('AccessToken') }
+      //     })
+      //     .post('/duplicateShow', show)
+      //     .then( res => {
+      //       console.log(res)
+      //     })
+      //     .catch( error => {
+      //         console.log(error)
+      //     })
+      //   }
+      // })
     }
   },
   watch: {

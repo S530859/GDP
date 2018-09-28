@@ -102,7 +102,7 @@ export default {
             'Admin has been successfully updated.',
             'success'
           )
-           axios({
+          axios({
             method: 'get',
             headers: {
               token: window.localStorage.getItem('AccessToken')

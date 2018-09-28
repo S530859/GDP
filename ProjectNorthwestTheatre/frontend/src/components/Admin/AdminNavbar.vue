@@ -14,26 +14,35 @@
         <div class="col-sm-2 collapse d-sm-flex position-fixed" id="sidebar">
             <div class="col-sm-10 bg-dark pt-2" v-if="login">
                 <ul class="nav flex-column flex-nowrap ">
-                   <li class="nav-item my-2">
-                        <button class="btn white_green btn-block" @click="addshowevent()">
-                          <span class="mr-2"><i class="fas fa-plus-circle"></i> </span>
-                          Add Show </button>
-                    </li>
-                    <li class="nav-item my-2">
-                        <router-link to="/admin/adminlist" class="btn white_green btn-block">
-                         <span class="mr-2"><i class="fas fa-list-ul"></i></span>Admin List</router-link>
-                    </li>
-                    <li class="nav-item my-2">
-                        <router-link to="/admin/addadmin" class="btn white_green  btn-block">
-                         <span class="mr-2"><i class="fas fa-user"></i></span>Add Admin</router-link>
-                    </li>
-                    <li class="nav-item my-2">
-                        <router-link to="/admin/sectionlist" class="btn white_green btn-block"> <span class="mr-2"><i class="fas fa-th-list"></i></span>View Section</router-link>
-                    </li>
-                    <li class="nav-item my-2">
-                        <router-link to="/admin/addsection" class="btn white_green btn-block">
-                        <span class="mr-2"><i class="fas fa-plus"></i></span>Add Section </router-link>
-                    </li>
+                  <li class="nav-item my-2">
+                      <router-link to="/admin/dashboard" class="btn white_green btn-block">
+                        <span class="mr-2"><i class="fas fa-home"></i></span>Home</router-link>
+                  </li>
+                  <li class="nav-item my-2">
+                      <button class="btn white_green btn-block" @click="addshowevent()">
+                        <span class="mr-2"><i class="fas fa-plus-circle"></i> </span>
+                        Add Show </button>
+                  </li>
+                  <li class="nav-item my-2">
+                      <router-link to="/admin/adminlist" class="btn white_green btn-block">
+                        <span class="mr-2"><i class="fas fa-list-ul"></i></span>Admin List</router-link>
+                  </li>
+                  <li class="nav-item my-2">
+                      <router-link to="/admin/addadmin" class="btn white_green  btn-block">
+                        <span class="mr-2"><i class="fas fa-user"></i></span>Add Admin</router-link>
+                  </li>
+                  <li class="nav-item my-2">
+                      <router-link to="/admin/sectionlist" class="btn white_green btn-block">
+                      <span class="mr-2"><i class="fas fa-th-list"></i></span>View Section</router-link>
+                  </li>
+                  <li class="nav-item my-2">
+                      <router-link to="/admin/addsection" class="btn white_green btn-block">
+                      <span class="mr-2"><i class="fas fa-plus"></i></span>Add Section</router-link>
+                  </li>
+                  <li class="nav-item my-2">
+                    <router-link to="/admin/cancelticket" class="btn white_green btn-block">
+                    <span class="mr-2"><i class="fas fa-ban"></i> CancelTicket</span></router-link>
+                </li>
                 </ul>
             </div>
         </div>
@@ -66,8 +75,12 @@
                 </textarea>
               </div>
               <div class="form-group row">
-                <label class="col-sm-4 form-label required">Show Date:</label>
-                <input class="col-sm-7 form-control" type="date" id="showdate" name="ShowDate" required>
+                <label class="col-sm-4 form-label">Show Date:</label>
+                    <input type="text" class="date form-control col-sm-7" name="ShowDate" id="datepicker-input" required>
+                        <span @click="showdatepicker()" id="date-icon" class="col-sm-1">
+                          <i class="fas fa-calendar-alt fa-2x" aria-hidden="true" ></i>
+                        </span>
+                <!-- <input class="col-sm-7 form-control" type="date" id="showdate" name="ShowDate" required> -->
               </div>
               <div class="form-group row">
                 <label class="col-sm-4 form-label required">Show Time:</label>
@@ -90,19 +103,31 @@
                     <option>R</option>
                   </select>
                 </div>
+
+                <form @submit.prevent="addticketprice()" id="ticketform">
+                  <div class="form-group row">
+                    <label class="col-sm-4 form-label required">Ticket Type:</label>
+                    <input class="col-sm-6 form-control" type="text" placeholder="Ticket Type" id="TicketType" required>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 form-label required">Ticket Price:</label>
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                      </div>
+                    <input class="col-sm-4 form-control" type="number" placeholder="Ticket Price" id="TicketPrice" min="1" required>
+                    <button class="btn col-sm-1.5 offset-sm-1" type="submit">Add</button>
+                  </div>
+                </form>
+
                 <div class="form-group row">
-                  <label class="col-sm-4 form-label required">Adult Ticket:</label>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">$</div>
-                    </div>
-                  <input class="col-sm-6 form-control" type="number" placeholder="Ticket Cost for Adult" id="adultprice" name="ShowPriceForAdult" min="1" required>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-4 form-label required">Children Ticket:</label>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">$</div>
-                    </div>
-                  <input class="col-sm-6 form-control" type="number" placeholder="Ticket Cost for children" id="childrenprice" min="1" name="ShowPriceForChildren" required>
+                  <ol class="col-sm-8 offset-sm-2" name="ticketdetails" id="ticketdetails">
+                    <li v-for="ticket in ticketdetails" :key="ticket.TicketType" style="height: 50px;vertical-align: middle">
+                      {{ ticket.TicketType }} - $ {{ ticket.TicketPrice }}
+                        <button type="button" class="btn rounded-circle float-right mx-2" id="delete" @click="deleteticket(ticket.TicketType)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </li>
+                  </ol>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-4 form-label required">Upload Image:</label>
@@ -140,11 +165,18 @@ export default {
         isPublished: false
       },
       /* global moment  */
-      showtime: moment().format('HH:mm')
+      showtime: moment().format('HH:mm'),
+      ticketdetails: [
+
+      ]
     }
   },
   props: ['login'],
   methods: {
+    showdatepicker () {
+      console.log('date picker clicked')
+      $('.date').datepicker('show')
+    },
     logout () {
       window.localStorage.clear()
       var _this = this
@@ -156,11 +188,26 @@ export default {
     },
     addshow () {
       var data = new FormData(document.querySelector('#addshow'))
-      /* global $ axios url */
+      data.append('Ticketdetails', JSON.stringify(this.ticketdetails))
+      /*
+        ShowTitle: data.get('ShowTitle'),
+        ShowPlayWright: data.get('ShowPlayWright'),
+        ShowDescription: data.get('ShowDescription'),
+        ShowDate: data.get('ShowDate'),
+        ShowTime: data.get('ShowTime'),
+        NumberOfTickets: data.get('NumberOfTickets'),
+        ShowVenue: data.get('ShowVenue'),
+        ShowRating: data.get('ShowRating'),
+        ShowImage: data.get('ShowImage'),
+        isPublished: data.get('isPublished'),
+      */
+      /* global $ axios url _ */
       axios.create({
         baseURL: url,
         headers: { 'token': window.localStorage.getItem('AccessToken') }
-      }).post('/addshow', data)
+      }).post('/addshow',
+        data
+      )
         .then(res => {
           axios({
             method: 'get',
@@ -181,11 +228,46 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    addticketprice () {
+      console.log(TicketType.value)
+      this.ticketdetails.push({
+        'TicketType': $('#TicketType').val(),
+        'TicketPrice': $('#TicketPrice').val()
+      })
+      document.getElementById('ticketform').reset()
+    },
+    deleteticket (TicketType) {
+      swal({
+        title: `Do you want to delete ${TicketType} ?`,
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Yes, delete!`
+      })
+        .then((result) => {
+          if (result.value) {
+            this.ticketdetails = _.without(this.ticketdetails, _.findWhere(this.ticketdetails, {
+              TicketType: TicketType
+            }))
+            swal(
+              'Deleted!',
+              `Ticket Type:  ${TicketType} has been deleted.`,
+              'success'
+            )
+          }
+        })
     }
   },
   mounted () {
     console.log('mounted admin navbar')
     console.log('element ', document.getElementById('rem_content'))
+    $('.date').datepicker({
+      multidate: true,
+      multidateSeparator: '; '
+    })
     function myFunction1 () {
       console.log('myfunction1 show content')
       $('#sidebar').toggle()
@@ -326,4 +408,24 @@ export default {
         content: '*';
         color: red;
     }
+#delete:hover {
+  color: #910000;
+  background-color: #DA7A7A
+}
+#delete {
+  color: #D14F4F;
+  background-color: none
+}
+#date-icon{
+  position: absolute;
+  right: 35px;
+  padding: 2px;
+display: flex;
+align-items: center;
+}
+#datepicker-input {
+  padding-right: 40px;
+ outline: none;
+}
+
 </style>

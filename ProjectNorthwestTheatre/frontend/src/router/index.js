@@ -11,20 +11,47 @@ import AdminList from '../components/Admin/AdminList.vue'
 import Admin from '../components/Admin/Admin.vue'
 import PageNotFound from '../components/Admin/PageNotFound.vue'
 import SectionList from '../components/Admin/SectionList.vue'
+import UserCancelTicket from '../components/User/UserCancelTicket.vue'
+import UserShow from '../components/User/UserShow.vue'
+import User from '../components/User/User.vue'
+import CancelTicket from '../components/Admin/CancelTicket.vue'
+import UserDirections from '../components/User/UserDirections.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'UserDashboard',
-      component: UserDashboard
-    },
-    {
-      path: '/user/reservation',
-      name: 'UserReservation',
-      component: UserReservation
+      path: '/user',
+      name: 'User',
+      component: User,
+      children: [
+        {
+          path: 'dashboard',
+          name: 'Userdashboard',
+          component: UserDashboard
+        },
+        {
+          path: 'usershow',
+          name: 'UserShow',
+          component: UserShow
+        },
+        {
+          path: 'reservation',
+          name: 'UserReservation',
+          component: UserReservation
+        },
+        {
+          path: 'CancelTicket',
+          name: 'UserCancelTicket',
+          component: UserCancelTicket
+        },
+        {
+          path: 'directions',
+          name: 'UserDirections',
+          component: UserDirections
+        }
+      ]
     },
     {
       path: '/admin',
@@ -65,6 +92,12 @@ export default new Router({
           name: 'SectionList',
           beforeEnter: Guard.auth,
           component: SectionList
+        },
+        {
+          path: 'cancelticket',
+          name: 'cancelticket',
+          beforeEnter: Guard.auth,
+          component: CancelTicket
         }
       ]
     },

@@ -11,6 +11,9 @@ export default {
 </script>
 
 <style>
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+/* @import '../node_modules/font-awesome/css/font-awesome.css'; */
+@import '../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

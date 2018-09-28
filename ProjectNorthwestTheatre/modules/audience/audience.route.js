@@ -2,10 +2,10 @@
 
 var express = require('express');
 var router = express.Router();
+var UserShowController = require('../audience/controllers/user.show.controller')
 
+router.get('/showlist', UserShowController.GetShowList );
 
-router.get('/', function (req, res, next) {
-
-});
+router.get('/image', UserShowController.imagebyid)
 
 module.exports = router;

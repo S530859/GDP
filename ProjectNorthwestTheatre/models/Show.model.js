@@ -53,6 +53,9 @@ var ShowSchema = new mongoose.Schema({
     ShowVenue: {
         type: String,
         trim: true
+    },
+    Ticketdetails: {
+        type: Array
     }
 })
 
