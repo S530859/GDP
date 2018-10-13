@@ -6,8 +6,12 @@ const path = require('path')
 const cronJob = require('cron').CronJob
 const show = require('../../../models/Show.model')
 const moment = require('moment')
+const theatreappreciationstudents = require('../../../models/TheatreAppreciationStudent.model')
+const audience = require('../../../models/Audience.model')
+let ObjectId = require('mongoose').Types.ObjectId
 
-let SendMail = function (req,res,next) {
+
+let SendMail = async function (show_id) {
     let transporter = nodemailer.createTransport({
         host: 'smtp.office365.com',
         port: 587,
@@ -17,6 +21,20 @@ let SendMail = function (req,res,next) {
             pass: config.password // generated ethereal password
         }
     })
+
+    theatreappreciationstudents.find({ ShowID: new ObjectId(show_id) }, ['EmailAddress'], function(err, list){
+        console.log(list)
+    })
+    let students = await Promise.all([ theatreappreciationstudents.find({ ShowID: new ObjectId(show_id) }, ['EmailAddress']).exec() ,
+                                  audience.find({ ShowID: new ObjectId(show_id) }, ['EmailAddress']).exec() ])
+
+
+    console.log(students)
+
+
+
+
+
     let names =['Saivarun']
     for(let name of names){
         ejs.renderFile(path.join(__dirname, "../../../views/mail.ejs"), { name: name, content: req.body.email.body }, function (err, data) {
@@ -51,7 +69,7 @@ module.exports.SendMail = SendMail
 
 let startjob = function() {
     console.log('cron job started')
-    const job = new cronJob('* * * * * *', function(){
+    const job = new cronJob('0 */1 * * * *', function(){
         show.find({}, ['ShowDate'], function(err, showlist){
             for(Show of showlist){
                     let showarray = Show.ShowDate.split(',')
@@ -60,7 +78,7 @@ let startjob = function() {
                         console.log(date)
                        console.log( moment().diff(moment(date, 'MM/DD/YYYY'), 'days') )
                         if(moment().diff(moment(date, 'MM/DD/YYYY'), 'days') === 0){
-                            SendMail(Show._id)
+                            SendMail(Show.id)
                         }
                     }
                 }
