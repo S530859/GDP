@@ -1,30 +1,17 @@
 <template>
     <!-- Ashwith Gundu - Created side navigation bar -->
-    
     <div class="container-fluid" style=" ">
-    
         <div class="sticky-top">
-    
             <nav class="navbar bg-dark bor text-light sticky-top" style="overflow-x:hidden;">
-    
                 <a href="" data-target="#sidebar" data-toggle="collapse" class="d-md-none" id="show_content">
-    
                     <i class="fa fa-bars"></i>
-    
                 </a>
-    
                 <router-link class="navbar-brand tex " to="/user/dashboard">
-    
                     <h1>Theatre Northwest</h1>
-    
                 </router-link>
-    
             </nav>
-    
         </div>
-    
         <div id="adminnavbar" class="row">
-    
             <div class="col-sm-2 collapse d-sm-flex position-fixed" id="sidebar">
     
                 <div class="col-sm-10 bg-dark pt-2">

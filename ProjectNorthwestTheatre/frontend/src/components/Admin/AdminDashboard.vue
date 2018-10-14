@@ -332,12 +332,12 @@ export default {
         })
         .post("/reserveTicket", reserveticketdata)
         .then(res => {
-          swal("Congratualtions!", "You have reserved a Seat", "success")
+          swal('Congratualtions!', 'You have reserved a Seat', 'success')
           $('#ReserveTicketsAdmin')[0].reset()
           console.log('Ticket Reserved ' + res)
         })
         .catch(err => {
-            console.log('error in Reserving Ticket' + err)
+          console.log('error in Reserving Ticket' + err)
         })
     }
   },
@@ -382,7 +382,7 @@ export default {
 <style scoped>
 .fixed{
     position: fixed;
-    z-index: 100; 
+    z-index: 100;
 }
 
 .down{
