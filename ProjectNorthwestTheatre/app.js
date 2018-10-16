@@ -21,16 +21,19 @@ var adminModel = require('./models/Admin.model')
 var cors = require('cors')
 
 // view engine setup
-app.set('views', path.join(__dirname, 'frontend'));
-app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.set('views', path.join(__dirname, 'frontend/dist'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+// app.set('view engine', 'ejs');
 
 app.use(cors())
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'frontend/dist/')))
-app.use(express.static(path.join(__dirname, 'public')))
+// app.use(express.static(path.join(__dirname, 'frontend/dist/')))
+//app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({ 
   secret: config.sessionsecret,
   resave: false, 
@@ -97,7 +100,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.send(404, 'no route configured')
+  //res.send(404, 'no route configured')
 });
 
 module.exports = app;

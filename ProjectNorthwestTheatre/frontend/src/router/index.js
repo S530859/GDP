@@ -20,7 +20,13 @@ import UserDirections from '../components/User/UserDirections.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
+    {
+      path: '/Theatre',
+      name: 'HomePage',
+      redirect: { name: 'Userdashboard' }
+    },
     {
       path: '/user',
       name: 'User',
