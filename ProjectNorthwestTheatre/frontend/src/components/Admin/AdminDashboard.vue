@@ -203,7 +203,7 @@ export default {
       search: '',
       email: {
         subject: 'Attention!!',
-        body: 'Thank you for your interest in the show.\n The show has been delayed by two days due to bad weather conditions. \n Sorry for the inconvenience'
+        body: 'Thank you for your interest in the show.\nThe show has been delayed by two days due to bad weather conditions.\nSorry for the inconvenience'
       }
     }
   },
@@ -275,8 +275,8 @@ export default {
     },
     refreshData () {
       var _this = this
-       /* global axios moment _ */
-        axios({
+      /* global axios moment _ */
+      axios({
         method: 'get',
         headers: {
           token: window.localStorage.getItem('AccessToken')
@@ -332,12 +332,12 @@ export default {
         })
         .post("/reserveTicket", reserveticketdata)
         .then(res => {
-          swal("Congratualtions!", "You have reserved a Seat", "success")
+          swal('Congratualtions!', 'You have reserved a Seat', 'success')
           $('#ReserveTicketsAdmin')[0].reset()
           console.log('Ticket Reserved ' + res)
         })
         .catch(err => {
-            console.log('error in Reserving Ticket' + err)
+          console.log('error in Reserving Ticket' + err)
         })
     }
   },
@@ -372,7 +372,7 @@ export default {
   computed: {
     updatedShowList: function () {
       return this.showlist.filter(show => {
-          return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
+        return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
       })
     }
   }
@@ -382,7 +382,7 @@ export default {
 <style scoped>
 .fixed{
     position: fixed;
-    z-index: 100; 
+    z-index: 100;
 }
 
 .down{

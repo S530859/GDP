@@ -200,7 +200,7 @@ export default {
         ShowImage: data.get('ShowImage'),
         isPublished: data.get('isPublished'),
       */
-      /* global $ axios url _ */
+      /* global $ axios url _ swal */
       axios.create({
         baseURL: url,
         headers: { 'token': window.localStorage.getItem('AccessToken') }
@@ -229,7 +229,7 @@ export default {
         })
     },
     addticketprice () {
-     // console.log(TicketType.value)
+      // console.log(TicketType.value)
       this.ticketdetails.push({
         'TicketType': $('#TicketTypeAddShow').val(),
         'TicketPrice': $('#TicketPriceAddShow').val()
