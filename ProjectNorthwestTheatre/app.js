@@ -29,8 +29,8 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'frontend')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'frontend/dist/')))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({ 
   secret: config.sessionsecret,
   resave: false, 
@@ -38,7 +38,7 @@ app.use(session({
   cookie: { secure: true }
 }))
 // app.use('/', index);
-app.use('/users', users);
+app.use('/Theatre', users);
 app.use('/register', audienceRoutes);
 
 let tokenAuthentication = (req, res, next) => {
