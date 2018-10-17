@@ -55,7 +55,17 @@
                             </router-link>
     
                         </li>
+                        <li class="nav-item my-2">
     
+                            <router-link to="/admin/login" class="btn white_green btn-block">
+    
+                                <span class="mr-2"><i class="fas fa-directions"></i>
+    
+                             </span>AsAdmin
+    
+                            </router-link>
+    
+                        </li>
     
     
                     </ul>
