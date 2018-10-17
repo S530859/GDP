@@ -34,10 +34,12 @@ let SendMail = async function (req,res,next) {
                                             ['EmailAddress', 'LastName', 'FirstName']
                                         ).exec() 
                                     ])
+    let email_subject = ( req && req.body.email.subject ) ? req.body.email.subject : "test"
+    let email_body = ( req && req.body.email.body ) ? req.body.email.body : "Testing"
     students = [ ...students[0], ...students[1]]
     for (student of students) {
             ejs.renderFile( path.join(__dirname, "../../../views/mail.ejs"),
-            { name: `${student.FirstName} ${student.LastName}`, content: req.body.email.body || 'Testing' },
+            { name: `${student.FirstName} ${student.LastName}`, content: email_body },
             function (err, data) {
                 if (err) {
                     console.error(err)
@@ -46,7 +48,7 @@ let SendMail = async function (req,res,next) {
                     let mailOptions = {
                         from: '"Northwest Theatre" <s530859@nwmissouri.edu>', // sender address
                         to: student.EmailAddress, // list of receivers
-                        subject: req.body.email.subject || 'test', // Subject line
+                        subject: email_subject, // Subject line
                         html: data
                     }
                     // send mail with defined transport object
