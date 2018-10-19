@@ -42,7 +42,7 @@ export default {
   name: 'AdminDashboard',
   data () {
     return {
-      /* global $ axios url */
+      /* global $ axios */
       sectionlist: [],
       showlist: [],
       show: '',
@@ -58,7 +58,7 @@ export default {
     },
     refreshData () {
       var _this = this
-      /* global axios moment _  userurl */
+      /* global axios userurl */
       /*  axios({
         method: "get",
         headers: {

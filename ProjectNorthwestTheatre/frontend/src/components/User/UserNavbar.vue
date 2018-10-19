@@ -13,116 +13,81 @@
         </div>
         <div id="adminnavbar" class="row">
             <div class="col-sm-2 collapse d-sm-flex position-fixed" id="sidebar">
-    
                 <div class="col-sm-10 bg-dark pt-2">
-    
                     <ul class="nav flex-column flex-nowrap ">
-    
                         <li class="nav-item my-2">
-    
                             <router-link to="/user/dashboard" class="btn white_green btn-block">
-    
                                 <span class="mr-2">
-    
                               <i class="fas fa-home"></i>
-    
                              </span>Home
-    
                             </router-link>
-    
                         </li>
-    
                         <li class="nav-item my-2">
-    
                             <router-link to="/user/cancelticket" class="btn white_green btn-block">
-    
                                 <span class="mr-2"><i class="fas fa-ban"></i>
-    
                              </span>CancelTicket
-    
                             </router-link>
-    
                         </li>
-    
                         <li class="nav-item my-2">
-    
                             <router-link to="/user/directions" class="btn white_green btn-block">
-    
                                 <span class="mr-2"><i class="fas fa-directions"></i>
-    
                              </span>Directions
-    
                             </router-link>
-    
                         </li>
                         <li class="nav-item my-2">
-    
                             <router-link to="/admin/login" class="btn white_green btn-block">
-    
                                 <span class="mr-2"><i class="fas fa-directions"></i>
-    
                              </span>AsAdmin
-    
                             </router-link>
-    
                         </li>
-    
-    
                     </ul>
-    
                 </div>
-    
             </div>
-    
             <div class="col-sm-10 offset-sm-2" id="rem_content">
-    
                 <slot class="col-sm-12"></slot>
-    
             </div>
-    
         </div>
-    
     </div>
 </template>
 
 <script>
 export default {
-    name: 'UserNavbar',
-    data() {
-        return {
-            pathname: '',
-            formdata: {
-                isPublished: false
-            },
-            /* global moment  */
-            showtime: moment().format('HH:mm')
-        }
-    },
-    props: ['login'],
-    methods: {},
-    mounted() {
-        console.log('mounted admin navbar')
-        console.log('element ', document.getElementById('rem_content'))
-
-        function myFunction1() {
-            console.log('myfunction1 show content')
-            $('#sidebar').toggle()
-        }
-
-        function myFunction() {
-            console.log('myfunction remainig content')
-            $('#sidebar').hide()
-        }
-        if (document.getElementById('rem_content')) {
-            document.getElementById('rem_content').addEventListener('click', myFunction)
-        }
-        if (document.getElementById('show_content')) {
-            document.getElementById('show_content').addEventListener('click', myFunction1)
-        }
-        this.$eventbus.$on('addshow', function() {
-            $('#myModal').modal('show')
-        })
+  name: 'UserNavbar',
+  data () {
+    return {
+      pathname: '',
+      formdata: {
+        isPublished: false
+      },
+      /* global moment  */
+      showtime: moment().format('HH:mm')
     }
+  },
+  props: ['login'],
+  methods: {},
+  mounted () {
+    console.log('mounted admin navbar')
+    console.log('element ', document.getElementById('rem_content'))
+
+    function myFunction1 () {
+      console.log('myfunction1 show content')
+      $('#sidebar').toggle()
+    }
+
+    function myFunction () {
+      console.log('myfunction remainig content')
+      $('#sidebar').hide()
+    }
+    if (document.getElementById('rem_content')) {
+      document.getElementById('rem_content').addEventListener('click', myFunction)
+    }
+    if (document.getElementById('show_content')) {
+      document.getElementById('show_content').addEventListener('click', myFunction1)
+    }
+    this.$eventbus.$on('addshow', function () {
+      $('#myModal').modal('show')
+    })
+  }
 }
 /* global $ */
 /* $(function () {

@@ -105,7 +105,7 @@ export default {
         Semester: formdata.get('Semester'),
         Year: formdata.get('Year')
       }
-      /* global axios url swal */
+      /* global axios url swal $ */
       axios.create({
         baseURL: url,
         headers: { 'token': window.localStorage.getItem('AccessToken') }
