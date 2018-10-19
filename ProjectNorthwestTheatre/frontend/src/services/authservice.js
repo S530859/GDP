@@ -1,5 +1,6 @@
 export default {
   auth (to, from, next) {
+    console.log(from, to)
     console.log(to.name, to.name === 'AdminLogin')
     /* global axios url */
     axios({

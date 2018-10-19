@@ -78,6 +78,7 @@ export default {
         .catch(function(err) {
           console.log("error while getting section list", err);
         }); */
+      console.log(userurl)
       axios({
         method: 'get',
         url: userurl + '/showlist'
