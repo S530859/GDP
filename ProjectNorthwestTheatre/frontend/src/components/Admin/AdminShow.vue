@@ -11,10 +11,9 @@
                      <h1 class=" heading">{{ show.ShowTitle }}</h1>
                    </div>
               </div>
-              <div class="col-md left">
-                  <div class=" component float-right">
-                      <span class="mx-5" >
-                        <div class="btn-group rounded" id="status" data-toggle="buttons">
+              <div class="col-md left my-auto p_u-mobile">
+                  <div class="d-inline float-right ">
+                        <div class="btn-group rounded btn-width" id="status" data-toggle="buttons">
                           <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }" @click="showstatuschanged(true)">
                             <input class="d-none" type="radio" value="1">
                             <strong>Publish</strong>
@@ -24,8 +23,7 @@
                             <strong>UnPublish</strong>
                           </label>
                         </div>
-                      </span>
-                  <button type="button" class="btn rounded-circle" id="delete" @click="deleteshow">
+                  <button type="button" class="btn rounded-circle btn-mobile" id="delete" @click="deleteshow">
                       <i class="fas fa-trash"></i>
                   </button>
                  </div>
@@ -38,7 +36,7 @@
 <!-- comment -->
         <div class="card-body green">
           <div class="content">
-            <div class="row justify-content-around m-3 rounded  bg-light">
+            <div class="row justify-content-around m-3 mar rounded  bg-light">
               <!-- image column -->
               <div class="col-lg align-self-center" id="imagediv">
                 <img :src="'http://localhost:3000/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
@@ -609,4 +607,24 @@ export default {
   float: left;
   margin-left: -20px;
 }
+
+.btn-width{
+  margin-left:10px
+}
+
+.p_u-mobile{
+margin-left:0px;
+}
+.btn-mobile{
+  margin-left: 30px;
+}
+@media only screen and (max-width: 420px) {
+.btn-mobile{
+    margin-left: 20px;
+}
+.p_u-mobile{
+  margin-left: -40px;
+}
+}
+
 </style>
