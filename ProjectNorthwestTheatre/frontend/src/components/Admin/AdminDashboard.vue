@@ -378,7 +378,7 @@ export default {
 <style scoped>
 .fixed{
     position: fixed;
-    z-index: 100;
+    z-index: 2;
 }
 
 .down{
@@ -394,6 +394,16 @@ export default {
    /* border-bottom: 5px solid rgba(4, 224, 151, 0.521); */
      /* border-bottom-left-radius: 50px ; */
      box-shadow: 0px 10px 5px #f6f4ef;
+}
+
+.heading{
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+.heading{
+  font-size: 20px;
+}
 }
 
 </style>
