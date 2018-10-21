@@ -22,6 +22,11 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/',
+      name: 'HomePage',
+      redirect: { name: 'Userdashboard' }
+    },
+    {
       path: '/user',
       name: 'User',
       component: User,

@@ -6,8 +6,8 @@
             <a href="" data-target="#sidebar" data-toggle="collapse" class="d-md-none" id="show_content">
                 <i class="fa fa-bars"></i>
             </a>
-            <router-link class="navbar-brand tex " to="/admin/dashboard"><h1>Theatre Northwest</h1></router-link>
-            <button class="btn white_green px-4" @click="logout()" v-if="login"><span class="mr-2"><i class="fas fa-sign-out-alt"></i></span>Logout</button>
+            <router-link class="navbar-brand tex " to="/admin/dashboard"><h1 class="heading">Theatre Northwest</h1></router-link>
+            <button id="logB" class="btn white_green px-4 d-none d-md-block d-lg-block d-xl-block" @click="logout()" v-if="login"><span class="mr-2"><i class="fas fa-sign-out-alt"></i></span>Logout</button>
         </nav>
     </div>
     <div id="adminnavbar" class="row">
@@ -19,7 +19,7 @@
                         <span class="mr-2"><i class="fas fa-home"></i></span>Home</router-link>
                   </li>
                   <li class="nav-item my-2">
-                      <button class="btn white_green btn-block" @click="addshowevent()">
+                      <button class="btn white_green btn-block " @click="addshowevent()">
                         <span class="mr-2"><i class="fas fa-plus-circle"></i> </span>
                         Add Show </button>
                   </li>
@@ -39,9 +39,13 @@
                       <router-link to="/admin/addsection" class="btn white_green btn-block">
                       <span class="mr-2"><i class="fas fa-plus"></i></span>Add Section</router-link>
                   </li>
-                  <li class="nav-item my-2">
+                  <li class="nav-item my-2 ">
                     <router-link to="/admin/cancelticket" class="btn white_green btn-block">
                     <span class="mr-2"><i class="fas fa-ban"></i> CancelTicket</span></router-link>
+                </li>
+                <li id="logS" class="nav-item my-2 d-md-none d-lg-none d-xl-none " @click="logout()" v-if="login">
+                    <router-link to="" class="btn white_green btn-block">
+                    <span class="mr-2"><i class="fas fa-location"></i> Logout</span></router-link>
                 </li>
                 </ul>
             </div>
@@ -107,14 +111,14 @@
                 <form @submit.prevent="addticketprice()" id="ticketform">
                   <div class="form-group row">
                     <label class="col-sm-4 form-label required">Ticket Type:</label>
-                    <input class="col-sm-6 form-control" type="text" placeholder="Ticket Type" id="TicketType" required>
+                    <input class="col-sm-6 form-control" type="text" placeholder="Ticket Type"  id="TicketTypeAddShow" required>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 form-label required">Ticket Price:</label>
                       <div class="input-group-prepend">
                         <div class="input-group-text">$</div>
                       </div>
-                    <input class="col-sm-4 form-control" type="number" placeholder="Ticket Price" id="TicketPrice" min="1" required>
+                    <input class="col-sm-4 form-control" type="number" placeholder="Ticket Price" id="TicketPriceAddShow" min="1" required>
                     <button class="btn col-sm-1.5 offset-sm-1" type="submit">Add</button>
                   </div>
                 </form>
@@ -167,7 +171,6 @@ export default {
       /* global moment  */
       showtime: moment().format('HH:mm'),
       ticketdetails: [
-
       ]
     }
   },
@@ -175,7 +178,7 @@ export default {
   methods: {
     showdatepicker () {
       console.log('date picker clicked')
-      $('.date').datepicker('show')
+      // $('.date').datepicker('show')
     },
     logout () {
       window.localStorage.clear()
@@ -201,7 +204,7 @@ export default {
         ShowImage: data.get('ShowImage'),
         isPublished: data.get('isPublished'),
       */
-      /* global $ axios url _ */
+      /* global $ axios url _ swal */
       axios.create({
         baseURL: url,
         headers: { 'token': window.localStorage.getItem('AccessToken') }
@@ -230,10 +233,10 @@ export default {
         })
     },
     addticketprice () {
-      console.log(TicketType.value)
+      // console.log(TicketType.value)
       this.ticketdetails.push({
-        'TicketType': $('#TicketType').val(),
-        'TicketPrice': $('#TicketPrice').val()
+        'TicketType': $('#TicketTypeAddShow').val(),
+        'TicketPrice': $('#TicketPriceAddShow').val()
       })
       document.getElementById('ticketform').reset()
     },
@@ -266,7 +269,8 @@ export default {
     console.log('element ', document.getElementById('rem_content'))
     $('.date').datepicker({
       multidate: true,
-      multidateSeparator: '; '
+      multidateSeparator: '; ',
+      container: '#myModal'
     })
     function myFunction1 () {
       console.log('myfunction1 show content')
@@ -310,11 +314,21 @@ export default {
     min-height: 100%;
     z-index: 1;
 }
+
+.nav{
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0px;
+    margin-bottom: 0;
+    list-style: none;
+}
 .container-fluid {
     padding-right:0;
     padding-left:0;
-    margin-right:auto;
-    margin-left:auto
+    margin-right:0;
+    margin-left:0;
  }
  .switch {
   position: relative;
@@ -418,14 +432,41 @@ export default {
 }
 #date-icon{
   position: absolute;
-  right: 35px;
+  right: 45px;
   padding: 2px;
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 }
 #datepicker-input {
   padding-right: 40px;
- outline: none;
+  outline: none;
+}
+.row{
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+#sidebar{
+  padding-left: 0px;
+  z-index: 10;
+}
+ul{
+  padding-left: 10px;
+}
+.heading{
+  font-size: 30px;
 }
 
+@media only screen and (max-width: 600px) {
+.heading{
+  font-size: 20px;
+}
+}
+.wrap{
+  overflow-wrap: break-word;
+   word-break: break-all;
+}
 </style>

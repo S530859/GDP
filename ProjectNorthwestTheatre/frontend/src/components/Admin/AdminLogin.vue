@@ -1,7 +1,7 @@
 <template>
     <div id="AdminLogin">
       <div class="row mt-5">
-        <div class="col-sm-6">
+        <div class="col-sm-6 d-none d-md-block d-lg-block d-xl-block">
            <img class="mb-4 w-50" src="../../assets/logoproject.jpg" alt="">
         </div>
          <div class="col-sm-6 align-self-center">
@@ -12,18 +12,30 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="card-header bg-success display-4">Login</div>
+              <div class="card-header bg-success display-4">
+                <h1 class="heading">  Login </h1>
+               </div>
                 <div class="card-body bg-light">
-                  <form class="form-signin" @submit.prevent = "formsubmit">
-                  <label for="inputEmail" class="sr-only">Email address</label>
+                  <form class="form-signin " @submit.prevent = "formsubmit">
+                    <div class="mar">
+                        <label for="inputEmail" class="sr-only mar">Email address</label>
                   <input type="text" v-model="formdata.Username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                  <label for="inputPassword" class="sr-only">Password</label>
+                    </div>
+                  <div>
+                     <label for="inputPassword" class="sr-only">Password</label>
                   <input type="password" id="inputPassword" v-model="formdata.Password" class="form-control" placeholder="Password" required>
-                  <button class="btn btn-lg btn-success btn-block" type="submit" >Login</button>
+                  </div>
+                 
+                  <button class="btn btn-lg btn-success btn-block mt-4" type="submit" >Login</button>
               </form>
               </div>
             </div>
         </div>
+    <!-- For Mobile device -->
+        <div class="col-sm-6 d-md-none d-lg-none d-xl-none">
+           <img class="mb-4 w-50" src="../../assets/logoproject.jpg" alt="">
+        </div>
+      <!-- end mobile Device -->
       </div>
     </div>
 </template>
@@ -44,7 +56,7 @@ export default {
     formsubmit () {
       var _this = this
       /* Saivarun Illendula - Added API Calls */
-    //  /* global axios url swal $ */
+      /* global axios url */
       axios
         .post(url + '/authenticate', this.formdata)
         .then(function (response) {
@@ -107,4 +119,37 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.heading{
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+.heading{
+  font-size: 25px;
+  margin: -10px;
+  letter-spacing: 4px;
+  
+}
+.card-header{
+  height: 35px;
+}
+.mar{
+  padding-bottom: 20px;
+}
+.form-signin {
+  padding: 1px;
+  /* margin: auto; */
+}
+.align-self-center {
+    -ms-flex-item-align: center!important;
+    align-self: center!important;
+    padding: 1px;
+}
+.card{
+  border: 1px solid #28a745;
+  margin: 2px;
+}
+}
+
+
 </style>
