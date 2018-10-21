@@ -4,30 +4,39 @@
     <div class="col-md-12 col-sm-12 my-3">
       <div class="card rounded mb-3" >
         <div class="card-header grey text-white">
-          <div class="d-inline-block font-weight-bold float-left">
-              <h1>{{ show.ShowTitle }}</h1>
-          </div>
-          <div class="d-inline-block component float-right">
-            <span class="mx-5" >
-              <div class="btn-group rounded" id="status" data-toggle="buttons">
-                <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }" @click="showstatuschanged(true)">
-                  <input class="d-none" type="radio" value="1">
-                  <strong>Publish</strong>
-                </label>
-                <label class="btn btn-default btn-off" style="border:2px solid white" :class="{ active: !show.isPublished }" @click="showstatuschanged(false)">
-                  <input class="d-none" type="radio" value="0" >
-                  <strong>UnPublish</strong>
-                </label>
+          <!-- show header -->
+            <div class="row">
+              <div class="col-md-6">
+                   <div class="  font-weight-bold float-left">
+                     <h1 class=" heading">{{ show.ShowTitle }}</h1>
+                   </div>
               </div>
-            </span>
-            <button type="button" class="btn rounded-circle float-right" id="delete" @click="deleteshow">
-                <i class="fas fa-trash"></i>
-            </button>
-          </div>
+              <div class="col-md left my-auto p_u-mobile">
+                  <div class="d-inline float-right ">
+                        <div class="btn-group rounded btn-width" id="status" data-toggle="buttons">
+                          <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }" @click="showstatuschanged(true)">
+                            <input class="d-none" type="radio" value="1">
+                            <strong>Publish</strong>
+                          </label>
+                          <label class="btn btn-default btn-off" style="border:2px solid white" :class="{ active: !show.isPublished }" @click="showstatuschanged(false)">
+                            <input class="d-none" type="radio" value="0" >
+                            <strong>UnPublish</strong>
+                          </label>
+                        </div>
+                  <button type="button" class="btn rounded-circle btn-mobile" id="delete" @click="deleteshow">
+                      <i class="fas fa-trash"></i>
+                  </button>
+                 </div>
+              </div>
+            </div>
+          <!-- end show header -->
+         
+
         </div>
+<!-- comment -->
         <div class="card-body green">
           <div class="content">
-            <div class="row justify-content-around m-3 rounded  bg-light">
+            <div class="row justify-content-around m-3 mar rounded  bg-light">
               <!-- image column -->
               <div class="col-lg align-self-center" id="imagediv">
                 <img :src="'http://localhost:3000/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
@@ -230,214 +239,219 @@
 
 <script>
 export default {
-  name: 'AdminShow',
-  data () {
+  name: "AdminShow",
+  data() {
     return {
       /* global moment */
-      ShowDate: moment(this.show.ShowDate, 'YYYY-MM-DD').format('MMMM Do YYYY'),
-      ShowTime: moment(this.show.ShowTime, 'HH:mm').format('hh:mm a'),
-      token: window.localStorage.getItem('AccessToken'),
+      ShowDate: moment(this.show.ShowDate, "YYYY-MM-DD").format("MMMM Do YYYY"),
+      ShowTime: moment(this.show.ShowTime, "HH:mm").format("hh:mm a"),
+      token: window.localStorage.getItem("AccessToken"),
       showImg: true,
       time: Date()
-    }
+    };
   },
-  props: ['show'],
+  props: ["show"],
   methods: {
-    emitevent () {
-      console.log(this.show)
-      this.$emit('showmodal', this.show)
+    emitevent() {
+      console.log(this.show);
+      this.$emit("showmodal", this.show);
     },
-    emailevent () {
-      this.$emit('showemailmodal', this.show)
+    emailevent() {
+      this.$emit("showemailmodal", this.show);
     },
-    editevent () {
+    editevent() {
       /* global $ */
-      console.log('editclicked', this.show._id)
-      $('#editshow' + this.show._id).modal('show')
-      this.showdatepicker()
+      console.log("editclicked", this.show._id);
+      $("#editshow" + this.show._id).modal("show");
+      this.showdatepicker();
     },
-    editshow () {
-      console.log('editclicked')
+    editshow() {
+      console.log("editclicked");
       var formdata = new FormData(
-        document.querySelector('#editshowform' + this.show._id)
-      )
-      formdata.append('Ticketdetails', JSON.stringify(this.show.Ticketdetails))
+        document.querySelector("#editshowform" + this.show._id)
+      );
+      formdata.append("Ticketdetails", JSON.stringify(this.show.Ticketdetails));
 
       // var _this = this
       axios
         .create({
           baseURL: url,
-          headers: { token: window.localStorage.getItem('AccessToken') }
+          headers: { token: window.localStorage.getItem("AccessToken") }
         })
-        .post('/updateshow', formdata)
+        .post("/updateshow", formdata)
         .then(
-          function (res) {
-            $('#editshow' + this.show._id).modal('hide')
-            swal('Updated!', 'Show has been successfully updated.', 'success')
-            this.time = Date()
+          function(res) {
+            $("#editshow" + this.show._id).modal("hide");
+            swal("Updated!", "Show has been successfully updated.", "success");
+            this.time = Date();
             axios({
-              method: 'get',
+              method: "get",
               headers: {
-                token: window.localStorage.getItem('AccessToken')
+                token: window.localStorage.getItem("AccessToken")
               },
-              url: url + '/showlist'
+              url: url + "/showlist"
             })
               .then(response => {
-                this.$eventbus.$emit('refreshdata', response.data)
+                this.$eventbus.$emit("refreshdata", response.data);
               })
               .catch(err => {
-                console.log('error while getting show list', err)
-              })
+                console.log("error while getting show list", err);
+              });
           }.bind(this)
         )
         .catch(error => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
-    deleteshow () {
+    deleteshow() {
       /* global swal axios url _ */
       swal({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        type: 'warning',
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {
           axios
             .create({
               baseURL: url,
-              headers: { token: window.localStorage.getItem('AccessToken') }
+              headers: { token: window.localStorage.getItem("AccessToken") }
             })
-            .post('/deleteshow', { id: this.show._id })
+            .post("/deleteshow", { id: this.show._id })
             .then(res => {
-              swal('Deleted!', 'Show has been deleted.', 'success')
+              swal("Deleted!", "Show has been deleted.", "success");
               axios({
-                method: 'get',
+                method: "get",
                 headers: {
-                  token: window.localStorage.getItem('AccessToken')
+                  token: window.localStorage.getItem("AccessToken")
                 },
-                url: url + '/showlist'
+                url: url + "/showlist"
               })
                 .then(response => {
-                  this.$eventbus.$emit('refreshdata', response.data)
+                  this.$eventbus.$emit("refreshdata", response.data);
                 })
                 .catch(err => {
-                  console.log('error while getting show list', err)
-                })
+                  console.log("error while getting show list", err);
+                });
             })
             .catch(error => {
-              console.log(error)
-            })
+              console.log(error);
+            });
         }
-      })
+      });
     },
-    showstatuschanged (isPublished) {
+    showstatuschanged(isPublished) {
       axios
         .create({
           baseURL: url,
-          headers: { token: window.localStorage.getItem('AccessToken') }
+          headers: { token: window.localStorage.getItem("AccessToken") }
         })
-        .post('/ispublished', {
+        .post("/ispublished", {
           id: this.show._id,
           isPublished: isPublished
         })
         .then(res => {
-          console.log(res)
+          console.log(res);
         })
         .catch(error => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
-    emitshowdescription (showclicked) {
-      this.$eventbus.$emit('showdescription', showclicked)
+    emitshowdescription(showclicked) {
+      this.$eventbus.$emit("showdescription", showclicked);
     },
-    duplicateEvent (show) {
-      console.log('duplicate show clicked')
+    duplicateEvent(show) {
+      console.log("duplicate show clicked");
       swal({
-        title: 'Duplicate Show',
-        text: 'Do you want to duplicate the show!',
-        type: 'warning',
+        title: "Duplicate Show",
+        text: "Do you want to duplicate the show!",
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Sure!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Sure!"
       }).then(res => {
-        console.log(res.value)
+        console.log(res.value);
         if (res.value) {
           axios
             .create({
               baseURL: url,
-              headers: { token: window.localStorage.getItem('AccessToken') }
+              headers: { token: window.localStorage.getItem("AccessToken") }
             })
-            .post('/duplicateShow', show)
+            .post("/duplicateShow", show)
             .then(res => {
-              console.log(res)
+              console.log(res);
             })
             .catch(err => {
-              console.log(err)
-            })
+              console.log(err);
+            });
         }
-      })
+      });
     },
-    showdatepicker () {
-      console.log('date picker clicked')
-      let dates = this.show.ShowDate.split(',')
+    showdatepicker() {
+      console.log("date picker clicked");
+      let dates = this.show.ShowDate.split(",");
       _.each(dates, (element, index, list) => {
-        let date = element.replace(';', '')
-        list[index] = new Date(date)
-      })
-      console.log(dates)
-      $(`#editshowform${this.show._id} .row` + ' .date').datepicker('setDates', dates)
+        let date = element.replace(";", "");
+        list[index] = new Date(date);
+      });
+      console.log(dates);
+      $(`#editshowform${this.show._id} .row` + " .date").datepicker(
+        "setDates",
+        dates
+      );
       // $('.date').datepicker('show')
     },
-    deleteticket (TicketType) {
+    deleteticket(TicketType) {
       swal({
         title: `Do you want to delete ${TicketType} ?`,
         text: "You won't be able to revert this!",
-        type: 'warning',
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
         confirmButtonText: `Yes, delete!`
-      })
-        .then((result) => {
-          if (result.value) {
-            this.show.Ticketdetails = _.without(this.show.Ticketdetails, _.findWhere(this.show.Ticketdetails, {
+      }).then(result => {
+        if (result.value) {
+          this.show.Ticketdetails = _.without(
+            this.show.Ticketdetails,
+            _.findWhere(this.show.Ticketdetails, {
               TicketType: TicketType
-            }))
-            swal(
-              'Deleted!',
-              `Ticket Type:  ${TicketType} has been deleted.`,
-              'success'
-            )
-          }
-        })
+            })
+          );
+          swal(
+            "Deleted!",
+            `Ticket Type:  ${TicketType} has been deleted.`,
+            "success"
+          );
+        }
+      });
     },
-    addticketpriceEditModal () {
+    addticketpriceEditModal() {
       this.show.Ticketdetails.push({
-        'TicketType': $('#TicketTypeEditShow').val(),
-        'TicketPrice': $('#TicketPriceEditShow').val()
-      })
-      document.getElementById('ticketformEdit').reset()
+        TicketType: $("#TicketTypeEditShow").val(),
+        TicketPrice: $("#TicketPriceEditShow").val()
+      });
+      document.getElementById("ticketformEdit").reset();
     }
   },
-  mounted () {
-  // $('.date').datepicker({
-  //     container: '#editshow' + this.show._id
-  //   })
+  mounted() {
+    // $('.date').datepicker({
+    //     container: '#editshow' + this.show._id
+    //   })
   },
   watch: {
-    show: function (newVal, oldVal) {
-      this.ShowDate = moment(newVal.ShowDate, 'YYYY-MM-DD').format(
-        'MMMM Do YYYY'
-      )
-      this.ShowTime = moment(newVal.ShowTime, 'HH:mm').format('hh:mm a')
+    show: function(newVal, oldVal) {
+      this.ShowDate = moment(newVal.ShowDate, "YYYY-MM-DD").format(
+        "MMMM Do YYYY"
+      );
+      this.ShowTime = moment(newVal.ShowTime, "HH:mm").format("hh:mm a");
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -577,7 +591,7 @@ export default {
   transform: translateX(26px);
 }
 
-#date-icon{
+#date-icon {
   position: absolute;
   right: 35px;
   padding: 2px;
@@ -588,4 +602,29 @@ export default {
   padding-right: 40px;
   outline: none;
 }
+
+.left{
+  float: left;
+  margin-left: -20px;
+}
+
+.btn-width{
+  margin-left:10px
+}
+
+.p_u-mobile{
+margin-left:0px;
+}
+.btn-mobile{
+  margin-left: 30px;
+}
+@media only screen and (max-width: 420px) {
+.btn-mobile{
+    margin-left: 20px;
+}
+.p_u-mobile{
+  margin-left: -40px;
+}
+}
+
 </style>

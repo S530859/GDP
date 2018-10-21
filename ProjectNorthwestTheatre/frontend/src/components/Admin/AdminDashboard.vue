@@ -5,7 +5,7 @@
         <i class="fas fa-plus"></i>
       </button>
     </div> -->
-    <div class="row col-sm-12 ">
+    <div class="row col-sm-12  wi">
       <div class="fixed bg">
       </div>
                <div class=" offset-sm-6 col-sm-3 fixed">
@@ -378,7 +378,7 @@ export default {
 <style scoped>
 .fixed{
     position: fixed;
-    z-index: 100;
+    z-index: 2;
 }
 
 .down{
@@ -394,6 +394,38 @@ export default {
    /* border-bottom: 5px solid rgba(4, 224, 151, 0.521); */
      /* border-bottom-left-radius: 50px ; */
      box-shadow: 0px 10px 5px #f6f4ef;
+}
+
+.heading{
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+.heading{
+  font-size: 20px;
+}
+}
+
+.wi{
+  width: 100%;
+}
+
+.m-3{
+  margin: 10px;
+}
+@media only screen and (max-width: 420px) {
+.wi{
+  /* width: 126%; */
+  width: 400px;
+  /* padding-left: -50px; */
+  margin-left:-40px;
+ 
+  /* margin-right:-40px; */
+}
+
+.m-3{
+  margin: 10px;
+}
 }
 
 </style>

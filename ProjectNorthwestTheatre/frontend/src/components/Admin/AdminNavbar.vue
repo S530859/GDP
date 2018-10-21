@@ -6,8 +6,8 @@
             <a href="" data-target="#sidebar" data-toggle="collapse" class="d-md-none" id="show_content">
                 <i class="fa fa-bars"></i>
             </a>
-            <router-link class="navbar-brand tex " to="/admin/dashboard"><h1>Theatre Northwest</h1></router-link>
-            <button class="btn white_green px-4" @click="logout()" v-if="login"><span class="mr-2"><i class="fas fa-sign-out-alt"></i></span>Logout</button>
+            <router-link class="navbar-brand tex " to="/admin/dashboard"><h1 class="heading">Theatre Northwest</h1></router-link>
+            <button id="logB" class="btn white_green px-4 d-none d-md-block d-lg-block d-xl-block" @click="logout()" v-if="login"><span class="mr-2"><i class="fas fa-sign-out-alt"></i></span>Logout</button>
         </nav>
     </div>
     <div id="adminnavbar" class="row">
@@ -19,7 +19,7 @@
                         <span class="mr-2"><i class="fas fa-home"></i></span>Home</router-link>
                   </li>
                   <li class="nav-item my-2">
-                      <button class="btn white_green btn-block" @click="addshowevent()">
+                      <button class="btn white_green btn-block " @click="addshowevent()">
                         <span class="mr-2"><i class="fas fa-plus-circle"></i> </span>
                         Add Show </button>
                   </li>
@@ -39,9 +39,13 @@
                       <router-link to="/admin/addsection" class="btn white_green btn-block">
                       <span class="mr-2"><i class="fas fa-plus"></i></span>Add Section</router-link>
                   </li>
-                  <li class="nav-item my-2">
+                  <li class="nav-item my-2 ">
                     <router-link to="/admin/cancelticket" class="btn white_green btn-block">
                     <span class="mr-2"><i class="fas fa-ban"></i> CancelTicket</span></router-link>
+                </li>
+                <li id="logS" class="nav-item my-2 d-md-none d-lg-none d-xl-none " @click="logout()" v-if="login">
+                    <router-link to="" class="btn white_green btn-block">
+                    <span class="mr-2"><i class="fas fa-location"></i> Logout</span></router-link>
                 </li>
                 </ul>
             </div>
@@ -447,8 +451,22 @@ export default {
 }
 #sidebar{
   padding-left: 0px;
+  z-index: 10;
 }
 ul{
   padding-left: 10px;
+}
+.heading{
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+.heading{
+  font-size: 20px;
+}
+}
+.wrap{
+  overflow-wrap: break-word;
+   word-break: break-all;
 }
 </style>
