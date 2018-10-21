@@ -16,7 +16,7 @@ var cors = require('cors')
 let mongoose = require('mongoose')
 
 // view engine setup
-app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.use(express.static(path.join(__dirname, 'frontend/dist/')));
 app.set('views', path.join(__dirname, 'frontend/dist'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
