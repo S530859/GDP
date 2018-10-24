@@ -33,6 +33,7 @@ let addShow = (req, res, next) => {
 
 module.exports.addShow = addShow
 
+// This method deletes the show specified
 let deleteShow = (req, res, next) => {
     ShowModel.findByIdAndRemove(req.body.id, function (err, Show) {
         if (err || !Show) return res.status(400).send('Cannot Delete, Show not found')
