@@ -39,7 +39,7 @@
             <div class="row justify-content-around m-3 mar rounded  bg-light">
               <!-- image column -->
               <div class="col-lg align-self-center" id="imagediv">
-                <img :src="'http://localhost:3000/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
+                <img :src="'/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
               </div>
               <!-- image column end -->
               <!-- details of the show -->
