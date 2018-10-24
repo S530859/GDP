@@ -72,6 +72,8 @@ let SendMail = async function (req,res,next) {
     }
 module.exports.SendMail = SendMail
 
+
+//start a cron job -- testing jenkins
 let startjob = function() {
     console.log('cron job started')
     const job = new cronJob('1 0 0 */1 * *', function(){
