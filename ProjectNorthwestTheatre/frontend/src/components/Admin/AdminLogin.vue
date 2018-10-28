@@ -4,7 +4,7 @@
         <div class="col-sm-6 d-none d-md-block d-lg-block d-xl-block">
            <img class="mb-4 w-50" src="../../assets/logoproject.jpg" alt="">
         </div>
-         <div class="col-sm-6 align-self-center">
+         <div class="col-sm-6 align-self-center" v-if="forgotclicked">
             <div class="card text-white w-100 mb-3" style="max-width: 24rem;">
                <div class="alert alert-danger alert-dismissible fade" role="alert" :class="{ 'd-none': !alert, show: alert}">
                 Incorrect username or password.
@@ -16,7 +16,7 @@
                 <h1 class="heading">  Login </h1>
                </div>
                 <div class="card-body bg-light">
-                  <form class="form-signin " @submit.prevent = "formsubmit">
+                  <form class="form-signin" @submit.prevent = "formsubmit">
                     <div class="mar">
                         <label for="inputEmail" class="sr-only mar">Email address</label>
                   <input type="text" v-model="formdata.Username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
@@ -25,8 +25,35 @@
                      <label for="inputPassword" class="sr-only">Password</label>
                   <input type="password" id="inputPassword" v-model="formdata.Password" class="form-control" placeholder="Password" required>
                   </div>
-                 
+                  <div class="resetpassword">
+                      <p class="float-right text-primary" @click="resetclicked">Reset Password?</p>
+                  </div>
+
                   <button class="btn btn-lg btn-success btn-block mt-4" type="submit" >Login</button>
+              </form>
+              </div>
+            </div>
+        </div>
+         <div class="col-sm-6 align-self-center" v-else>
+            <div class="card text-white w-100 mb-3" style="max-width: 24rem;">
+               <div class="alert alert-danger alert-dismissible fade" role="alert" :class="{ 'd-none': !alert, show: alert}">
+                Incorrect username
+                <button type="button" class="close" aria-label="Close" @click="closealert()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header bg-success display-4">
+                <h1 class="heading"> Reset Password </h1>
+               </div>
+                <div class="card-body bg-light">
+                  <form class="form-signin" @submit.prevent = "resetpasswordsubmit">
+                    <div class="mar">
+                        <label for="inputEmail" class="sr-only mar">Email address</label>
+                         <input type="text" v-model="formdata.Username" id="inputEmail" class="form-control" 
+                          placeholder="Email address" required autofocus>
+                    </div>
+                  <button class="btn btn-lg btn-danger btn-block mt-4" type="submit" >Get My Reset Link</button>
+                  <button class="btn btn-lg btn-success btn-block mt-4" type="button" @click="loginclicked" >Login</button>
               </form>
               </div>
             </div>
@@ -42,37 +69,60 @@
 
 <script>
 export default {
-  name: 'AdminLogin',
-  data () {
+  name: "AdminLogin",
+  data() {
     return {
       alert: false,
       formdata: {
-        Username: '',
-        Password: ''
-      }
-    }
+        Username: "",
+        Password: ""
+      },
+      forgotclicked: true
+    };
   },
   methods: {
-    formsubmit () {
-      var _this = this
+    formsubmit() {
+      var _this = this;
       /* Saivarun Illendula - Added API Calls */
-      /* global axios url */
+      /* global axios url swal */
       axios
-        .post(url + '/authenticate', this.formdata)
-        .then(function (response) {
-          window.localStorage.setItem('AccessToken', response.data.token)
-          _this.$router.push('/admin/dashboard')
+        .post(url + "/authenticate", this.formdata)
+        .then(function(response) {
+          window.localStorage.setItem("AccessToken", response.data.token);
+          _this.$router.push("/admin/dashboard");
         })
-        .catch(function (error) {
-          _this.alert = true
-          console.log(error)
-        })
+        .catch(function(error) {
+          _this.alert = true;
+          console.log(error);
+        });
     },
-    closealert () {
-      this.alert = false
+    closealert() {
+      this.alert = false;
+    },
+    resetclicked () {
+      this.forgotclicked = ! this.forgotclicked
+    },
+    loginclicked () {
+      this.forgotclicked = ! this.forgotclicked
+    },
+    resetpasswordsubmit () {
+      var _this = this;
+      axios.post( url + '/resetpassword', this.formdata)
+      .then(function(response) {
+         console.log(response)
+          swal(
+            response.data,
+            'Please Check Your Email for More Details',
+            'success'
+          )
+        })
+      .catch(function(error) {
+          _this.alert = true;
+          console.log(error);
+        });
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -119,37 +169,40 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.heading{
+.heading {
   font-size: 30px;
 }
 
 @media only screen and (max-width: 600px) {
-.heading{
-  font-size: 25px;
-  margin: -10px;
-  letter-spacing: 4px;
-  
-}
-.card-header{
-  height: 35px;
-}
-.mar{
-  padding-bottom: 20px;
-}
-.form-signin {
-  padding: 1px;
-  /* margin: auto; */
-}
-.align-self-center {
-    -ms-flex-item-align: center!important;
-    align-self: center!important;
+  .heading {
+    font-size: 25px;
+    margin: -10px;
+    letter-spacing: 4px;
+  }
+  .card-header {
+    height: 35px;
+  }
+  .mar {
+    padding-bottom: 20px;
+  }
+  .form-signin {
     padding: 1px;
-}
-.card{
-  border: 1px solid #28a745;
-  margin: 2px;
-}
+    /* margin: auto; */
+  }
+  .align-self-center {
+    -ms-flex-item-align: center !important;
+    align-self: center !important;
+    padding: 1px;
+  }
+  .card {
+    border: 1px solid #28a745;
+    margin: 2px;
+  }
 }
 
-
+.float-right {
+  text-decoration: none;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
 </style>

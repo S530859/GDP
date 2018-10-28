@@ -9,6 +9,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.config.productionTip = false
 window.moment = require('moment')
 window.axios = require('axios')
+window.axios.defaults.headers.common['token'] = window.localStorage.getItem('AccessToken') ? window.localStorage.getItem('AccessToken') : '' 
 window.url = url.url
 window.userurl = url.userurl
 window.swal = require('sweetalert2')

@@ -16,6 +16,7 @@ import UserShow from '../components/User/UserShow.vue'
 import User from '../components/User/User.vue'
 import CancelTicket from '../components/Admin/CancelTicket.vue'
 import UserDirections from '../components/User/UserDirections.vue'
+import ResetPassword from '../components/Admin/ResetPassword.vue'
 
 Vue.use(Router)
 
@@ -103,6 +104,11 @@ export default new Router({
           name: 'cancelticket',
           beforeEnter: Guard.auth,
           component: CancelTicket
+        },
+        {
+          path: 'resetpassword',
+          name: 'resetpassword',
+          component: ResetPassword
         }
       ]
     },

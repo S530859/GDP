@@ -27,6 +27,10 @@ let tokenAuthentication = (req, res, next) => {
             if(!user){
                return res.status(401).send('User Does not exist')
             }
+            if(!req.body.Password){
+              req.session.user = user
+              next()
+            }
             user.comparePassword(req.body.Password, function (err, isMatch) {
               if (err) res.status(400).send("Error while comparing password"); 
               if(isMatch) {
@@ -43,7 +47,21 @@ let tokenAuthentication = (req, res, next) => {
                
              })
       })
-    } else {
+    } else if(req.body.Username){
+        adminModel.findOne({ Username: req.body.Username }, function (err, user) {
+          if (err) res.status(401).send("Error while getting user");
+              if(!user){
+                 return res.status(401).send('User Does not exist')
+              }
+                req.session.user = user
+                if(req.path === "/resetpassword"){
+                  next()
+                }else{
+                  res.status(401).send("Unauthorized")
+                }
+
+      })
+    }else{
       res.status(401).send("Unauthorized")
     }
   }

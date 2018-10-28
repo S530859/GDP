@@ -56,4 +56,6 @@ router.post('/deletesection', SectionController.deleteSection)
 
 router.post('/sendemail', MailController.SendMail)
 
+router.post('/resetpassword', MailController.SendResetEmail)
+
 module.exports = router
