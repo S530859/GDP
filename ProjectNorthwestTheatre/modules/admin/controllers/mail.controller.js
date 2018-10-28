@@ -8,6 +8,7 @@ const show = require('../../../models/Show.model')
 const moment = require('moment')
 const theatreappreciationstudents = require('../../../models/TheatreAppreciationStudent.model')
 const audience = require('../../../models/Audience.model')
+let jwt = require('jsonwebtoken')
 let ObjectId = require('mongoose').Types.ObjectId
 let show_id
 
@@ -27,8 +28,12 @@ let MailServer = () => {
 let SendResetEmail = (req,res) => {
     let transporter = MailServer()
     let admin = req.session.user
+    let data = {
+        Username: admin.Username
+    }
+    let token = jwt.sign(data, config.tokensecret, { expiresIn: '6h' })
     let email_subject = "test"
-    let email_body = "Testing"
+    let email_body = "http://localhost:3000/Theatre/admin/resetpassword?token=" + token
     ejs.renderFile( path.join(__dirname, "../../../views/mail.ejs"),
             { name: `${admin.Username}`, content: email_body },
             function (err, data) {

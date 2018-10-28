@@ -4,7 +4,35 @@
         <div class="col-sm-6 d-none d-md-block d-lg-block d-xl-block">
            <img class="mb-4 w-50" src="../../assets/logoproject.jpg" alt="">
         </div>
-         <div class="col-sm-6 align-self-center" v-if="forgotclicked">
+          <div class="col-sm-6 align-self-center" v-if="resetpasswordpage">
+            <div class="card text-white w-100 mb-3" style="max-width: 24rem;">
+               <div class="alert alert-danger alert-dismissible fade" role="alert" :class="{ 'd-none': !alert, show: alert}">
+                Link Expired
+                <button type="button" class="close" aria-label="Close" @click="closealert()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header bg-success display-4">
+                <h1 class="heading"> Reset Password </h1>
+               </div>
+                <div class="card-body bg-light">
+                  <form class="form-signin" @submit.prevent = "confirmresetpasswordsubmit">
+                    <div class="mar">
+                        <label for="Password" class="sr-only mar">Password</label>
+                         <input type="text" v-model="formdata.Password" id="Password" class="form-control" 
+                          placeholder="Password" required autofocus>
+                    </div>
+                    <div class="mar">
+                        <label for="Confirm_Password" class="sr-only mar">Confirm Password</label>
+                         <input type="text" v-model="formdata.Password" id="Confirm_Password" class="form-control" 
+                          placeholder="Confirm Password" required autofocus>
+                    </div>
+                  <button class="btn btn-lg btn-danger btn-block mt-4" type="submit">Reset Password</button>
+              </form>
+              </div>
+            </div>
+        </div>
+         <div class="col-sm-6 align-self-center" v-else-if="forgotclicked">
             <div class="card text-white w-100 mb-3" style="max-width: 24rem;">
                <div class="alert alert-danger alert-dismissible fade" role="alert" :class="{ 'd-none': !alert, show: alert}">
                 Incorrect username or password.
@@ -77,12 +105,19 @@ export default {
         Username: "",
         Password: ""
       },
-      forgotclicked: true
+      forgotclicked: true,
+      resetpasswordpage: false
     };
+  },
+  mounted () {
+    if(this.$route.name === "ResetPassword"){
+        this.resetpasswordpage = true
+        window.localStorage.setItem('AccessToken', this.$route.query.token)
+      }
   },
   methods: {
     formsubmit() {
-      var _this = this;
+      let _this = this;
       /* Saivarun Illendula - Added API Calls */
       /* global axios url swal */
       axios
@@ -106,7 +141,7 @@ export default {
       this.forgotclicked = ! this.forgotclicked
     },
     resetpasswordsubmit () {
-      var _this = this;
+      let _this = this;
       axios.post( url + '/resetpassword', this.formdata)
       .then(function(response) {
          console.log(response)
@@ -120,9 +155,25 @@ export default {
           _this.alert = true;
           console.log(error);
         });
+    },
+    confirmresetpasswordsubmit () {
+      let _this = this;
+      axios.post( url + '/confirmresetpassword', { Password: this.formdata.Password } )
+      .then(function(response) {
+         console.log(response)
+          swal(
+            response.data,
+            'Now you can login with Updated Credentials',
+            'success'
+          )
+        })
+      .catch(function(error) {
+          _this.alert = true;
+          console.log(error);
+        });
     }
   }
-};
+}
 </script>
 
 <style scoped>

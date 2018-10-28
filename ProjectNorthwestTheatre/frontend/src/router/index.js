@@ -107,8 +107,8 @@ export default new Router({
         },
         {
           path: 'resetpassword',
-          name: 'resetpassword',
-          component: ResetPassword
+          name: 'ResetPassword',
+          component: AdminLogin
         }
       ]
     },

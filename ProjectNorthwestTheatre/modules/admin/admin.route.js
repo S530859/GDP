@@ -58,4 +58,8 @@ router.post('/sendemail', MailController.SendMail)
 
 router.post('/resetpassword', MailController.SendResetEmail)
 
+router.get('/resetpassword', AdminController.GetResetPasswordView)
+
+router.post('/confirmresetpassword', AdminController.ResetPassword)
+
 module.exports = router
