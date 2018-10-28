@@ -275,9 +275,6 @@ export default {
       /* global axios moment _ swal */
       axios({
         method: 'get',
-        headers: {
-          token: window.localStorage.getItem('AccessToken')
-        },
         url: url + '/sectionlist'
       })
         .then(function (response) {
@@ -292,9 +289,6 @@ export default {
         })
       axios({
         method: 'get',
-        headers: {
-          token: window.localStorage.getItem('AccessToken')
-        },
         url: url + '/showlist'
       })
         .then(function (response) {
@@ -359,14 +353,9 @@ export default {
       this.showdescriptionmodal()
     }.bind(this))
   },
-  watch: {
-    showlist: function () {
-      console.log('changed')
-    }
-  },
-
   computed: {
     updatedShowList: function () {
+      console.log(this.showlist)
       return this.showlist.filter(show => {
         return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
       })

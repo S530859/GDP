@@ -21,9 +21,14 @@ import ResetPassword from '../components/Admin/ResetPassword.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/Theatre/admin/resetpassword',
+      redirect: { name: 'ResetPassword' }
+    },
+    {
+      path: '/Theatre',
       name: 'HomePage',
       redirect: { name: 'Userdashboard' }
     },

@@ -166,6 +166,10 @@ export default {
             'Now you can login with Updated Credentials',
             'success'
           )
+          _this.forgotclicked = true
+          _this.resetpasswordpage = false
+          _this.formdata.Password = ""
+          _this.$router.push({ name: 'AdminLogin' })
         })
       .catch(function(error) {
           _this.alert = true;
