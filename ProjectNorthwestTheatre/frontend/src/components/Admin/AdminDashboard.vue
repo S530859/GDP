@@ -408,7 +408,7 @@ export default {
   width: 400px;
   /* padding-left: -50px; */
   margin-left:-40px;
- 
+
   /* margin-right:-40px; */
 }
 

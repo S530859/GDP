@@ -9,15 +9,15 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.config.productionTip = false
 window.moment = require('moment')
 window.axios = require('axios')
-window.axios.defaults.headers.post['Content-Type'] = 'application/json';
+window.axios.defaults.headers.post['Content-Type'] = 'application/json'
 window.axios.interceptors.request.use(function (config) {
-      if(localStorage.getItem('AccessToken')){
-        config.headers.token = localStorage.getItem('AccessToken')
-      }
-      return config;
-    }, function (error) {
-      return Promise.reject(error);
-    })
+  if (localStorage.getItem('AccessToken')) {
+    config.headers.token = localStorage.getItem('AccessToken')
+  }
+  return config
+}, function (error) {
+  return Promise.reject(error)
+})
 window.url = url.url
 window.userurl = url.userurl
 window.swal = require('sweetalert2')

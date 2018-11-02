@@ -19,12 +19,12 @@
                   <form class="form-signin" @submit.prevent = "confirmresetpasswordsubmit">
                     <div class="mar">
                         <label for="Password" class="sr-only mar">Password</label>
-                         <input type="text" v-model="formdata.Password" id="Password" class="form-control" 
+                         <input type="text" v-model="formdata.Password" id="Password" class="form-control"
                           placeholder="Password" required autofocus>
                     </div>
                     <div class="mar">
                         <label for="Confirm_Password" class="sr-only mar">Confirm Password</label>
-                         <input type="text" v-model="formdata.Password" id="Confirm_Password" class="form-control" 
+                         <input type="text" v-model="formdata.Password" id="Confirm_Password" class="form-control"
                           placeholder="Confirm Password" required autofocus>
                     </div>
                   <button class="btn btn-lg btn-danger btn-block mt-4" type="submit">Reset Password</button>
@@ -77,7 +77,7 @@
                   <form class="form-signin" @submit.prevent = "resetpasswordsubmit">
                     <div class="mar">
                         <label for="inputEmail" class="sr-only mar">Email address</label>
-                         <input type="text" v-model="formdata.Username" id="inputEmail" class="form-control" 
+                         <input type="text" v-model="formdata.Username" id="inputEmail" class="form-control"
                           placeholder="Email address" required autofocus>
                     </div>
                   <button class="btn btn-lg btn-danger btn-block mt-4" type="submit" >Get My Reset Link</button>
@@ -97,70 +97,70 @@
 
 <script>
 export default {
-  name: "AdminLogin",
-  data() {
+  name: 'AdminLogin',
+  data () {
     return {
       alert: false,
       formdata: {
-        Username: "",
-        Password: ""
+        Username: '',
+        Password: ''
       },
       forgotclicked: true,
       resetpasswordpage: false
-    };
+    }
   },
   mounted () {
-    if(this.$route.name === "ResetPassword"){
-        this.resetpasswordpage = true
-        window.localStorage.setItem('AccessToken', this.$route.query.token)
-      }
+    if (this.$route.name === 'ResetPassword') {
+      this.resetpasswordpage = true
+      window.localStorage.setItem('AccessToken', this.$route.query.token)
+    }
   },
   methods: {
-    formsubmit() {
-      let _this = this;
+    formsubmit () {
+      let _this = this
       /* Saivarun Illendula - Added API Calls */
       /* global axios url swal */
       axios
-        .post(url + "/authenticate", this.formdata)
-        .then(function(response) {
-          window.localStorage.setItem("AccessToken", response.data.token);
-          _this.$router.push("/admin/dashboard");
+        .post(url + '/authenticate', this.formdata)
+        .then(function (response) {
+          window.localStorage.setItem('AccessToken', response.data.token)
+          _this.$router.push('/admin/dashboard')
         })
-        .catch(function(error) {
-          _this.alert = true;
-          console.log(error);
-        });
+        .catch(function (error) {
+          _this.alert = true
+          console.log(error)
+        })
     },
-    closealert() {
-      this.alert = false;
+    closealert () {
+      this.alert = false
     },
     resetclicked () {
-      this.forgotclicked = ! this.forgotclicked
+      this.forgotclicked = !this.forgotclicked
     },
     loginclicked () {
-      this.forgotclicked = ! this.forgotclicked
+      this.forgotclicked = !this.forgotclicked
     },
     resetpasswordsubmit () {
-      let _this = this;
-      axios.post( url + '/resetpassword', this.formdata)
-      .then(function(response) {
-         console.log(response)
+      let _this = this
+      axios.post(url + '/resetpassword', this.formdata)
+        .then(function (response) {
+          console.log(response)
           swal(
             response.data,
             'Please Check Your Email for More Details',
             'success'
           )
         })
-      .catch(function(error) {
-          _this.alert = true;
-          console.log(error);
-        });
+        .catch(function (error) {
+          _this.alert = true
+          console.log(error)
+        })
     },
     confirmresetpasswordsubmit () {
-      let _this = this;
-      axios.post( url + '/confirmresetpassword', { Password: this.formdata.Password } )
-      .then(function(response) {
-         console.log(response)
+      let _this = this
+      axios.post(url + '/confirmresetpassword', { Password: this.formdata.Password })
+        .then(function (response) {
+          console.log(response)
           swal(
             response.data,
             'Now you can login with Updated Credentials',
@@ -168,13 +168,13 @@ export default {
           )
           _this.forgotclicked = true
           _this.resetpasswordpage = false
-          _this.formdata.Password = ""
+          _this.formdata.Password = ''
           _this.$router.push({ name: 'AdminLogin' })
         })
-      .catch(function(error) {
-          _this.alert = true;
-          console.log(error);
-        });
+        .catch(function (error) {
+          _this.alert = true
+          console.log(error)
+        })
     }
   }
 }
