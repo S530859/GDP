@@ -6,3 +6,60 @@ body {
 a {
   color: #00B7FF;
 }
+
+.c {
+  color: rgb(94, 92, 92);
+  text-align: center;
+  font-size: 3vw;
+}
+
+.border_mail_outer {
+  padding: 10px;
+  background-color: lightgray
+}
+
+.border_mail {
+  border: 8px solid darkgray;
+  border-radius: 20px;
+  background-color: rgb(241, 240, 240);
+}
+
+.padding_mail {
+  padding: 10px;
+  font-size: 2vw;
+  box-shadow: 2px 3px 3px 1px #888888;
+
+}
+
+.mail_header {
+  background-color: rgb(255, 255, 255);
+  margin: 10px;
+}
+
+
+.img_mail_in {
+  max-width: 100%;
+  height: 100px;
+}
+
+@media only screen and (max-width: 850px) {
+  .c {
+
+    font-size: 30px;
+  }
+
+  .padding_mail {
+    font-size: 20px;
+  }
+
+  .border_mail {
+    border: 4px solid darkgray;
+    border-radius: 10px;
+
+  }
+
+  .border_mail_outer {
+    padding: 2px;
+    background-color: lightgray
+  }
+}
