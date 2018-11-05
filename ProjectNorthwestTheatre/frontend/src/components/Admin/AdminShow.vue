@@ -136,13 +136,13 @@
       </div>
     <!-- card -->
     <!-- Modal -->
-    <div class="modal fade" :id="'editshow'+show._id" tabindex="-1" role="dialog" :aria-labelledby="'editshow'+show._id" aria-hidden="true">
+    <div class="modal animated" :id="'editshow'+show._id" tabindex="-1" role="dialog" :aria-labelledby="'editshow'+show._id" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">Edit Show Details:</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" @click="closeEditShowModal">&times;</button>
           </div>
           <!-- Modal body -->
           <div class="modal-body">
@@ -279,7 +279,16 @@ export default {
       /* global $ */
       console.log("editclicked", this.show._id);
       $("#editshow" + this.show._id).modal("show");
+      $("#editshow" + this.show._id).addClass('zoomIn')
       this.showdatepicker();
+    },
+    closeEditShowModal() {
+       $("#editshow" + this.show._id).removeClass('zoomIn')
+      $("#editshow" + this.show._id).addClass('zoomOut')
+      setTimeout(function(){ 
+        $("#editshow" + this.show._id).modal("hide")    
+        $("#editshow" + this.show._id).removeClass('zoomOut')
+        }, 100)
     },
     editshow() {
       console.log("editclicked");
