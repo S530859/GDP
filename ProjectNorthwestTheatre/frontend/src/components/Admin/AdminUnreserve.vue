@@ -51,42 +51,42 @@
     </b-row>
 
     <!-- Info modal -->
-    <b-modal id="modalInfo"  hide-footer @hide="resetModal" :title="modalInfo.title">           
-    <div class="d-block text-center">
+    <b-modal id='modalInfo'  hide-footer @hide="resetModal" :title="modalInfo.title">
+    <div class='d-block text-center'>
         <b> Name: {{ modalInfo.content.FirstName }},{{ modalInfo.content.LastName }} <br>
                 Email Address:  {{ modalInfo.content.EmailAddress }} </b>
     </div>
-    <b-btn class="mt-3" variant="outline-danger" block @click="unreserveTicket">Unreserve Ticket</b-btn>
+    <b-btn class='mt-3' variant='outline-danger' block @click="unreserveTicket">Unreserve Ticket</b-btn>
     </b-modal>
 
   </b-container>
 </template>
 <script>
 export default {
-  name: "unreserve",
-  data() {
+  name: 'unreserve',
+  data () {
     return {
       items: this.shows,
       fields: [
         {
-          key: "EmailAddress",
-          label: "EmailAddress",
+          key: 'EmailAddress',
+          label: 'EmailAddress',
           sortable: true,
-          sortDirection: "desc"
+          sortDirection: 'desc'
         },
         {
-          key: "LastName",
-          label: "LastName",
+          key: 'LastName',
+          label: 'LastName',
           sortable: true,
-          class: "text-center"
+          class: 'text-center'
         },
         {
-          key: "FirstName",
-          label: "FirstName",
+          key: 'FirstName',
+          label: 'FirstName',
           sortable: true,
-          class: "text-center"
+          class: 'text-center'
         },
-        { key: "actions", label: "Actions" }
+        { key: 'actions', label: 'Actions' }
       ],
       currentPage: 1,
       perPage: 5,
@@ -94,41 +94,41 @@ export default {
       pageOptions: [5, 10, 15],
       sortBy: null,
       sortDesc: false,
-      sortDirection: "asc",
+      sortDirection: 'asc',
       filter: null,
-      modalInfo: { title: "", content: "" }
-    };
+      modalInfo: { title: '', content: '' }
+    }
   },
   computed: {
-    sortOptions() {
+    sortOptions () {
       // Create an options list from our fields
       return this.fields.filter(f => f.sortable).map(f => {
-        return { text: f.label, value: f.key };
-      });
+        return { text: f.label, value: f.key }
+      })
     }
   },
   methods: {
-    info(item, index, button) {
-      console.log(`This is item = ${item}`);
-      this.modalInfo.title = `Please Check Details`;
-      this.modalInfo.content = item;
-      this.$root.$emit("bv::show::modal", "modalInfo", button);
+    info (item, index, button) {
+      console.log(`This is item = ${item}`)
+      this.modalInfo.title = `Please Check Details`
+      this.modalInfo.content = item
+      this.$root.$emit('bv::show::modal', 'modalInfo', button)
     },
-    resetModal() {
-      this.modalInfo.title = "";
-      this.modalInfo.content = "";
+    resetModal () {
+      this.modalInfo.title = ''
+      this.modalInfo.content = ''
     },
-    onFiltered(filteredItems) {
+    onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     }
   },
-  created() {
-    console.log(this.shows);
+  created () {
+    console.log(this.shows)
   },
-  props: ["shows"]
-};
+  props: ['shows']
+}
 </script>
 <style scoped>
 </style>

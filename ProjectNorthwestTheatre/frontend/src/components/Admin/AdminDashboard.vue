@@ -17,7 +17,7 @@
             </div>
 
     </div>
-    <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
+    <AdminShow class='down' v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
       </AdminShow>
     </div>
     <div class="modal" id="descriptionmodal" tabindex="-1" role="dialog">
@@ -223,10 +223,10 @@ export default {
     closeReserveTicketsModal () {
       $('#ReserveTickets.modal').removeClass('bounceIn')
       $('#ReserveTickets.modal').addClass('zoomOut')
-      setTimeout(function(){ 
-        $("#ReserveTickets").modal("hide")    
+      setTimeout(function () {
+        $('#ReserveTickets').modal('hide')
         $('#ReserveTickets.modal').removeClass('zoomOut')
-        }, 100)
+      }, 100)
     },
     saveEmailContent () {
 
