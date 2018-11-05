@@ -137,7 +137,7 @@
     <!-- card -->
     <!-- Modal -->
     <div class="modal fade" :id="'editshow'+show._id" tabindex="-1" role="dialog" :aria-labelledby="'editshow'+show._id" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
@@ -148,80 +148,76 @@
           <div class="modal-body">
             <form @submit.prevent="editshow" :id="'editshowform'+show._id">
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Show Name:</label>
-                <input class="col-sm-7 form-control" type="text" placeholder="Show Name" id="showname" :value="show.ShowTitle" name="ShowTitle" required>
+                <label class="col-sm-2 offset-sm-1 form-label py-2">Show Name:</label>
+                <input class="col-sm-2 form-control" type="text" placeholder="Show Name" id="showname" :value="show.ShowTitle" name="ShowTitle" required>
+                <label class="col-sm-2 offset-sm-1 form-label py-2">Playwright:</label>
+                <input class="col-sm-2 form-control" type="text" placeholder="Playwright" id="playwright" :value="show.ShowPlayWright" name="ShowPlayWright" required>
               </div>
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Playwright:</label>
-                <input class="col-sm-7 form-control" type="text" placeholder="Playwright" id="playwright" :value="show.ShowPlayWright" name="ShowPlayWright" required>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-4 form-label">Description:</label>
+                <label class="col-sm-2 py-2 offset-sm-1 form-label">Description:</label>
                 <textarea class="col-sm-7 form-control" type="text" placeholder="Description of Show" id="description" :value="show.ShowDescription" name="ShowDescription" required>
                 </textarea>
               </div>
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Show Date:</label>
-                <input type="text" class="date form-control col-sm-7" name="ShowDate" id="datepicker-input"
+                <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Time:</label>
+                 <input class="col-sm-2 form-control" type="time" :value="show.ShowTime" id="showtime" name="ShowTime" required>
+                <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Date:</label>
+                <input type="text" class="date form-control col-sm-2" name="ShowDate" id="datepicker-input"
                 data-date-multidate="true" data-date-multidateSeparator="; " :data-date-container=" '#editshow' + show._id"
                 required>
                     <span @click="showdatepicker()" id="date-icon" class="col-sm-1">
                       <i class="fas fa-calendar-alt fa-2x" aria-hidden="true" ></i>
                     </span>
               </div>
-              <div class="form-group row">
-                <label class="col-sm-4 form-label">Show Time:</label>
-                 <input class="col-sm-7 form-control" type="time" :value="show.ShowTime" id="showtime" name="ShowTime" required>
-              </div>
-                <div class="form-group row">
-                  <label class="col-sm-4 form-label">Total Seats:</label>
-                  <input class="col-sm-7 form-control" type="number" placeholder="Total No. of Tickets" id="totalseats" :value="show.NumberOfTickets" name="NumberOfTickets" min="1" required>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-4 form-label">Venue:</label>
-                  <input class="col-sm-7 form-control" type="text" placeholder="Venue" id="showvenue" :value="show.ShowVenue" name="ShowVenue" required>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-4 form-label">Show Rating:</label>
-                  <select id="inputState" class="form-control col-sm-7" required :value="show.ShowRating" name="ShowRating" >
+               <div class="form-group row">
+                  <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Rating:</label>
+                  <select id="inputState" class="form-control col-sm-2" required :value="show.ShowRating" name="ShowRating" >
                     <option selected>Choose...</option>
                     <option>A</option>
                     <option>U/A</option>
                     <option>R</option>
                   </select>
-                </div>
-               <form @submit.prevent="addticketpriceEditModal()" id="ticketformEdit">
-                  <div class="form-group row">
-                    <label class="col-sm-4 form-label required">Ticket Type:</label>
-                    <input class="col-sm-6 form-control" type="text" placeholder="Ticket Type" id="TicketTypeEditShow" required>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 form-label required">Ticket Price:</label>
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">$</div>
-                      </div>
-                    <input class="col-sm-4 form-control" type="number" placeholder="Ticket Price" id="TicketPriceEditShow" min="1" required>
-                    <button class="btn col-sm-1.5 offset-sm-1" type="submit">Add</button>
-                  </div>
-                </form>
-
-                <div class="form-group row">
-                  <ol class="col-sm-8 offset-sm-2" name="ticketdetails" id="ticketdetails">
-                    <li v-for="ticket in show.Ticketdetails" :key="ticket.TicketType" style="height: 50px;vertical-align: middle">
-                      {{ ticket.TicketType }} - $ {{ ticket.TicketPrice }}
-                        <button type="button" class="btn rounded-circle float-right mx-2" id="delete" @click="deleteticket(ticket.TicketType)">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </li>
-                  </ol>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-4 form-label">Upload Image:</label>
-                  <div class="form-group col-sm-7">
+                  <label class="col-sm-2 py-2 offset-sm-1 form-label">Image:</label>
+                  <div class="form-group col-sm-2">
                     <input type="file" accept="image/*" class="form-control-file" id="InputFile" aria-describedby="fileHelp" :value="show.ShowImage" name="ShowImage" >
                     <small id="fileHelp" class="form-text text-muted"></small>
                   </div>
                 </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 py-2 offset-sm-1 form-label">Total Seats:</label>
+                  <input class="col-sm-2 form-control" type="number" placeholder="Total No. of Tickets" id="totalseats" :value="show.NumberOfTickets" name="NumberOfTickets" min="1" required>
+                  <label class="col-sm-2 py-2 offset-sm-1 form-label">Venue:</label>
+                  <input class="col-sm-2 form-control" type="text" placeholder="Venue" id="showvenue" :value="show.ShowVenue" name="ShowVenue" required>
+                </div>
+               <form @submit.prevent="addticketpriceEditModal()" id="ticketformEdit">
+                  <div class="form-group row">
+                    <label class="col-sm-2 py-2 offset-sm-1 form-label required">Ticket Type:</label>
+                    <input class="col-sm-2 form-control" type="text" placeholder="Ticket Type" id="TicketTypeEditShow" required>
+                    <label class="col-sm-2 py-2 offset-sm-1 form-label required">Ticket Price:</label>
+                      <div class="input-group-prepend" style="position: absolute;right: 235px;z-index:1">
+                        <div class="input-group-text py-0 my-0" style="height: 38px;">$</div>
+                      </div>
+                    <input class="col-sm-2 form-control" type="number" placeholder="Ticket Price" id="TicketPriceEditShow" min="1" required>
+                    <button class="btn col-sm-1 mx-1 py-0 my-0" style="height: 38px;" type="submit">Add</button>
+                  </div>
+                </form>
+              
+                <div class="form-group">
+                  <div name="ticketdetails" id="ticketdetails" class="row mx-5">
+                    <div class="column" v-for="(ticket, index) in show.Ticketdetails" :key="ticket.TicketType">
+                      <div class="row" style="margin-left: 0px;margin-right: 0px">
+                        <div  class="py-2" style="width: 60px">{{ index + 1 }}. </div>
+                        <div  class="py-2" style="width: 200px"> {{ ticket.TicketType }} - $ {{ ticket.TicketPrice }} </div>
+                        <div   style="width: 70px">  
+                            <button type="button" class="btn rounded-circle" id="delete" @click="deleteticket(ticket.TicketType)">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
                 <div class="form-group row">
                   <label class="col-sm-4 form-label">Publish:</label>
                     <label class="switch float-right form-group">
@@ -258,16 +254,19 @@ export default {
   props: ["show"],
   methods: {
     unreservetickets() {
-      let _this = this
+      let _this = this;
       axios
         .post(url + "/students", { show_id: this.show._id })
         .then(res => {
-          console.log(res)
-          _this.$router.push({ name: "unreserve", params: { shows: res.data } })
+          console.log(res);
+          _this.$router.push({
+            name: "unreserve",
+            params: { shows: res.data }
+          });
         })
         .catch(err => {
-          console.log(res)
-        })
+          console.log(res);
+        });
     },
     emitevent() {
       console.log(this.show);
@@ -610,7 +609,7 @@ export default {
 
 #date-icon {
   position: absolute;
-  right: 35px;
+  right: 110px;
   padding: 2px;
   display: flex;
   align-items: center;
