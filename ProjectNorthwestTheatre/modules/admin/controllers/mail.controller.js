@@ -40,7 +40,7 @@ let SendResetEmail = (req,res) => {
                 if (err) {
                     console.error(err)
                 } else {
-                    // setup email data with unicode symbols
+                    // setunpp email data with unicode symbols
                     let mailOptions = {
                         from: '"Northwest Theatre" <s530859@nwmissouri.edu>', // sender address
                         to: admin.Email, // list of receivers
