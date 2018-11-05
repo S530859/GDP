@@ -6,6 +6,7 @@ let fs = require('fs')
 let path = require('path')
 let StudentModel = require('../../../models/TheatreAppreciationStudent.model')
 let GeneralAudienceModel = require('../../../models/Audience.model')
+let ObjectId = require('mongoose').Types.ObjectId
 
 let addShow = (req, res, next) => {
     req.body.Ticketdetails = JSON.parse(req.body.Ticketdetails)
@@ -158,7 +159,7 @@ let reserveTickets = (req,res) => {
 module.exports.reserveTickets = reserveTickets
 
 
-let getAllStudentsForAShow = (req,res) => {
+let getAllStudentsForAShow = async (req,res) => {
     let students = await Promise.all([  StudentModel.find(
                                             { ShowID: new ObjectId(req.body.show_id) },
                                             ['EmailAddress', 'LastName','FirstName']
@@ -169,7 +170,7 @@ let getAllStudentsForAShow = (req,res) => {
                                         ).exec() 
                                     ])
         students = [ ...students[0], ...students[1]]
-        res.json(students)
+        return res.json(students)
 }
 
 module.exports.getAllStudentsForAShow = getAllStudentsForAShow

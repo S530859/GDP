@@ -220,7 +220,7 @@ export default {
     showdescriptionmodal () {
       $('#descriptionmodal').modal('show')
     },
-    async closeReserveTicketsModal () {
+    closeReserveTicketsModal () {
       $('#ReserveTickets.modal').removeClass('bounceIn')
       $('#ReserveTickets.modal').addClass('zoomOut')
       setTimeout(function(){ 
@@ -327,7 +327,7 @@ export default {
         })
         .post('/reserveTicket', reserveticketdata)
         .then(res => {
-          $('#ReserveTickets').removeClass('bounceIn').addClass('zoomOut')
+          this.closeReserveTicketsModal()
           swal('Congratualtions!', 'You have reserved a Seat', 'success')
           $('#ReserveTicketsAdmin')[0].reset()
           console.log('Ticket Reserved ' + res)

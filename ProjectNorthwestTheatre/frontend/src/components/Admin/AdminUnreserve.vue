@@ -22,7 +22,7 @@
     <!-- Main table element -->
     <b-table show-empty
              stacked="md"
-             :items="items"
+             :items="shows"
              :fields="fields"
              :current-page="currentPage"
              :per-page="perPage"
@@ -32,12 +32,13 @@
              :sort-direction="sortDirection"
              @filtered="onFiltered"
     >
-      <template slot="name" slot-scope="row">{{row.value.first}} {{row.value.last}}</template>
-      <template slot="isActive" slot-scope="row">{{row.value?'Yes :)':'No :('}}</template>
+      <!-- <template slot="EmailAddress" slot-scope="row">{{row.value}}</template>
+      <template slot="LastName" slot-scope="row">{{row.value}}</template>
+      <template slot="FirstName" slot-scope="row">{{row.value}}</template> -->
       <template slot="actions" slot-scope="row">
         <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
-        <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
-          Unreserve
+        <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger">
+         <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
         </b-button>
       </template>
 
@@ -50,65 +51,84 @@
     </b-row>
 
     <!-- Info modal -->
-    <b-modal id="modalInfo" @hide="resetModal" :title="modalInfo.title" ok-only>
-      <pre>{{ modalInfo.content }}</pre>
+    <b-modal id="modalInfo"  hide-footer @hide="resetModal" :title="modalInfo.title">           
+    <div class="d-block text-center">
+        <b> Name: {{ modalInfo.content.FirstName }},{{ modalInfo.content.LastName }} <br>
+                Email Address:  {{ modalInfo.content.EmailAddress }} </b>
+    </div>
+    <b-btn class="mt-3" variant="outline-danger" block @click="unreserveTicket">Unreserve Ticket</b-btn>
     </b-modal>
 
   </b-container>
 </template>
 <script>
-
 export default {
   name: "unreserve",
-  data () {
+  data() {
     return {
-      items: items,
+      items: this.shows,
       fields: [
-        { key: 'name', label: 'Person Full name', sortable: true, sortDirection: 'desc' },
-        { key: 'age', label: 'Person age', sortable: true, 'class': 'text-center' },
-        { key: 'isActive', label: 'is Active' },
-        { key: 'actions', label: 'Actions' }
+        {
+          key: "EmailAddress",
+          label: "EmailAddress",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "LastName",
+          label: "LastName",
+          sortable: true,
+          class: "text-center"
+        },
+        {
+          key: "FirstName",
+          label: "FirstName",
+          sortable: true,
+          class: "text-center"
+        },
+        { key: "actions", label: "Actions" }
       ],
       currentPage: 1,
       perPage: 5,
-      totalRows: items.length,
-      pageOptions: [ 5, 10, 15 ],
+      totalRows: this.shows.length,
+      pageOptions: [5, 10, 15],
       sortBy: null,
       sortDesc: false,
-      sortDirection: 'asc',
+      sortDirection: "asc",
       filter: null,
-      modalInfo: { title: '', content: '' }
-    }
+      modalInfo: { title: "", content: "" }
+    };
   },
   computed: {
-    sortOptions () {
+    sortOptions() {
       // Create an options list from our fields
-      return this.fields
-        .filter(f => f.sortable)
-        .map(f => { return { text: f.label, value: f.key } })
+      return this.fields.filter(f => f.sortable).map(f => {
+        return { text: f.label, value: f.key };
+      });
     }
   },
   methods: {
-    info (item, index, button) {
-      this.modalInfo.title = `Row index: ${index}`
-      this.modalInfo.content = JSON.stringify(item, null, 2)
-      this.$root.$emit('bv::show::modal', 'modalInfo', button)
+    info(item, index, button) {
+      console.log(`This is item = ${item}`);
+      this.modalInfo.title = `Please Check Details`;
+      this.modalInfo.content = item;
+      this.$root.$emit("bv::show::modal", "modalInfo", button);
     },
-    resetModal () {
-      this.modalInfo.title = ''
-      this.modalInfo.content = ''
+    resetModal() {
+      this.modalInfo.title = "";
+      this.modalInfo.content = "";
     },
-    onFiltered (filteredItems) {
+    onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length
-      this.currentPage = 1
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
     }
   },
-  created () {
-
+  created() {
+    console.log(this.shows);
   },
-  props: ["show_id"]
-}
+  props: ["shows"]
+};
 </script>
 <style scoped>
 </style>
