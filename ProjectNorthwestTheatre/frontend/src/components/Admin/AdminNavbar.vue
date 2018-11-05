@@ -405,7 +405,7 @@ export default {
 
 .white_green:hover {background-color: #aae8aa}
 
-.white_green:active {
+.btn.router-link-active {
   background-color: #7fe682;
   box-shadow: 0 2px #666;
   transform: translateY(2px);
