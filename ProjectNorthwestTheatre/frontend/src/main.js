@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import url from './config/config'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import BootstrapVue from 'bootstrap-vue'
 
 Vue.config.productionTip = false
 window.moment = require('moment')
@@ -32,6 +33,7 @@ window.$ = require('jquery')
 require('bootstrap')
 require('bootstrap-datepicker')
 
+Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCoZmlmWNMd1Ef1ig-WA8jJ9NRnSQ5AP6Y'

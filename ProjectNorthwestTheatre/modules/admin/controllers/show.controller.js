@@ -156,3 +156,20 @@ let reserveTickets = (req,res) => {
     }
 }
 module.exports.reserveTickets = reserveTickets
+
+
+let getAllStudentsForAShow = (req,res) => {
+    let students = await Promise.all([  StudentModel.find(
+                                            { ShowID: new ObjectId(req.body.show_id) },
+                                            ['EmailAddress', 'LastName','FirstName']
+                                        ).exec() ,
+                                        GeneralAudienceModel.find(
+                                            { ShowID: new ObjectId(req.body.show_id) },
+                                            ['EmailAddress', 'LastName', 'FirstName']
+                                        ).exec() 
+                                    ])
+        students = [ ...students[0], ...students[1]]
+        res.json(students)
+}
+
+module.exports.getAllStudentsForAShow = getAllStudentsForAShow

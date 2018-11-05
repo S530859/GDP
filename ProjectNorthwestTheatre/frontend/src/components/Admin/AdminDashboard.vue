@@ -17,7 +17,7 @@
             </div>
 
     </div>
-         <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
+    <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
       </AdminShow>
     </div>
     <div class="modal" id="descriptionmodal" tabindex="-1" role="dialog">

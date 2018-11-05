@@ -6,13 +6,18 @@
         <div class="card-header grey text-white">
           <!-- show header -->
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                    <div class="  font-weight-bold float-left">
                      <h1 class=" heading">{{ show.ShowTitle }}</h1>
                    </div>
               </div>
-              <div class="col-md left my-auto p_u-mobile">
-                  <div class="d-inline float-right ">
+              <div class="col-md-8 left my-auto p_u-mobile">
+                  <div class="d-inline float-right col-md-12">
+                     <div class="btn-group rounded btn-width col-md-4">
+                        <button class="col-md-12 btn bg-danger text-white" type="button"  @click="unreservetickets">
+                          <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
+                        </button>
+                     </div>
                         <div class="btn-group rounded btn-width" id="status" data-toggle="buttons">
                           <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }" @click="showstatuschanged(true)">
                             <input class="d-none" type="radio" value="1">
@@ -20,12 +25,14 @@
                           </label>
                           <label class="btn btn-default btn-off" style="border:2px solid white" :class="{ active: !show.isPublished }" @click="showstatuschanged(false)">
                             <input class="d-none" type="radio" value="0" >
-                            <strong>UnPublish</strong>
+                            <strong>Unpublish</strong>
                           </label>
-                        </div>
-                  <button type="button" class="btn rounded-circle btn-mobile" id="delete" @click="deleteshow">
-                      <i class="fas fa-trash"></i>
-                  </button>
+                        </div>  
+                    <div class="btn-group rounded btn-width col-md-1 float-right">
+                      <button type="button" class="btn rounded-circle btn-mobile" id="delete" @click="deleteshow">
+                          <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
                  </div>
               </div>
             </div>
@@ -250,6 +257,9 @@ export default {
   },
   props: ['show'],
   methods: {
+    unreservetickets () {
+      this.$router.push({ name: 'unreserve', params: { show_id: this.show._id }})
+    },
     emitevent () {
       console.log(this.show)
       this.$emit('showmodal', this.show)
@@ -623,6 +633,10 @@ margin-left:0px;
 .p_u-mobile{
   margin-left: -40px;
 }
+}
+
+.btn-group {
+  vertical-align: baseline;
 }
 
 </style>
