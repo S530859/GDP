@@ -16,7 +16,8 @@ import UserShow from '../components/User/UserShow.vue'
 import User from '../components/User/User.vue'
 import CancelTicket from '../components/Admin/CancelTicket.vue'
 import UserDirections from '../components/User/UserDirections.vue'
-import ResetPassword from '../components/Admin/ResetPassword.vue'
+// import ResetPassword from '../components/Admin/ResetPassword.vue'
+import Unreserve from "../components/Admin/AdminUnreserve.vue";
 
 Vue.use(Router)
 
@@ -114,6 +115,12 @@ export default new Router({
           path: 'resetpassword',
           name: 'ResetPassword',
           component: AdminLogin
+        },
+        {
+          path: 'unreserve/:show_id',
+          name: 'unreserve',
+          props: true,
+          component: Unreserve
         }
       ]
     },

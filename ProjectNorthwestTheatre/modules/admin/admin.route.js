@@ -42,6 +42,8 @@ router.post('/duplicateShow', ShowController.GetduplicateShow, ShowController.Ge
 
 router.post('/reserveTicket', ShowController.reserveTickets)
 
+router.post('/students', ShowController.getAllStudentsForAShow)
+
 /* section CRUD operations */
 router.post('/addsection', SectionController.addSection)
 

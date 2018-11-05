@@ -5,19 +5,25 @@ import App from './App'
 import router from './router'
 import url from './config/config'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import BootstrapVue from 'bootstrap-vue'
 
 Vue.config.productionTip = false
 window.moment = require('moment')
 window.axios = require('axios')
-window.axios.defaults.headers.post['Content-Type'] = 'application/json';
+window.axios.defaults.headers.post['Content-Type'] = 'application/json'
 window.axios.interceptors.request.use(function (config) {
-      if(localStorage.getItem('AccessToken')){
-        config.headers.token = localStorage.getItem('AccessToken')
-      }
-      return config;
-    }, function (error) {
-      return Promise.reject(error);
-    })
+  console.log(config)
+  console.log(window.axios)
+  if (localStorage.getItem('AccessToken')) {
+    config.headers.token = localStorage.getItem('AccessToken')
+  }
+  if (config.url.includes('authenticate')) {
+    delete config.headers.token
+  }
+  return config
+}, function (error) {
+  return Promise.reject(error)
+})
 window.url = url.url
 window.userurl = url.userurl
 window.swal = require('sweetalert2')
@@ -27,6 +33,7 @@ window.$ = require('jquery')
 require('bootstrap')
 require('bootstrap-datepicker')
 
+Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCoZmlmWNMd1Ef1ig-WA8jJ9NRnSQ5AP6Y'

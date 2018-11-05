@@ -17,7 +17,7 @@
             </div>
 
     </div>
-         <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
+    <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
       </AdminShow>
     </div>
     <div class="modal" id="descriptionmodal" tabindex="-1" role="dialog">
@@ -71,12 +71,12 @@
       </div>
     </div>
     <!-- Keerthi Chiduruppa - Added ReserveTickets Model to Dashboard -->
-    <div class="modal fade" id="ReserveTickets" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
+    <div class="modal animated" id="ReserveTickets" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" >Enter Details</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close"  aria-label="Close" @click="closeReserveTicketsModal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -210,7 +210,7 @@ export default {
   methods: {
     showmodal (d) {
       $('#ReserveTickets').modal('show')
-      console.log(d)
+      $('#ReserveTickets.modal').addClass('bounceIn')
       this.reserveshow = d
     },
     showemailmodal (v) {
@@ -219,6 +219,14 @@ export default {
     },
     showdescriptionmodal () {
       $('#descriptionmodal').modal('show')
+    },
+    closeReserveTicketsModal () {
+      $('#ReserveTickets.modal').removeClass('bounceIn')
+      $('#ReserveTickets.modal').addClass('zoomOut')
+      setTimeout(function(){ 
+        $("#ReserveTickets").modal("hide")    
+        $('#ReserveTickets.modal').removeClass('zoomOut')
+        }, 100)
     },
     saveEmailContent () {
 
@@ -310,9 +318,6 @@ export default {
         'ShowID': this.reserveshow._id
       }
 
-      // axios.post( url + '/reserveTicket',reserveticketdata, {
-      //     headers: { token: window.localStorage.getItem('AccessToken') }
-      //   })
       axios
         .create({
           baseURL: url,
@@ -322,6 +327,7 @@ export default {
         })
         .post('/reserveTicket', reserveticketdata)
         .then(res => {
+          this.closeReserveTicketsModal()
           swal('Congratualtions!', 'You have reserved a Seat', 'success')
           $('#ReserveTicketsAdmin')[0].reset()
           console.log('Ticket Reserved ' + res)
@@ -365,6 +371,9 @@ export default {
 </script>
 
 <style scoped>
+.animated{
+  animation-duration: 0.7s
+}
 .fixed{
     position: fixed;
     z-index: 2;
@@ -408,7 +417,7 @@ export default {
   width: 400px;
   /* padding-left: -50px; */
   margin-left:-40px;
- 
+
   /* margin-right:-40px; */
 }
 
