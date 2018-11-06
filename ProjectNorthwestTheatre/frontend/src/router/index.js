@@ -17,7 +17,7 @@ import User from '../components/User/User.vue'
 import CancelTicket from '../components/Admin/CancelTicket.vue'
 import UserDirections from '../components/User/UserDirections.vue'
 // import ResetPassword from '../components/Admin/ResetPassword.vue'
-import Unreserve from "../components/Admin/AdminUnreserve.vue";
+import Unreserve from '../components/Admin/AdminUnreserve.vue'
 
 Vue.use(Router)
 

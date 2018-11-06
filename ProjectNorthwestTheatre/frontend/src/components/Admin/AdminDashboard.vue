@@ -1,10 +1,5 @@
 <template>
  <div>
-    <!-- <div class="row m-1 float-right">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        <i class="fas fa-plus"></i>
-      </button>
-    </div> -->
     <div class="row col-sm-12  wi">
       <div class="fixed bg">
       </div>
@@ -17,15 +12,15 @@
             </div>
 
     </div>
-    <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
+    <AdminShow class='down' v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
       </AdminShow>
     </div>
-    <div class="modal" id="descriptionmodal" tabindex="-1" role="dialog">
+    <div class="modal animated" id="descriptionmodal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Playwright: {{ show.ShowPlayWright ? show.ShowPlayWright : '' }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" aria-label="Close" @click="closeDescriptionModal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -33,20 +28,20 @@
             <p>{{ show.ShowDescription ? show.ShowDescription : '' }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" @click="closeDescriptionModal">Close</button>
           </div>
         </div>
       </div>
     </div>
     <!--Saivarun Illendula - Added Email Model to Dashboard-->
     <!-- The Modal -->
-    <div class="modal fade" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
+    <div class="modal animated" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">Email</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" @click="closeEmailModal">&times;</button>
           </div>
             <!-- Modal body -->
             <!-- Rahul Reddy Lankala - Added placeholders -->
@@ -64,8 +59,8 @@
             </div>
                 <!-- Modal footer -->
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" data-dismiss="modal" @click="saveEmailContent()">Save</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal" @click="sendMail()">Save &amp; Email</button>
+              <button type="button" class="btn btn-success"  @click="saveEmailContent()">Save</button>
+              <button type="button" class="btn btn-danger"  @click="sendMail()">Save &amp; Email</button>
             </div>
         </div>
       </div>
@@ -210,26 +205,44 @@ export default {
   methods: {
     showmodal (d) {
       $('#ReserveTickets').modal('show')
-      $('#ReserveTickets.modal').addClass('bounceIn')
+      $('#ReserveTickets.modal').addClass('zoomIn')
       this.reserveshow = d
     },
     showemailmodal (v) {
       this.show = v
       $('#emailmodal').modal('show')
+      $('#emailmodal.modal').addClass('zoomIn')
     },
     showdescriptionmodal () {
       $('#descriptionmodal').modal('show')
+      $('#descriptionmodal.modal').addClass('zoomIn')
+    },
+    closeDescriptionModal () {
+       $('#descriptionmodal.modal').removeClass('zoomIn')
+      $('#descriptionmodal.modal').addClass('zoomOut')
+      setTimeout(function(){ 
+        $("#descriptionmodal").modal("hide")    
+        $('#descriptionmodal.modal').removeClass('zoomOut')
+        }, 100)
     },
     closeReserveTicketsModal () {
-      $('#ReserveTickets.modal').removeClass('bounceIn')
+      $('#ReserveTickets.modal').removeClass('zoomIn')
       $('#ReserveTickets.modal').addClass('zoomOut')
-      setTimeout(function(){ 
-        $("#ReserveTickets").modal("hide")    
+      setTimeout(function () {
+        $('#ReserveTickets').modal('hide')
         $('#ReserveTickets.modal').removeClass('zoomOut')
+      }, 100)
+    },
+    closeEmailModal(){
+      $('#emailmodal.modal').removeClass('zoomIn')
+      $('#emailmodal.modal').addClass('zoomOut')
+      setTimeout(function(){ 
+        $("#emailmodal").modal("hide")    
+        $('#emailmodal.modal').removeClass('zoomOut')
         }, 100)
     },
     saveEmailContent () {
-
+      this.closeEmailModal()
     },
     sendMail () {
       this.email.subject = $('#subject').val()
@@ -256,6 +269,7 @@ export default {
               })
                 .then(res => {
                   console.log('mail sent ' + res)
+                  this.closeEmailModal()
                   swal({
                     position: 'top-end',
                     type: 'success',
