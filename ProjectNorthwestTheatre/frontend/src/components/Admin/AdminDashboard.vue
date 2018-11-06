@@ -35,7 +35,7 @@
     </div>
     <!--Saivarun Illendula - Added Email Model to Dashboard-->
     <!-- The Modal -->
-    <div class="modal animated" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
+    <div class="modal animated" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="emailmodal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -76,36 +76,37 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="ReserveTickets()" id="ReserveTicketsAdmin">
+            <form @submit.prevent="ReserveTickets" id="ReserveTicketsAdmin">
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">First Name:</label>
-                    <input class="col-sm-7 form-control" type="text" id="Firstname" name="Firstname" placeholder="Firstname">
+                    <input class="col-sm-7 form-control" type="text" id="Firstname" name="Firstname" placeholder="Firstname" required>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">Last Name:</label>
-                    <input class="col-sm-7 form-control" type="text" id="Lastname" name="Lastname" placeholder="Lastname">
+                    <input class="col-sm-7 form-control" type="text" id="Lastname" name="Lastname" placeholder="Lastname" required>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">Email:</label>
-                    <input class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email">
+                    <input class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email" pattern="[S|s]{1}[0-9]{6}@nwmissouri\.edu"
+                    oninvalid="this.setCustomValidity('expecting s530859@nwmissouri.edu')" oninput="this.setCustomValidity('')" required>
                   </div>
                     <fieldset class="form-group">
                         <div class="row">
                           <legend class="col-form-label col-sm-8 pt-0">Are you a theatre appreciation student?</legend>
                           <div class="col-sm-4">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yes" value="true" v-model="isTheatreAppreciationStudent">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yes" value="true" v-model="isTheatreAppreciationStudent" required>
                               <label class="form-check-label" for="yes">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="no" value="false" v-model="isTheatreAppreciationStudent">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="no" value="false" v-model="isTheatreAppreciationStudent" required>
                               <label class="form-check-label" for="no">No</label>
                             </div>
                           </div>
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'true' }">
                           <label class="col-sm-4 form-label">Section Number:</label>
-                          <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled">
+                          <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled" required>
                               <option selected value="default">--Select--</option>
                               <option v-for="ele of sectionlist" :key="ele._id" :value="ele.SectionNumber">
                                  {{ ele.ProfessorName }}:
@@ -129,7 +130,7 @@
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'false' }">
                             <label class="col-sm-4 form-label">No. Of Tickets:</label>
-                            <select id="NumberOfTicketsperPerson" class="form-control col-sm-7" name="NumberOfTicketsperPerson">
+                            <select id="NumberOfTicketsperPerson" class="form-control col-sm-7" name="NumberOfTicketsperPerson" required>
                               <option selected v-for="ele of [1,2,3,4,5,6,7,8,9,10]" :key="ele" :value="ele">{{ele}}</option>
                             </select>
                         </div>
@@ -332,6 +333,7 @@ export default {
         'ShowID': this.reserveshow._id
       }
 
+
       axios
         .create({
           baseURL: url,
@@ -349,7 +351,7 @@ export default {
         .catch(err => {
           console.log('error in Reserving Ticket' + err)
         })
-    }
+      }
   },
   mounted () {
     console.log('mounted')

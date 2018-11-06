@@ -162,11 +162,11 @@ module.exports.reserveTickets = reserveTickets
 let getAllStudentsForAShow = async (req,res) => {
     let students = await Promise.all([  StudentModel.find(
                                             { ShowID: new ObjectId(req.body.show_id) },
-                                            ['EmailAddress', 'LastName','FirstName']
+                                            ['EmailAddress', 'LastName','FirstName', 'SectionEnrolled']
                                         ).exec() ,
                                         GeneralAudienceModel.find(
                                             { ShowID: new ObjectId(req.body.show_id) },
-                                            ['EmailAddress', 'LastName', 'FirstName']
+                                            ['EmailAddress', 'LastName', 'FirstName', 'NumberOfTicketsperPerson']
                                         ).exec() 
                                     ])
         students = [ ...students[0], ...students[1]]

@@ -61,7 +61,7 @@ export default {
       formdata: {
         isPublished: false
       },
-      /* global moment  */
+      /* global moment $ */
       showtime: moment().format('HH:mm'),
       selected: ''
     }

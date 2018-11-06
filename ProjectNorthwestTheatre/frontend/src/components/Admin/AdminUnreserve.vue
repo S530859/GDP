@@ -12,9 +12,14 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col md="6" class="my-3">
+      <b-col md="3" class="my-3">
         <b-form-group horizontal label="Per page" class="mb-0">
           <b-form-select :options="pageOptions" v-model="perPage" />
+        </b-form-group>
+      </b-col>
+      <b-col md="3" class="my-3">
+        <b-form-group horizontal label="Filter" class="mb-0">
+          <b-form-select :options="customfilterproperties" v-model="customfilter" />
         </b-form-group>
       </b-col>
     </b-row>
@@ -26,7 +31,7 @@
              :fields="fields"
              :current-page="currentPage"
              :per-page="perPage"
-             :filter="filter"
+             :filter="customfiltermeth"
              :sort-by.sync="sortBy"
              :sort-desc.sync="sortDesc"
              :sort-direction="sortDirection"
@@ -66,6 +71,8 @@ export default {
   name: 'unreserve',
   data () {
     return {
+      customfilter: '',
+      customfilterproperties: ['Students','Others','All'],
       items: this.shows,
       fields: [
         {
@@ -122,6 +129,31 @@ export default {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
+    },
+    customfiltermeth (row) {
+
+      console.log(`section ${row.SectionEnrolled}`)
+
+      if(this.customfilter === 'Students'){
+        if(row.SectionEnrolled && !isNaN(row.SectionEnrolled) && row.SectionEnrolled != 'undefined'){
+        return true
+        }
+        return false
+      }
+      if(this.customfilter === 'Others'){
+         if(row.NumberOfTicketsperPerson){
+          return true
+        }
+        return false
+    }
+        
+      if(this.filter){
+        return `${row.LastName}${row.FirstName}${row.EmailAddress}`.includes(this.filter)
+      }
+      return true
+    },
+    unreserveTicket () {
+
     }
   },
   created () {
