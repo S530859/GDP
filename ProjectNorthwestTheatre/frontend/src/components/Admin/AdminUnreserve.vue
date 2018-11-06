@@ -37,11 +37,9 @@
              :sort-direction="sortDirection"
              @filtered="onFiltered"
     >
-      <!-- <template slot="EmailAddress" slot-scope="row">{{row.value}}</template>
-      <template slot="LastName" slot-scope="row">{{row.value}}</template>
-      <template slot="FirstName" slot-scope="row">{{row.value}}</template> -->
+  
       <template slot="actions" slot-scope="row">
-        <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
+        
         <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger">
          <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
         </b-button>
@@ -136,13 +134,13 @@ export default {
 
       if(this.customfilter === 'Students'){
         if(row.SectionEnrolled && !isNaN(row.SectionEnrolled) && row.SectionEnrolled != 'undefined'){
-        return true
+          return this.filter ? `${row.LastName}${row.FirstName}${row.EmailAddress}`.toLowerCase().includes(this.filter.toLowerCase()) : true 
         }
         return false
       }
       if(this.customfilter === 'Others'){
          if(row.NumberOfTicketsperPerson){
-          return true
+          return this.filter ? `${row.LastName}${row.FirstName}${row.EmailAddress}`.toLowerCase().includes(this.filter.toLowerCase()) : true 
         }
         return false
     }
