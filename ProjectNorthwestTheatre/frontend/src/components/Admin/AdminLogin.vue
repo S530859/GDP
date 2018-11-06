@@ -2,7 +2,7 @@
     <div id="AdminLogin">
       <div class="row mt-5">
         <div class="col-sm-6 d-none d-md-block d-lg-block d-xl-block">
-           <img class="mb-4 w-50" src="../../assets/logoproject.jpg" alt="">
+           <img class="mb-4 w-50" height = "335px" src="../../assets/logo1.jpg" alt="Theatre Northwest">
         </div>
           <div class="col-sm-6 align-self-center" v-if="resetpasswordpage">
             <div class="card text-white w-100 mb-3" style="max-width: 24rem;">
