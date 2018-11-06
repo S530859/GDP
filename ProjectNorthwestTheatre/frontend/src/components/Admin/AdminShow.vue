@@ -113,9 +113,11 @@
               @click="emailevent()">
                 <strong><span class = "mr-2"><i class="fas fa-envelope"></i></span>Email</strong>
               </button>
-              <a class="col-sm m-2 btn btn-outline-warning" type="button" href="http://localhost:3000/Reports/SampleExcelReport.xlsx">
+              <button class="col-sm m-2 btn btn-outline-warning" type="button" >
+              <a href="http://localhost:3000/Reports/SampleExcelReport.xlsx">
                 <strong><span class = "mr-2"><i class="fas fa-file-excel"></i></span> Report</strong>
               </a>
+              </button>
               <button class="col-sm m-2 btn btn-outline-success" type="button" @click="emitevent()">
                 <strong><span class = "mr-2"><i class="fas fa-ticket-alt"></i></span>Reserve Tickets</strong>
               </button>
