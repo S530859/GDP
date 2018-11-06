@@ -3,8 +3,8 @@
      <!-- Created by Supraja Kumbam -->
     <!-- Saivarun Illendula : Added Card to Section List -->
      <div class="tb">
-       <h1 class = "h2 mb-3 font-weight-normal">View Section </h1>
-        <table class="table table-bordered">
+       <h1 class = "h2 mb-3 font-weight-normal mt-3">VIEW SECTION </h1>
+        <table class="table table-striped table-bordered">
           <thead class="thead-dark">
             <tr>
               <th scope="col">S.NO</th>
@@ -21,13 +21,13 @@
               <th scope="row">
                 {{ index + 1 }}
               </th>
-              <td>
+              <td class="text-left">
                 {{ ele.Semester }} {{ ele.Year }}
               </td>
               <td>
                 {{ ele.SectionNumber }}
               </td>
-              <td>
+              <td class="text-left">
                 {{ ele.ProfessorName }}
               </td>
               <td>
@@ -254,15 +254,37 @@ div.tb {
   background-color: #DA7A7A
 }
 #delete {
-  color: #D14F4F;
-  background-color: none
+  color: #ffffff;
+  background-color: #910000
 }
 #edit:hover {
   color: #1A1818;
-  background-color: #AB9898
+  background-color: rgb(160, 235, 153)
 }
 #edit {
-  color: #746967;
-  background-color: none
+  color: #ffffff;
+  background-color: #585958
+}
+
+table.table-bordered > tbody > tr > td, th{
+    border:1px solid black;
+    font-size: 25px;
+    vertical-align: middle;
+}
+
+table.table-bordered > tbody > tr > td, th{
+    border:1px solid black;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+@media only screen and (max-width: 800px) {
+table.table-bordered > tbody > tr > td, th{
+    font-size: 15px;
+}
+}
+
+.table-striped> tbody> tr:nth-child(odd){
+   background-color: rgba(128, 128, 128, 0.248);
 }
 </style>
