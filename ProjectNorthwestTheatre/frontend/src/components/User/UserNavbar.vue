@@ -208,4 +208,15 @@ export default {
     content: '*';
     color: red;
 }
+
+.wrap{
+  overflow-wrap: break-word;
+   word-break: break-all;
+}
+
+.btn{
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+
 </style>

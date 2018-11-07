@@ -13,7 +13,7 @@
     <div id="adminnavbar" class="row">
         <div class="col-sm-2 collapse d-sm-flex position-fixed" id="sidebar">
             <div class="col-sm-10 bg-dark pt-2" v-if="login">
-                <ul class="nav flex-column flex-nowrap ">
+                <ul class="nav flex-column flex-nowrap">
                   <li class="nav-item my-2">
                       <router-link to="/admin/dashboard" class="btn white_green btn-block">
                         <span class="mr-2"><i class="fas fa-home"></i></span>Home</router-link>
