@@ -10,7 +10,7 @@
     <div class="form-group row justify-content-center">
       <label for="username" class="col-sm-3 text-right col-form-label required">Username:</label>
       <div class="col-sm-4">
-        <input type="username" class="form-control" id="username" name="RegUsername" placeholder="Username" required>
+        <input type="username" class="form-control" id="username" name="RegUsername" placeholder="Username" autofocus="autofocus" required>
       </div>
     </div>
     <div class="form-group row justify-content-center">
@@ -22,8 +22,8 @@
     <div class="form-group row justify-content-center">
       <label for="inputPassword3" class="col-sm-3 col-form-label text-right required">Password:</label>
       <div class="col-sm-4">
-        <input type="password" class="form-control" id="Password" name="RegPassword" placeholder="Password" @input="password_check" v-model="message" autocomplete="false" required>
-        <div class="text-left">
+        <input type="password" class="form-control" id="Password" name="RegPassword" placeholder="Password" @click="seen = true" @input="password_check" v-model="message" autocomplete="false" required>
+        <div class="text-left" v-if="seen">
           <p class="frmValidation" :class="{'frmValidation--passed' : message.length > 6}"><i class="frmIcon fas" :class="message.length > 6 ? 'fa-check' : 'fa-times'"></i> 6 Characters Long</p>
           <p class="frmValidation" :class="{'frmValidation--passed' :has_uppercase }"><i class="frmIcon fas" :class="has_uppercase ? 'fa-check' : 'fa-times'"></i> One Uppercase Letter</p>
           <p class="frmValidation" :class="{'frmValidation--passed' : has_number }"><i class="frmIcon fas" :class="has_number ? 'fa-check' : 'fa-times'"></i> One Number</p>
@@ -35,12 +35,10 @@
     <div class="form-group row justify-content-center">
       <label for="inputPassword3" class="col-sm-3 col-form-label text-right required">Confirm Password:</label>
       <div class="col-sm-4">
-        <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password" @input="password_match" v-model="message2"  required>
+        <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password" @input="password_match" v-model="message2"  @focus="seen2 = true">
       </div>
-
     </div>
-         <p id="pwmatch" class="frmValidation" :class="{'frmValidation--passed' : pmatch }"><i id="cpSymbol" class="frmIcon fas fa-times"></i> Password Maatched</p>
-
+         <p v-if="seen2" id="pwmatch" class="frmValidation" :class="{'frmValidation--passed' : pmatch }"><i id="cpSymbol" class="frmIcon fas fa-times"></i> Password Matched</p>
     <button type="reset" class="btn btn-danger">Reset</button>
     <button type="submit" class="btn btn-success">Create Admin</button>
   </form>
@@ -59,7 +57,9 @@ export default {
         has_uppercase: false,
         has_special:   false,
         pmatch: false,
-        message2: ''
+        message2: '',
+        seen: false,
+        seen2: false
     }
   },
   methods: {
