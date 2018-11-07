@@ -2,9 +2,9 @@
 <div class="row">
   <div class="col">
 <GmapMap class="mapDesign"
-  :center="{lat:40.3461017, lng:-94.87247059999999}"
-  :zoom="13"
-  map-type-id="roadmap"
+  :center="{ lat: 40.35024, lng: -94.88756419999999 }"
+  :zoom="18"
+  map-type-id="hybrid"
   style="width: 800px; height: 450px; margin-top: 20px;"
 >
   <GmapMarker

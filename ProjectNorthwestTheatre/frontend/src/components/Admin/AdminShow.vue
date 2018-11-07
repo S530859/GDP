@@ -139,21 +139,24 @@
     <!-- card -->
     <!-- Modal -->
     <div class="modal animated" :id="'editshow'+show._id" tabindex="-1" role="dialog" :aria-labelledby="'editshow'+show._id" aria-hidden="true">
+    <form @submit.prevent="editshow" :id="'editshowform'+show._id" style="height: 95%">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" >
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">Edit Show Details:</h4>
             <button type="button" class="close" @click="closeEditShowModal">&times;</button>
           </div>
+
           <!-- Modal body -->
-          <div class="modal-body">
-            <form @submit.prevent="editshow" :id="'editshowform'+show._id">
+          <div class="modal-body" >
               <div class="form-group row">
                 <label class="col-sm-2 offset-sm-1 form-label py-2">Show Name:</label>
                 <input class="col-sm-2 form-control" type="text" placeholder="Show Name" id="showname" :value="show.ShowTitle" name="ShowTitle" required>
                 <label class="col-sm-2 offset-sm-1 form-label py-2">Playwright:</label>
-                <input class="col-sm-2 form-control" type="text" placeholder="Playwright" id="playwright" :value="show.ShowPlayWright" name="ShowPlayWright" required>
+                <div class="col-sm-2">
+                  <input class="form-control" type="text" placeholder="Playwright" id="playwright" :value="show.ShowPlayWright" name="ShowPlayWright" required>
+                </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 py-2 offset-sm-1 form-label">Description:</label>
@@ -164,12 +167,14 @@
                 <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Time:</label>
                  <input class="col-sm-2 form-control" type="time" :value="show.ShowTime" id="showtime" name="ShowTime" required>
                 <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Date:</label>
-                <input type="text" class="date form-control col-sm-2" name="ShowDate" id="datepicker-input"
-                data-date-multidate="true" data-date-multidateSeparator="; " :data-date-container=" '#editshow' + show._id"
-                required>
-                    <span @click="showdatepicker()" id="date-icon" class="col-sm-1">
-                      <i class="fas fa-calendar-alt fa-2x" aria-hidden="true" ></i>
-                    </span>
+                
+                <div class="col-sm-3" style="position: relative;">
+                  <i class="fas fa-calendar-alt fa-2x" style="position: absolute; padding: 3px 20px; right: 0px;" aria-hidden="true"></i>
+                  <input type="text" class="date form-control" name="ShowDate" id="datepicker-input" style="padding-right: 40px;"
+                  data-date-multidate="true" data-date-multidateSeparator="; " :data-date-container=" '#editshow' + show._id"
+                  required>
+                </div>
+
               </div>
                <div class="form-group row">
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Rating:</label>
@@ -180,26 +185,29 @@
                     <option>R</option>
                   </select>
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Image:</label>
-                  <div class="form-group col-sm-2">
-                    <input type="file" accept="image/*" class="form-control-file" id="InputFile" aria-describedby="fileHelp" :value="show.ShowImage" name="ShowImage" >
+                    <input type="file" accept="image/*" class="form-control-file col-sm-4" id="InputFile" aria-describedby="fileHelp" :value="show.ShowImage" name="ShowImage" >
                     <small id="fileHelp" class="form-text text-muted"></small>
-                  </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Total Seats:</label>
                   <input class="col-sm-2 form-control" type="number" placeholder="Total No. of Tickets" id="totalseats" :value="show.NumberOfTickets" name="NumberOfTickets" min="1" required>
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Venue:</label>
-                  <input class="col-sm-2 form-control" type="text" placeholder="Venue" id="showvenue" :value="show.ShowVenue" name="ShowVenue" required>
+                  <div class="col-sm-3">
+                    <input class="form-control" type="text" placeholder="Venue" id="showvenue" :value="show.ShowVenue" name="ShowVenue" required>
+                  </div>
                 </div>
                <form @submit.prevent="addticketpriceEditModal()" id="ticketformEdit">
                   <div class="form-group row">
                     <label class="col-sm-2 py-2 offset-sm-1 form-label required">Ticket Type:</label>
                     <input class="col-sm-2 form-control" type="text" placeholder="Ticket Type" id="TicketTypeEditShow" required>
                     <label class="col-sm-2 py-2 offset-sm-1 form-label required">Ticket Price:</label>
-                      <div class="input-group-prepend" style="position: absolute;right: 235px;z-index:1">
+                      <!-- <div class="input-group-prepend" style="position: absolute;right: 235px;z-index:1">
                         <div class="input-group-text py-0 my-0" style="height: 38px;">$</div>
-                      </div>
-                    <input class="col-sm-2 form-control" type="number" placeholder="Ticket Price" id="TicketPriceEditShow" min="1" required>
+                      </div> -->
+                    <div class="col-sm-2" style="position: relative;">
+                      <i class="fas fa-dollar-sign fa-lg" style="position: absolute; padding: 10px 20px; left: 0px;"></i>
+                      <input class="form-control" style="padding-left: 20px;" type="number" placeholder="Ticket Price" id="TicketPriceEditShow" min="1" required>
+                    </div>
                     <button class="btn col-sm-1 mx-1 py-0 my-0" style="height: 38px;" type="submit">Add</button>
                   </div>
                 </form>
@@ -209,7 +217,7 @@
                     <div class="column" v-for="(ticket, index) in show.Ticketdetails" :key="ticket.TicketType">
                       <div class="row" style="margin-left: 0px;margin-right: 0px">
                         <div  class="py-2" style="width: 60px">{{ index + 1 }}. </div>
-                        <div  class="py-2" style="width: 200px"> {{ ticket.TicketType }} - $ {{ ticket.TicketPrice }} </div>
+                        <div  class="py-2" style="width: 180px"> {{ ticket.TicketType }} - $ {{ ticket.TicketPrice }} </div>
                         <div   style="width: 70px">
                             <button type="button" class="btn rounded-circle" id="delete" @click="deleteticket(ticket.TicketType)">
                               <i class="fas fa-trash"></i>
@@ -219,50 +227,50 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="form-group row">
+          </div>
+                <!-- <div class="form-group row">
                   <label class="col-sm-4 form-label">Publish:</label>
                     <label class="switch float-right form-group">
                       <input type="checkbox" class="sliderinput" v-model="show.isPublished" name="isPublished" value="true">
                       <span class="slider round"></span>
                    </label>
-                 </div>
+                 </div> -->
                  <input type="hidden" :value="show._id" name="id">
-                <div>
+                <div class="modal-footer">
                     <button type="reset" class=" btn btn-danger">Reset</button>
                     <button type="submit" class=" btn btn-success">Save Changes</button>
+                    <button type="submit" class=" btn btn-success" @click="show.isPublished = true">Save and Publish</button>
                 </div>
-            </form>
-          </div>
         </div>
       </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AdminShow',
-  data () {
+  name: "AdminShow",
+  data() {
     return {
       /* global moment */
-      ShowDate: moment(this.show.ShowDate, 'YYYY-MM-DD').format('MMMM Do YYYY'),
-      ShowTime: moment(this.show.ShowTime, 'HH:mm').format('hh:mm a'),
-      token: window.localStorage.getItem('AccessToken'),
+      ShowDate: moment(this.show.ShowDate, "YYYY-MM-DD").format("MMMM Do YYYY"),
+      ShowTime: moment(this.show.ShowTime, "HH:mm").format("hh:mm a"),
+      token: window.localStorage.getItem("AccessToken"),
       showImg: true,
       time: Date()
     }
   },
-  props: ['show'],
+  props: ["show"],
   methods: {
-    unreservetickets () {
+    unreservetickets() {
       let _this = this
       axios
-        .post(url + '/students', { show_id: this.show._id })
+        .post(url + "/students", { show_id: this.show._id })
         .then(res => {
           console.log(res)
           _this.$router.push({
-            name: 'unreserve',
+            name: "unreserve",
             params: { shows: res.data }
           })
         })
@@ -270,59 +278,60 @@ export default {
           console.log(res)
         })
     },
-    emitevent () {
+    emitevent() {
       console.log(this.show)
-      this.$emit('showmodal', this.show)
+      this.$emit("showmodal", this.show)
     },
-    emailevent () {
-      this.$emit('showemailmodal', this.show)
+    emailevent() {
+      this.$emit("showemailmodal", this.show)
     },
-    editevent () {
+    editevent() {
       /* global $ */
-      console.log("editclicked", this.show._id);
-      $("#editshow" + this.show._id).modal("show");
-      $("#editshow" + this.show._id).addClass('zoomIn')
-      this.showdatepicker();
+      console.log("editclicked", this.show._id)
+      $("#editshow" + this.show._id).modal("show")
+      $("#editshow" + this.show._id).addClass("zoomIn")
+      this.showdatepicker()
     },
     closeEditShowModal() {
-       $("#editshow" + this.show._id).removeClass('zoomIn')
-      $("#editshow" + this.show._id).addClass('zoomOut')
-      setTimeout(function(){ 
-        $("#editshow" + this.show._id).modal("hide")    
-        $("#editshow" + this.show._id).removeClass('zoomOut')
-        }, 100)
+      var _this = this
+      $("#editshow" + this.show._id).removeClass("zoomIn")
+      $("#editshow" + this.show._id).addClass("zoomOut")
+      setTimeout(function() {
+        $("#editshow" + _this.show._id).modal("hide")
+        $("#editshow" + _this.show._id).removeClass("zoomOut")
+      }, 100)
     },
     editshow() {
-      console.log("editclicked");
+      console.log(`editclicked ${JSON.stringify(this.show)} `)
       var formdata = new FormData(
-        document.querySelector('#editshowform' + this.show._id)
+        document.querySelector("#editshowform" + this.show._id)
       )
-      formdata.append('Ticketdetails', JSON.stringify(this.show.Ticketdetails))
-
+      formdata.append("Ticketdetails", JSON.stringify(this.show.Ticketdetails))
+      formdata.append("isPublished", this.show.isPublished)
       // var _this = this
       axios
         .create({
           baseURL: url,
-          headers: { token: window.localStorage.getItem('AccessToken') }
+          headers: { token: window.localStorage.getItem("AccessToken") }
         })
-        .post('/updateshow', formdata)
+        .post("/updateshow", formdata)
         .then(
-          function (res) {
-            $('#editshow' + this.show._id).modal('hide')
-            swal('Updated!', 'Show has been successfully updated.', 'success')
+          function(res) {
+            $("#editshow" + this.show._id).modal("hide")
+            swal("Updated!", "Show has been successfully updated.", "success")
             this.time = Date()
             axios({
-              method: 'get',
+              method: "get",
               headers: {
-                token: window.localStorage.getItem('AccessToken')
+                token: window.localStorage.getItem("AccessToken")
               },
-              url: url + '/showlist'
+              url: url + "/showlist"
             })
               .then(response => {
-                this.$eventbus.$emit('refreshdata', response.data)
+                this.$eventbus.$emit("refreshdata", response.data)
               })
               .catch(err => {
-                console.log('error while getting show list', err)
+                console.log("error while getting show list", err)
               })
           }.bind(this)
         )
@@ -330,38 +339,38 @@ export default {
           console.log(error)
         })
     },
-    deleteshow () {
+    deleteshow() {
       /* global swal axios url _ */
       swal({
-        title: 'Are you sure?',
-        text: 'You wont be able to revert this!',
-        type: 'warning',
+        title: "Are you sure?",
+        text: "You wont be able to revert this!",
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {
           axios
             .create({
               baseURL: url,
-              headers: { token: window.localStorage.getItem('AccessToken') }
+              headers: { token: window.localStorage.getItem("AccessToken") }
             })
-            .post('/deleteshow', { id: this.show._id })
+            .post("/deleteshow", { id: this.show._id })
             .then(res => {
-              swal('Deleted!', 'Show has been deleted.', 'success')
+              swal("Deleted!", "Show has been deleted.", "success")
               axios({
-                method: 'get',
+                method: "get",
                 headers: {
-                  token: window.localStorage.getItem('AccessToken')
+                  token: window.localStorage.getItem("AccessToken")
                 },
-                url: url + '/showlist'
+                url: url + "/showlist"
               })
                 .then(response => {
-                  this.$eventbus.$emit('refreshdata', response.data)
+                  this.$eventbus.$emit("refreshdata", response.data)
                 })
                 .catch(err => {
-                  console.log('error while getting show list', err)
+                  console.log("error while getting show list", err)
                 })
             })
             .catch(error => {
@@ -370,13 +379,14 @@ export default {
         }
       })
     },
-    showstatuschanged (isPublished) {
+    showstatuschanged(isPublished) {
+      this.show.isPublished = isPublished
       axios
         .create({
           baseURL: url,
-          headers: { token: window.localStorage.getItem('AccessToken') }
+          headers: { token: window.localStorage.getItem("AccessToken") }
         })
-        .post('/ispublished', {
+        .post("/ispublished", {
           id: this.show._id,
           isPublished: isPublished
         })
@@ -387,28 +397,28 @@ export default {
           console.log(error)
         })
     },
-    emitshowdescription (showclicked) {
-      this.$eventbus.$emit('showdescription', showclicked)
+    emitshowdescription(showclicked) {
+      this.$eventbus.$emit("showdescription", showclicked)
     },
-    duplicateEvent (show) {
-      console.log('duplicate show clicked')
+    duplicateEvent(show) {
+      console.log("duplicate show clicked")
       swal({
-        title: 'Duplicate Show',
-        text: 'Do you want to duplicate the show!',
-        type: 'warning',
+        title: "Duplicate Show",
+        text: "Do you want to duplicate the show!",
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Sure!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Sure!"
       }).then(res => {
         console.log(res.value)
         if (res.value) {
           axios
             .create({
               baseURL: url,
-              headers: { token: window.localStorage.getItem('AccessToken') }
+              headers: { token: window.localStorage.getItem("AccessToken") }
             })
-            .post('/duplicateShow', show)
+            .post("/duplicateShow", show)
             .then(res => {
               console.log(res)
             })
@@ -418,28 +428,28 @@ export default {
         }
       })
     },
-    showdatepicker () {
-      console.log('date picker clicked')
-      let dates = this.show.ShowDate.split(',')
+    showdatepicker() {
+      console.log("date picker clicked")
+      let dates = this.show.ShowDate.split(",")
       _.each(dates, (element, index, list) => {
-        let date = element.replace(';', '')
+        let date = element.replace(";", "")
         list[index] = new Date(date)
       })
       console.log(dates)
-      $(`#editshowform${this.show._id} .row` + ' .date').datepicker(
-        'setDates',
+      $(`#editshowform${this.show._id} .row` + " .date").datepicker(
+        "setDates",
         dates
       )
       // $('.date').datepicker('show')
     },
-    deleteticket (TicketType) {
+    deleteticket(TicketType) {
       swal({
         title: `Do you want to delete ${TicketType} ?`,
-        text: 'You wont be able to revert this!',
-        type: 'warning',
+        text: "You wont be able to revert this!",
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
         confirmButtonText: `Yes, delete!`
       }).then(result => {
         if (result.value) {
@@ -450,32 +460,32 @@ export default {
             })
           )
           swal(
-            'Deleted!',
+            "Deleted!",
             `Ticket Type:  ${TicketType} has been deleted.`,
-            'success'
+            "success"
           )
         }
       })
     },
-    addticketpriceEditModal () {
+    addticketpriceEditModal() {
       this.show.Ticketdetails.push({
-        TicketType: $('#TicketTypeEditShow').val(),
-        TicketPrice: $('#TicketPriceEditShow').val()
+        TicketType: $("#TicketTypeEditShow").val(),
+        TicketPrice: $("#TicketPriceEditShow").val()
       })
-      document.getElementById('ticketformEdit').reset()
+      document.getElementById("ticketformEdit").reset()
     }
   },
-  mounted () {
+  mounted() {
     // $('.date').datepicker({
     //     container: '#editshow' + this.show._id
     //   })
   },
   watch: {
-    show: function (newVal, oldVal) {
-      this.ShowDate = moment(newVal.ShowDate, 'YYYY-MM-DD').format(
-        'MMMM Do YYYY'
+    show: function(newVal, oldVal) {
+      this.ShowDate = moment(newVal.ShowDate, "YYYY-MM-DD").format(
+        "MMMM Do YYYY"
       )
-      this.ShowTime = moment(newVal.ShowTime, 'HH:mm').format('hh:mm a')
+      this.ShowTime = moment(newVal.ShowTime, "HH:mm").format("hh:mm a")
     }
   }
 }
@@ -618,17 +628,17 @@ export default {
   transform: translateX(26px);
 }
 
-#date-icon {
+/* #date-icon {
   position: absolute;
   right: 110px;
   padding: 2px;
   display: flex;
   align-items: center;
-}
-#datepicker-input {
+} */
+/* #datepicker-input {
   padding-right: 40px;
   outline: none;
-}
+} */
 
 .left {
   float: left;
@@ -656,5 +666,22 @@ export default {
 
 .btn-group {
   vertical-align: baseline;
+}
+
+.btn {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+
+.modal-dialog,
+.modal-content {
+  /* 80% of window height */
+  height: 95%;
+}
+
+.modal-body {
+  /* 100% = dialog height, 120px = header + footer */
+  max-height: calc(100% - 120px);
+  overflow-y: scroll;
 }
 </style>

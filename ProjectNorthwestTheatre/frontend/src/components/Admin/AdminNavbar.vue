@@ -310,6 +310,11 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  white-space:normal !important;
+  word-wrap: break-word; 
+}
+
 #sidebar {
     min-height: 100%;
     z-index: 1;
