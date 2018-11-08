@@ -1,8 +1,8 @@
 <template>
   <b-container fluid>
     <!-- User Interface controls -->
-     <b-row>
-      <p>{{ ShowTitle }}</p>
+     <b-row align-h="center">
+      <h1>{{ ShowTitle }}</h1>
     </b-row>
     <b-row>
       <b-col md="5" class="my-3">

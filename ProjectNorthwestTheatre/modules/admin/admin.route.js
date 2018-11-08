@@ -8,7 +8,7 @@ let AdminController = require('./controllers/CRUDadmin.controller')
 let ShowController = require('./controllers/show.controller')
 let SectionController = require('./controllers/section.controller')
 let MailController = require('./controllers/mail.controller')
-
+let ReportGenerator = require('./core/file.operation')
 
 MailController.startjob()
 
@@ -65,5 +65,10 @@ router.post('/resetpassword', MailController.SendResetEmail)
 router.get('/resetpassword', AdminController.GetResetPasswordView)
 
 router.post('/confirmresetpassword', AdminController.ResetPassword)
+
+
+/* Reports */
+
+router.post('/report', ReportGenerator.GenerateReport)
 
 module.exports = router
