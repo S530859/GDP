@@ -40,9 +40,11 @@ router.post('/ispublished', ShowController.isPublished)
 
 router.post('/duplicateShow', ShowController.GetduplicateShow, ShowController.GetShowList)
 
-router.post('/reserveTicket', ShowController.reserveTickets)
+router.post('/reserveTicket', ShowController.CheckForShowExistence, ShowController.reserveTickets, ShowController.IncReserveTicketsCount)
 
-router.post('/students', ShowController.getAllStudentsForAShow)
+router.post('/students', ShowController.CheckForShowExistence,ShowController.getAllStudentsForAShow)
+
+router.post('/unreserve', ShowController.CheckForShowExistence,ShowController.unreserve,ShowController.DecReserveTicketsCount, ShowController.getAllStudentsForAShow)
 
 /* section CRUD operations */
 router.post('/addsection', SectionController.addSection)

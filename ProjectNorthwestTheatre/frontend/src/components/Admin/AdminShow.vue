@@ -268,10 +268,10 @@ export default {
       axios
         .post(url + "/students", { show_id: this.show._id })
         .then(res => {
-          console.log(res)
+          console.log(_this)
           _this.$router.push({
             name: "unreserve",
-            params: { shows: res.data }
+            params: { students: res.data, show_id: _this.show._id, ShowTitle: _this.show.ShowTitle }
           })
         })
         .catch(err => {

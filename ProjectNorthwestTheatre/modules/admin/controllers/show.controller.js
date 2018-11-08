@@ -7,6 +7,7 @@ let path = require('path')
 let StudentModel = require('../../../models/TheatreAppreciationStudent.model')
 let GeneralAudienceModel = require('../../../models/Audience.model')
 let ObjectId = require('mongoose').Types.ObjectId
+let _ = require('underscore')
 
 let addShow = (req, res, next) => {
     req.body.Ticketdetails = JSON.parse(req.body.Ticketdetails)
@@ -118,54 +119,60 @@ let GetduplicateShow = (req, res, next) => {
              return res.status(400).send('error while duplicating a show', err)
         })              
 }
+
 module.exports.GetduplicateShow = GetduplicateShow
 
-let reserveTickets = (req,res) => {
+let CheckForShowExistence = (req,res,next) => {
+    ShowModel.findOne({ _id: req.body.show_id }).exec( (err, show) => {
+        if(err || !show) return res.send(400, "Show not found")
+        next()
+    })
+}
+module.exports.CheckForShowExistence = CheckForShowExistence
+
+let reserveTickets = (req,res,next) => {
     let TheatreAppreciationStudent = req.body.isStudent
     req.body.SectionEnrolled = parseInt(req.body.SectionEnrolled) 
     req.body.NumberOfTicketsperPerson = parseInt(req.body.NumberOfTicketsperPerson) 
-    if(TheatreAppreciationStudent === "true"){
-        let Student = new StudentModel(req.body)
-        Student.save()
-        .then(
-            result => {
-                console.log(result)
-                return res.send(200, "Ticket reserved")
+      let model = TheatreAppreciationStudent ? StudentModel : GeneralAudienceModel
+        model.findOne({ "EmailAddress": req.body.EmailAddress }, (err,reserve) => {
+            if(err) return res.send(400, "Student not found")
+            if(reserve){
+                console.log(reserve.ShowID)
+               if(_.contains(reserve.ShowID, req.body.show_id)) return res.send(400, "Already Registered")
+                reserve.ShowID.push(req.body.show_id)
+                reserve.save((err) => {
+                    if(err) return res.send(400, "Error while reserving Ticket")
+                    next()
+                })
+            }else{
+                req.body.ShowID = [req.body.show_id]
+                new model(req.body).save((err,Student) => {
+                    if(err) return res.send(400, "Error while reserving Ticket")
+                    next()
+                })
             }
-        )
-        .catch(
-            err => {
-                console.log(err)
-                return res.send(400, "Error while reserving Ticket For Theatre Appreciation Student")
-            }
-        ) 
-    }else{
-        let GeneralAudience = new GeneralAudienceModel(req.body)
-        GeneralAudience.save()
-            .then(
-                result => {
-                    console.log(result)
-                    return res.send(200, "Ticket reserved")
-                }
-            )
-            .catch(
-                err => {
-                    console.log(err)
-                    return res.send(400, "Error while reserving Ticket For General Audience")
-                }
-            )
-    }
+        })  
 }
 module.exports.reserveTickets = reserveTickets
 
 
+let IncReserveTicketsCount = (req,res) => {
+    ShowModel.findOneAndUpdate({ _id: req.body.show_id }, { $inc: { ReservedSeats : 1 } }).exec((err,show) => {
+        if(err) console.log(`error when incrementing the count for show reserved seats`)
+        return res.send(200, "Ticket reserved")
+    })
+}
+
+module.exports.IncReserveTicketsCount = IncReserveTicketsCount
+
 let getAllStudentsForAShow = async (req,res) => {
     let students = await Promise.all([  StudentModel.find(
-                                            { ShowID: new ObjectId(req.body.show_id) },
+                                            { ShowID: req.body.show_id },
                                             ['EmailAddress', 'LastName','FirstName', 'SectionEnrolled']
                                         ).exec() ,
                                         GeneralAudienceModel.find(
-                                            { ShowID: new ObjectId(req.body.show_id) },
+                                            { ShowID: req.body.show_id },
                                             ['EmailAddress', 'LastName', 'FirstName', 'NumberOfTicketsperPerson']
                                         ).exec() 
                                     ])
@@ -174,3 +181,39 @@ let getAllStudentsForAShow = async (req,res) => {
 }
 
 module.exports.getAllStudentsForAShow = getAllStudentsForAShow
+
+let unreserve = (req,res,next) => {
+    let model = req.body.isStudent ? StudentModel : GeneralAudienceModel
+        model.findOne({ _id: req.body.id }, function (err, reserve) {
+            if (err || !reserve) return res.status(400).send('Cannot Delete, Reservee not found')
+            console.log(reserve.ShowID)
+            if(!_.contains(reserve.ShowID, req.body.show_id)) return res.send(400, "Student has not registered for this show")
+            _.each(reserve.ShowID, function(ele,index){
+                if(ele === req.body.show_id){
+                    reserve.ShowID.splice(index,1)
+                }
+            })
+            if(reserve.ShowID.length <= 0) {
+                model.findOneAndDelete({ _id : reserve.id },function(err,doc){
+                    if(err) return res.send(400, "Error while unreserving Ticket saving")
+                        next()
+                })
+            }else{
+                reserve.save((err) => {
+                    if(err) return res.send(400, "Error while unreserving Ticket saving")
+                        next()
+                })          
+            }
+        })
+}
+
+module.exports.unreserve = unreserve
+
+let DecReserveTicketsCount = (req,res,next) => {
+    ShowModel.findOneAndUpdate({ _id: req.body.show_id }, { $inc: { ReservedSeats : -1 } }).exec((err,show) => {
+        if(err) console.log(`error when decrementing the count for show reserved seats`)
+        next()
+    })
+}
+
+module.exports.DecReserveTicketsCount = DecReserveTicketsCount
