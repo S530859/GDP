@@ -12,8 +12,6 @@ window.moment = require('moment')
 window.axios = require('axios')
 window.axios.defaults.headers.post['Content-Type'] = 'application/json'
 window.axios.interceptors.request.use(function (config) {
-  console.log(config)
-  console.log(window.axios)
   if (localStorage.getItem('AccessToken')) {
     config.headers.token = localStorage.getItem('AccessToken')
   }

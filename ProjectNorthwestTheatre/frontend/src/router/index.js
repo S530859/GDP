@@ -117,8 +117,9 @@ export default new Router({
           component: AdminLogin
         },
         {
-          path: 'unreserve/:show_id',
+          path: 'unreserve',
           name: 'unreserve',
+          beforeEnter: Guard.auth,
           props: true,
           component: Unreserve
         }
