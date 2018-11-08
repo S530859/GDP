@@ -109,24 +109,19 @@
             </div>
             <!-- buttons inside the card -->
             <div class="row justify-content-around m-2 bg-white rounded " style="border:1px ">
-              <button class="col-sm m-2 btn btn-outline-primary" type="button"
-              @click="emailevent()">
+              <button class="col-sm m-2 btn btn-outline-primary" type="button" @click="emailevent()">
                 <strong><span class = "mr-2"><i class="fas fa-envelope"></i></span>Email</strong>
               </button>
-              <button class="col-sm m-2 btn btn-outline-warning" type="button" >
-              <a href="http://localhost:3000/Reports/SampleExcelReport.xlsx">
+              <a class="col-sm m-2 btn btn-outline-warning" type="a" @click="GenerateReport">
                 <strong><span class = "mr-2"><i class="fas fa-file-excel"></i></span> Report</strong>
               </a>
-              </button>
               <button class="col-sm m-2 btn btn-outline-success" type="button" @click="emitevent()">
                 <strong><span class = "mr-2"><i class="fas fa-ticket-alt"></i></span>Reserve Tickets</strong>
               </button>
-              <button class="col-sm m-2 btn btn-outline-secondary" type="button"
-              @click="editevent()">
+              <button class="col-sm m-2 btn btn-outline-secondary" type="button" @click="editevent()">
                 <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Edit Show</strong>
               </button>
-               <button class="col-sm m-2 btn btn-outline-secondary" type="button"
-              @click="duplicateEvent(show)">
+               <button class="col-sm m-2 btn btn-outline-secondary" type="button" @click="duplicateEvent(show)">
                 <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Duplicate Show</strong>
               </button>
             </div>
@@ -263,6 +258,34 @@ export default {
   },
   props: ["show"],
   methods: {
+    GenerateReport () {
+      // var _this = this
+      // axios.post(url + '/report', { show_id: this.show._id, show_name: this.show.title + '.xlsx' })
+      // .then(res => {
+        
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      axios({
+          url: url + '/report',
+          method: 'POST',
+          responseType: 'blob', // important
+        },{
+          show_id: this.show._id,
+          show_name: this.show.title + '.xlsx'
+        },
+         { 
+           'Accept': 'application/vnd.ms-excel'
+         }).then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'file.xlsx')
+          document.body.appendChild(link)
+          link.click()
+        })
+    },
     unreservetickets() {
       let _this = this
       axios

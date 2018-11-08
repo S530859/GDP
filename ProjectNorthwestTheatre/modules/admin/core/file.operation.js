@@ -3,6 +3,8 @@ let config = require('../../../config/excel')
 let _ = require('underscore')
 let StudentModel = require('../../../models/TheatreAppreciationStudent.model')
 let AudienceModel = require('../../../models/Audience.model')
+let path = require('path')
+let fs = require('fs')
 
 let GenerateReport = async (req, res, next) => {
 
@@ -28,7 +30,8 @@ let GenerateReport = async (req, res, next) => {
         res.send(400, 'show not found')
     })
     workbook.xlsx.writeFile('./public/Reports/' + req.body.show_name).then(function () {
-        res.send('response ready')
+        res.download(path.resolve( __dirname, '../../../public/Reports/', req.body.show_name))
+        // res.send('file ready')
     })
 }
 
