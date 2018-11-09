@@ -30,6 +30,7 @@ Vue.prototype.$eventbus = new Vue()
 window.$ = require('jquery')
 require('bootstrap')
 require('bootstrap-datepicker')
+window.filesaver = require('file-saver')
 
 Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {

@@ -259,32 +259,18 @@ export default {
   props: ["show"],
   methods: {
     GenerateReport () {
-      // var _this = this
-      // axios.post(url + '/report', { show_id: this.show._id, show_name: this.show.title + '.xlsx' })
-      // .then(res => {
-        
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-      axios({
-          url: url + '/report',
-          method: 'POST',
-          responseType: 'blob', // important
-        },{
-          show_id: this.show._id,
-          show_name: this.show.title + '.xlsx'
-        },
-         { 
-           'Accept': 'application/vnd.ms-excel'
-         }).then((response) => {
-          const url = window.URL.createObjectURL(new Blob([response.data]))
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'file.xlsx')
-          document.body.appendChild(link)
-          link.click()
+      let _this = this
+      axios.post(url + '/report', { show_id: this.show._id }, { responseType:'arraybuffer' })
+      .then(res => {
+          //console.log(res)
+          let blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+          filesaver.saveAs(blob, _this.show.ShowTitle + moment().format('MM/DD/YYYY')  + '.xlsx')
         })
+        .catch(err => {
+          console.log(err)
+        })
+
+      /* filesaver $ moment */
     },
     unreservetickets() {
       let _this = this

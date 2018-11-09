@@ -29,10 +29,17 @@ let GenerateReport = async (req, res, next) => {
     await Promise.all(promises).catch((err) => {
         res.send(400, 'show not found')
     })
-    workbook.xlsx.writeFile('./public/Reports/' + req.body.show_name).then(function () {
-        res.download(path.resolve( __dirname, '../../../public/Reports/', req.body.show_name))
-        // res.send('file ready')
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+	res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx")
+	workbook.xlsx.write(res)
+    .then(function (data) {
+        res.end()
     })
+    // workbook.xlsx.writeFile('./public/Reports/' + req.body.show_name).then(function () {
+    //     res.download(path.resolve( __dirname, '../../../public/Reports/', req.body.show_name))
+    //     // res.send('file ready')
+    // })
 }
 
 module.exports.GenerateReport = GenerateReport
