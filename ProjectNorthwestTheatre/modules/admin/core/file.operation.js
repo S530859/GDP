@@ -15,6 +15,7 @@ let GenerateReport = async (req, res, next) => {
         workbook.addWorksheet(category)
         let worksheet = workbook.getWorksheet(category)
         worksheet.columns = config.columns[category]
+        worksheet.getRow(1).font = { bold: true }
         promises.push(
             new Promise((resolve, reject) => {
                 model.find({ ShowID: req.body.show_id }, function (err, data) {

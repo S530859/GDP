@@ -1,17 +1,47 @@
 module.exports = {
     columns: {
         students: [
-            { header: 'FirstName', key: 'FirstName' },
-            { header: 'LastName', key: 'LastName' },
-            { header: 'EmailAddress', key: 'EmailAddress' },
-            { header: 'Section', key: 'SectionEnrolled' }
+            {
+                header: 'FirstName',
+                key: 'FirstName',
+                width: 30
+            },
+            {
+                header: 'LastName',
+                key: 'LastName',
+                width: 30
+            },
+            {
+                header: 'EmailAddress',
+                key: 'EmailAddress',
+                width: 40
+            },
+            {
+                header: 'Section',
+                key: 'SectionEnrolled'
+            }
         ],
-        others:[
-            { header: 'FirstName', key: 'FirstName' },
-            { header: 'LastName', key: 'LastName' },
-            { header: 'EmailAddress', key: 'EmailAddress' },
-            { header: 'NumberOfTickets', key: 'NumberOfTicketsperPerson' }
+        others: [
+            {
+                header: 'FirstName',
+                key: 'FirstName',
+                width: 30
+            },
+            {
+                header: 'LastName',
+                key: 'LastName',
+                width: 30
+            },
+            {
+                header: 'EmailAddress',
+                key: 'EmailAddress',
+                width: 40
+            },
+            {
+                header: 'NumberOfTickets',
+                key: 'NumberOfTicketsperPerson'
+            }
         ]
     },
-    categories: ['students','others']
+    categories: ['students', 'others']
 }
