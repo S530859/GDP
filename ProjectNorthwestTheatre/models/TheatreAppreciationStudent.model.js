@@ -36,7 +36,15 @@ var TheatreAppreciationStudentSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('TheatreAppreciationStudent', TheatreAppreciationStudentSchema)
+let model
+try{
+    model = mongoose.model('TheatreAppreciationStudent', TheatreAppreciationStudentSchema)
+}catch{
+    model = mongoose.model('TheatreAppreciationStudent')
+}
+
+module.exports = model
+
 
 
 
