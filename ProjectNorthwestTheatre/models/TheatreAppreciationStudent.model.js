@@ -1,4 +1,5 @@
 /* Author: santhosh Bonala */
+let _ = require('underscore')
 
 const mongoose = require('mongoose')
 
@@ -24,7 +25,7 @@ var TheatreAppreciationStudentSchema = new mongoose.Schema({
         required: [true, 'Number of Tickets required']
     }, */
     ShowID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: [String],
         required: [true, 'Show required']
     },
     SectionEnrolled:{
@@ -34,4 +35,16 @@ var TheatreAppreciationStudentSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('TheatreAppreciationStudent', TheatreAppreciationStudentSchema)
+
+let model
+try{
+    model = mongoose.model('TheatreAppreciationStudent', TheatreAppreciationStudentSchema)
+}catch{
+    model = mongoose.model('TheatreAppreciationStudent')
+}
+
+module.exports = model
+
+
+
+

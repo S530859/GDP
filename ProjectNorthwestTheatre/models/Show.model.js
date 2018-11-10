@@ -56,4 +56,11 @@ var ShowSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Show',ShowSchema)
+let model
+try{
+    model = mongoose.model('Show',ShowSchema)
+}catch{
+    model = mongoose.model('Show')
+}
+
+module.exports = model

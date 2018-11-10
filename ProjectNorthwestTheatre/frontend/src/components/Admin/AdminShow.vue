@@ -108,25 +108,20 @@
               </div>
             </div>
             <!-- buttons inside the card -->
-            <div class="row justify-content-around mt-3 mx-2 bg-white rounded " style="border:1px ">
-              <button class="col-sm m-2 btn btn1 " type="button"
-              @click="emailevent()">
+            <div class="row justify-content-around m-2 bg-white rounded " style="border:1px ">
+              <button class="col-sm m-2 btn btn-outline-primary" type="button" @click="emailevent()">
                 <strong><span class = "mr-2"><i class="fas fa-envelope"></i></span>Email</strong>
               </button>
-              <button class="col-sm m-2 btn btn1 " type="button" >
-              <a href="http://localhost:3000/Reports/SampleExcelReport.xlsx">
+              <a class="col-sm m-2 btn btn-outline-warning" type="a" @click="GenerateReport">
                 <strong><span class = "mr-2"><i class="fas fa-file-excel"></i></span> Report</strong>
               </a>
-              </button>
-              <button class="col-sm m-2 btn btn1 " type="button" @click="emitevent()">
+              <button class="col-sm m-2 btn btn-outline-success" type="button" @click="emitevent()">
                 <strong><span class = "mr-2"><i class="fas fa-ticket-alt"></i></span>Reserve Tickets</strong>
               </button>
-              <button class="col-sm m-2 btn btn1 " type="button"
-              @click="editevent()">
+              <button class="col-sm m-2 btn btn-outline-secondary" type="button" @click="editevent()">
                 <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Edit Show</strong>
               </button>
-               <button class="col-sm m-2 btn btn1 " type="button"
-              @click="duplicateEvent(show)">
+               <button class="col-sm m-2 btn btn-outline-secondary" type="button" @click="duplicateEvent(show)">
                 <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Duplicate Show</strong>
               </button>
             </div>
@@ -263,15 +258,29 @@ export default {
   },
   props: ["show"],
   methods: {
+    GenerateReport () {
+      let _this = this
+      axios.post(url + '/report', { show_id: this.show._id }, { responseType:'arraybuffer' })
+      .then(res => {
+          //console.log(res)
+          let blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+          filesaver.saveAs(blob, _this.show.ShowTitle + moment().format('MM/DD/YYYY')  + '.xlsx')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+      /* filesaver $ moment */
+    },
     unreservetickets() {
       let _this = this
       axios
         .post(url + "/students", { show_id: this.show._id })
         .then(res => {
-          console.log(res)
+          console.log(_this)
           _this.$router.push({
             name: "unreserve",
-            params: { shows: res.data }
+            params: { students: res.data, show_id: _this.show._id, ShowTitle: _this.show.ShowTitle }
           })
         })
         .catch(err => {

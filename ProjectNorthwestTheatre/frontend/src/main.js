@@ -12,8 +12,6 @@ window.moment = require('moment')
 window.axios = require('axios')
 window.axios.defaults.headers.post['Content-Type'] = 'application/json'
 window.axios.interceptors.request.use(function (config) {
-  console.log(config)
-  console.log(window.axios)
   if (localStorage.getItem('AccessToken')) {
     config.headers.token = localStorage.getItem('AccessToken')
   }
@@ -32,6 +30,7 @@ Vue.prototype.$eventbus = new Vue()
 window.$ = require('jquery')
 require('bootstrap')
 require('bootstrap-datepicker')
+window.filesaver = require('file-saver')
 
 Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {

@@ -55,4 +55,11 @@ AdminSchema.methods.comparePassword = function (candidatePassword, callback) {
     });
 };
 
-module.exports = mongoose.model('Admin', AdminSchema)
+let model
+try{
+    model = mongoose.model('Admin', AdminSchema)
+}catch{
+    model = mongoose.model('Admin')
+}
+
+module.exports = model

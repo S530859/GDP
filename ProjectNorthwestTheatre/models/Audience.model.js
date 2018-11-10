@@ -24,9 +24,16 @@ var AudienceSchema = new mongoose.Schema({
         required: [true, 'Number of Tickets required']
     },
     ShowID:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: [String],
         required: [true, 'Show required']
     }
 })
 
-module.exports = mongoose.model('Audience', AudienceSchema)
+let model
+try{
+    model = mongoose.model('Audience', AudienceSchema)
+}catch{
+    model = mongoose.model('Audience')
+}
+
+module.exports = model

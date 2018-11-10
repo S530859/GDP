@@ -260,7 +260,6 @@ export default {
       })
         .then(
           (result) => {
-            console.log(`send mail clicked ${JSON.stringify(result)}`)
             if (result.value) {
               axios.post(url + '/sendemail', {
                 show: this.show,
@@ -300,27 +299,26 @@ export default {
         method: 'get',
         url: url + '/sectionlist'
       })
-        .then(function (response) {
-          console.log(response.data)
-          _this.sectionlist = response.data
-          _.each(_this.sectionlist, function (section) {
-            section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
-          })
+      .then(function (response) {
+        _this.sectionlist = response.data
+        _.each(_this.sectionlist, function (section) {
+          section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
         })
-        .catch(function (err) {
-          console.log('error while getting section list', err)
-        })
+      })
+      .catch(function (err) {
+        console.log('error while getting section list', err)
+      })
+
       axios({
         method: 'get',
         url: url + '/showlist'
       })
-        .then(function (response) {
-          console.log(response.data)
-          _this.showlist = response.data
-        })
-        .catch(function (err) {
-          console.log('error while getting show list', err)
-        })
+      .then(function (response) {
+        _this.showlist = response.data
+      })
+      .catch(function (err) {
+        console.log('error while getting show list', err)
+      })
     },
     ReserveTickets () {
       var reserveticketdata = {
@@ -330,9 +328,8 @@ export default {
         'SectionEnrolled': $('#SectionEnrolled').val(),
         'NumberOfTicketsperPerson': $('#NumberOfTicketsperPerson').val() ? $('#NumberOfTicketsperPerson').val() : 1,
         'isStudent': this.isTheatreAppreciationStudent,
-        'ShowID': this.reserveshow._id
+        'show_id': this.reserveshow._id
       }
-
 
       axios
         .create({
@@ -344,9 +341,9 @@ export default {
         .post('/reserveTicket', reserveticketdata)
         .then(res => {
           this.closeReserveTicketsModal()
+          this.refreshData()
           swal('Congratualtions!', 'You have reserved a Seat', 'success')
           $('#ReserveTicketsAdmin')[0].reset()
-          console.log('Ticket Reserved ' + res)
         })
         .catch(err => {
           console.log('error in Reserving Ticket' + err)
@@ -354,30 +351,26 @@ export default {
       }
   },
   mounted () {
-    console.log('mounted')
+    console.log(`mounted ${this.showlist}`)
     this.check = true
     $('[data-toggle=popover]').popover()
-    // console.log($('table')[0].outerHTML)
-    // $('#pop').popover({
-    //   content: $('table')[0].outerHTML
-    // })
   },
   created () {
     this.refreshData()
     this.$eventbus.$on('refreshdata', function (data) {
       this.showlist = data
-      console.log(data, this.showlist)
+   //   console.log(data, this.showlist)
     }.bind(this))
 
     this.$eventbus.$on('showdescription', function (showclicked) {
       this.show = showclicked
-      console.log('show description', this.show)
+    //  console.log('show description', this.show)
       this.showdescriptionmodal()
     }.bind(this))
   },
   computed: {
     updatedShowList: function () {
-      console.log(this.showlist)
+     // console.log(this.showlist)
       return this.showlist.filter(show => {
         return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
       })

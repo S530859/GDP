@@ -63,9 +63,9 @@
               </div>
               <!-- details of the show END -->
               <div class="col-lg lead" style="border:1px ">
-                <div class="component pb-1 mt-1 text-left seats_rounded bg-success text-light " style="border:2px solid grey">
+                                                                                                                                                                                                                                                                                                <div class="component pb-1 mt-1 text-center seats_rounded bg-success text-light " style="border:2px solid grey">
                   <!-- Total Seats -->
-                  <span class="px-3 font-weight-bold">
+                  <span class="px-1 font-weight-bold">
                       Limited Seats Available
                   </span>
                   <br>
