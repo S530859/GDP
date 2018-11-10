@@ -395,6 +395,9 @@ export default {
   background-color: white;
    font-weight: bold;
 } */
+.bg-dark {
+    background-color: #025736!important;
+}
 
 .white_green {
   padding: 15px 5px;
@@ -416,12 +419,12 @@ export default {
   transform: translateY(2px);
 }
 .bor {
-    box-shadow: 4px 10px 2px -4px rgba(74, 243, 18, 0.172);
+    /* box-shadow: 4px 10px 2px -4px rgba(74, 243, 18, 0.172); */
 }
 
 .tex {
     color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172);
+    /* text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172); */
 }
 .required:after {
         content: '*';

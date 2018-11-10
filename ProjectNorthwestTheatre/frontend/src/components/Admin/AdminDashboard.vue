@@ -7,7 +7,7 @@
             <div class="input-group mt-3 ">
                 <input class="form-control py-2 border-right-0 border " type="search" v-model="search"  placeholder="Search" id="example-search-input">
                 <span class="input-group-append">
-                    <div class="input-group-text bg-dark text-light "><i class="fa fa-search"></i></div>
+                    <div class="input-group-text green text-light "><i class="fa fa-search"></i></div>
                 </span>
             </div>
 
@@ -440,6 +440,10 @@ export default {
 .m-3{
   margin: 10px;
 }
+}
+
+.green{
+  background-color: #025736
 }
 
 </style>

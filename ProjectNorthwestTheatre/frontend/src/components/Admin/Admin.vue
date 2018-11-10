@@ -46,4 +46,11 @@ export default {
 </script>
 <style>
 
+.color{
+  color:#025736;
+  color: 	#7CAB9B;
+  color: #D2DED8;
+  color: #FDFDFD;
+}
+
 </style>

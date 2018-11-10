@@ -21,11 +21,11 @@
                         <div class="btn-group rounded btn-width" id="status" data-toggle="buttons">
                           <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }" @click="showstatuschanged(true)">
                             <input class="d-none" type="radio" value="1">
-                            <strong>Publish</strong>
+                            <strong><span class = "mr-2"><i class="fa fa-check"></i></span>Publish</strong>
                           </label>
                           <label class="btn btn-default btn-off" style="border:2px solid white" :class="{ active: !show.isPublished }" @click="showstatuschanged(false)">
                             <input class="d-none" type="radio" value="0" >
-                            <strong>Unpublish</strong>
+                            <strong><span class = "mr-2"><i class="fa fa-ban"></i></span>Unpublish</strong>
                           </label>
                         </div>
                     <div class="btn-group rounded btn-width col-md-1 float-right">
@@ -41,7 +41,7 @@
 <!-- comment -->
         <div class="card-body green">
           <div class="content">
-            <div class="row justify-content-around m-3 mar rounded  bg-light">
+            <div class="row justify-content-around mx-1 mar rounded  bg-light">
               <!-- image column -->
               <div class="col-lg align-self-center" id="imagediv">
                 <img :src="'/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
@@ -108,24 +108,24 @@
               </div>
             </div>
             <!-- buttons inside the card -->
-            <div class="row justify-content-around m-2 bg-white rounded " style="border:1px ">
-              <button class="col-sm m-2 btn btn-outline-primary" type="button"
+            <div class="row justify-content-around mt-3 mx-2 bg-white rounded " style="border:1px ">
+              <button class="col-sm m-2 btn btn1 " type="button"
               @click="emailevent()">
                 <strong><span class = "mr-2"><i class="fas fa-envelope"></i></span>Email</strong>
               </button>
-              <button class="col-sm m-2 btn btn-outline-warning" type="button" >
+              <button class="col-sm m-2 btn btn1 " type="button" >
               <a href="http://localhost:3000/Reports/SampleExcelReport.xlsx">
                 <strong><span class = "mr-2"><i class="fas fa-file-excel"></i></span> Report</strong>
               </a>
               </button>
-              <button class="col-sm m-2 btn btn-outline-success" type="button" @click="emitevent()">
+              <button class="col-sm m-2 btn btn1 " type="button" @click="emitevent()">
                 <strong><span class = "mr-2"><i class="fas fa-ticket-alt"></i></span>Reserve Tickets</strong>
               </button>
-              <button class="col-sm m-2 btn btn-outline-secondary" type="button"
+              <button class="col-sm m-2 btn btn1 " type="button"
               @click="editevent()">
                 <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Edit Show</strong>
               </button>
-               <button class="col-sm m-2 btn btn-outline-secondary" type="button"
+               <button class="col-sm m-2 btn btn1 " type="button"
               @click="duplicateEvent(show)">
                 <strong><span class = "mr-2"><i class="far fa-edit"></i></span>Duplicate Show</strong>
               </button>
@@ -208,7 +208,7 @@
                       <i class="fas fa-dollar-sign fa-lg" style="position: absolute; padding: 10px 20px; left: 0px;"></i>
                       <input class="form-control" style="padding-left: 20px;" type="number" placeholder="Ticket Price" id="TicketPriceEditShow" min="1" required>
                     </div>
-                    <button class="btn col-sm-1 mx-1 py-0 my-0" style="height: 38px;" type="submit">Add</button>
+                    <button class="btn btn1 col-sm-1 mx-1 py-0 my-0" style="height: 38px;" type="submit">Add</button>
                   </div>
                 </form>
 
@@ -684,4 +684,17 @@ export default {
   max-height: calc(100% - 120px);
   overflow-y: scroll;
 }
+
+
+.btn1{
+  background-color: #D2DED8;
+  border: 1px solid #7CAB9B;
+  color: black
+}
+
+.btn1:hover {
+    background-color: #025736;
+    color: whitesmoke
+}
+
 </style>

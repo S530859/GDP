@@ -260,4 +260,8 @@ body {
   cursor: -webkit-grab;
   cursor: grab;
 }
+
+.bg-success, .btn-success {
+  background-color:#025736!important;
+}
 </style>
