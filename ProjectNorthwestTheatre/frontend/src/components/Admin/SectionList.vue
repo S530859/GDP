@@ -3,7 +3,7 @@
      <!-- Created by Supraja Kumbam -->
     <!-- Saivarun Illendula : Added Card to Section List -->
      <div class="tb">
-       <h1 class = "h2 mb-3 font-weight-normal mt-3">VIEW SECTION </h1>
+       <h1 class = "h2 mb-3 font-weight-normal mt-3">VIEW SECTIONS </h1>
         <table class="table table-striped table-bordered">
           <thead class="thead-dark">
             <tr>

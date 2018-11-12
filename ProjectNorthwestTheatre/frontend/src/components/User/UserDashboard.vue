@@ -25,7 +25,7 @@
             <div class="input-group mt-3 ">
                 <input class="form-control py-2 border-right-0 border" type="search" v-model="search"  placeholder="Search" id="example-search-input">
                 <span class="input-group-append">
-                    <div class="input-group-text "><i class="fa fa-search"></i></div>
+                    <div class="input-group-text green text-light"><i class="fa fa-search"></i></div>
                 </span>
             </div>
       </div>
@@ -141,5 +141,9 @@ export default {
    /* border-bottom: 5px solid rgba(4, 224, 151, 0.521); */
      /* border-bottom-left-radius: 50px ; */
      box-shadow: 0px 10px 5px #f6f4ef;
+}
+
+.green{
+  background-color: #025736;
 }
 </style>

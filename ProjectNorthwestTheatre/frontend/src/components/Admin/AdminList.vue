@@ -19,9 +19,9 @@
               <td class="text-left">
                 {{ ele.Username }}
               </td>
-              <td class="text-left">
+              <td class="text-left" >
                 {{ ele.Email }}
-                <button type="button" class="btn rounded-circle float-right m-2" id="delete" @click="deleteadmin(ele._id)">
+                <button type="button" class="btn rounded-circle float-right m-2" id="delete" @click="deleteadmin(ele._id)" v-if="index != 0">
                     <i class="fas fa-trash"></i>
                 </button>
                 <button type="button" class="btn rounded-circle float-right m-2" id="edit" @click="editadmin(ele)">

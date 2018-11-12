@@ -37,11 +37,15 @@
                   </li>
                   <li class="nav-item my-2">
                       <router-link to="/admin/addsection" class="btn white_green btn-block">
-                      <span class="mr-2"><i class="fas fa-plus"></i></span>Add Section</router-link>
+                      <span class="mr-2"><i class="fas fa-plus"></i></span>Add Sections</router-link>
                   </li>
                   <li class="nav-item my-2 ">
                     <router-link to="/admin/cancelticket" class="btn white_green btn-block">
                     <span class="mr-2"><i class="fas fa-ban"></i> CancelTicket</span></router-link>
+                </li>
+                 <li class="nav-item my-2 ">
+                    <router-link to="/user/userView" class="btn white_green btn-block">
+                    <span class="mr-2"><i class="fas fa-eye"></i> Audience View</span></router-link>
                 </li>
                 <li id="logS" class="nav-item my-2 d-md-none d-lg-none d-xl-none " @click="logout()" v-if="login">
                     <router-link to="" class="btn white_green btn-block">
