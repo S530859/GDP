@@ -147,7 +147,7 @@
           <div class="modal-body" >
               <div class="form-group row">
                 <label class="col-sm-2 offset-sm-1 form-label py-2">Show Name:</label>
-                <input class="col-sm-2 form-control" type="text" placeholder="Show Name" id="showname" :value="show.ShowTitle" name="ShowTitle" required>
+                <input class="col-sm-2 form-control" type="text" placeholder="Show Name" autofocus="autofocus" id="showname" :value="show.ShowTitle" name="ShowTitle" required>
                 <label class="col-sm-2 offset-sm-1 form-label py-2">Playwright:</label>
                 <div class="col-sm-2">
                   <input class="form-control" type="text" placeholder="Playwright" id="playwright" :value="show.ShowPlayWright" name="ShowPlayWright" required>

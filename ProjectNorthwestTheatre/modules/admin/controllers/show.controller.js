@@ -15,26 +15,26 @@ let addShow = (req, res, next) => {
            return res.send(400, `${key} cannot be empty`)
         }
     })
-    req.body.Ticketdetails = JSON.parse(req.body.Ticketdetails)
+    if(!req.body.Ticketdetails) return res.status(422).send("Ticketdetails field cannot be empty")
+    req.body.Ticketdetails = JSON.parse(req.body.Ticketdetails) 
     let Show = new ShowModel(req.body)
-    buffer = req.file.buffer
+    buffer = req.file && req.file.buffer ? req.file.buffer : undefined
     Show.save()
         .then(function (Show) {
             fs.open('images/' + Show.id, 'w', function (err, fd) {
-                if (err) {
-                    throw 'error opening file: ' + err
-                }
+                if (err) return res.status(422).send('error opening file: ' + err)
+                if(!buffer) return res.status(422).send('error opening file: ' + err)
                 fs.write(fd, buffer, 0, buffer.length, null, function (err) {
-                    if (err) throw 'error writing file: ' + err
+                    if (err) return res.status(422).send('error writing file: ' + err)
                     fs.close(fd, function () {
                         console.log('file written')
                     })
-                return res.send('Show Added successfully')
+                   return res.send('Show Added successfully')
                 })
             })
         })
         .catch(function (err) {
-            return res.status(400).send('error while adding a show', err)
+            return res.status(400).send('error while adding a show' + err)
         })
 }
 

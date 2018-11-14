@@ -78,12 +78,12 @@
                 <input class="col-sm-7 form-control" type="text" placeholder="Playwright" id="playwright" name="ShowPlayWright" required>
               </div>
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Description:</label>
+                <label class="col-sm-4 form-label required">Description:</label>
                 <textarea class="col-sm-7 form-control" type="text" placeholder="Description of Show" id="description" name="ShowDescription">
                 </textarea>
               </div>
               <div class="form-group row">
-                <label class="col-sm-4 form-label">Show Date:</label>
+                <label class="col-sm-4 form-label required">Show Date:</label>
                     <input type="text" class="date form-control col-sm-7" name="ShowDate" id="datepicker-input" required>
                         <span @click="showdatepicker()" id="date-icon" class="col-sm-1">
                           <i class="fas fa-calendar-alt fa-2x" aria-hidden="true" ></i>
@@ -103,7 +103,7 @@
                   <input class="col-sm-7 form-control" type="text" placeholder="Venue" id="showvenue" name="ShowVenue" required>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-4 form-label">Show Rating:</label>
+                  <label class="col-sm-4 form-label required">Show Rating:</label>
                   <select id="inputState" class="form-control col-sm-7" required name="ShowRating" >
                     <option selected>Choose...</option>
                     <option>A</option>

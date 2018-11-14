@@ -30,14 +30,6 @@ var ShowSchema = new mongoose.Schema({
     isPublished : {
         type : Boolean
     },
-    ShowPriceForAdult : {
-        type : Number,
-        min : [0, 'Price Cannot be negative']
-    },
-    ShowPriceForChildren: {
-        type: Number,
-        min: [0, 'Price Cannot be negative']
-    },
     ShowRating : {
         type : String,
         trim : true
