@@ -87,8 +87,9 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">Email:</label>
-                    <input class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email" pattern="[S|s]{1}[0-9]{6}@nwmissouri\.edu"
+                    <input v-if="isTheatreAppreciationStudent === 'true'" class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email" pattern="[S|s]{1}[0-9]{6}@nwmissouri\.edu"
                     oninvalid="this.setCustomValidity('expecting s530859@nwmissouri.edu')" oninput="this.setCustomValidity('')" required>
+                    <input class="col-sm-7 form-control" type="text"  v-else id="EmailAddress" name="EmailAddress" placeholder="Email" required>
                   </div>
                     <fieldset class="form-group">
                         <div class="row">
