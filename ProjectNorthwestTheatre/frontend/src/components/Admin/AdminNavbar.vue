@@ -312,7 +312,7 @@ export default {
 <style scoped>
 .btn {
   white-space:normal !important;
-  word-wrap: break-word; 
+  word-wrap: break-word;
 }
 
 #sidebar {

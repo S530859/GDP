@@ -42,7 +42,6 @@
     >
       <template slot="#" slot-scope="data"> {{data.index + 1}} </template>
       <template slot="actions" slot-scope="row">
-        
         <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger" >
          <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
         </b-button>
@@ -55,7 +54,6 @@
         <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
       </b-col>
     </b-row>
-     
 
     <!-- Info modal -->
     <b-modal id='modalInfo' ref="modal" hide-footer :title="modalInfo.title" no-fade centered >
@@ -78,7 +76,7 @@ export default {
   data () {
     return {
       customfilter: '',
-      customfilterproperties: ['Students','Others','All'],
+      customfilterproperties: ['Students', 'Others', 'All'],
       items: this.students,
       fields: [
         '#',
@@ -131,10 +129,10 @@ export default {
     resetModal () {
       $('#modalInfo').removeClass('zoomIn')
       $('#modalInfo').addClass('zoomOut')
-       setTimeout(function(){ 
-        $("#modalInfo").modal("hide")    
+      setTimeout(function () {
+        $('#modalInfo').modal('hide')
         $('#modalInfo').removeClass('animated zoomOut')
-        }, 100)
+      }, 100)
       // this.modalInfo.title = ''
       // this.modalInfo.content = ''
     },
@@ -147,48 +145,45 @@ export default {
       console.log('test')
       $('#modalInfo').addClass('animated zoomIn')
       $('#modalInfo').modal('show')
-
     },
     customfiltermeth (row) {
-
       console.log(`section ${row.SectionEnrolled}`)
 
-      if(this.customfilter === 'Students'){
-        if(row.SectionEnrolled && !isNaN(row.SectionEnrolled) && row.SectionEnrolled != 'undefined'){
-          return this.filter ? `${row.LastName}${row.FirstName}${row.EmailAddress}`.toLowerCase().includes(this.filter.toLowerCase()) : true 
+      if (this.customfilter === 'Students') {
+        if (row.SectionEnrolled && !isNaN(row.SectionEnrolled) && row.SectionEnrolled !== 'undefined') {
+          return this.filter ? `${row.LastName}${row.FirstName}${row.EmailAddress}`.toLowerCase().includes(this.filter.toLowerCase()) : true
         }
         return false
       }
-      if(this.customfilter === 'Others'){
-         if(row.NumberOfTicketsperPerson){
-          return this.filter ? `${row.LastName}${row.FirstName}${row.EmailAddress}`.toLowerCase().includes(this.filter.toLowerCase()) : true 
+      if (this.customfilter === 'Others') {
+        if (row.NumberOfTicketsperPerson) {
+          return this.filter ? `${row.LastName}${row.FirstName}${row.EmailAddress}`.toLowerCase().includes(this.filter.toLowerCase()) : true
         }
         return false
-    }
-        
-      if(this.filter){
+      }
+      if (this.filter) {
         return `${row.LastName}${row.FirstName}${row.EmailAddress}`.includes(this.filter)
       }
       return true
     },
     unreserveTicket () {
-      /* axios _ url swal */
+      /* swal url axios _ */
       console.log(this.show_id)
-      axios.post( url + '/unreserve', { 
+      axios.post(url + '/unreserve', {
         show_id: this.show_id,
         id: this.modalInfo.content._id,
-        isStudent: this.modalInfo.content.SectionEnrolled && !isNaN(this.modalInfo.content.SectionEnrolled) && this.modalInfo.content.SectionEnrolled != 'undefined' ? true : false
-      }).then( res => {
+        isStudent: this.modalInfo.content.SectionEnrolled && !isNaN(this.modalInfo.content.SectionEnrolled) && this.modalInfo.content.SectionEnrolled !== 'undefined'
+      }).then(res => {
         this.items = res.data
-        swal("Success", "Unreserved a Seat", "success")
+        swal('Success', 'Unreserved a Seat', 'success')
         this.resetModal()
-      }).catch( err => {
-        swal("Failure", "Test", "error")
+      }).catch(err => {
+        swal('Failure', 'Test', 'error')
         console.log(err)
       })
     }
   },
-  props: ['students','show_id','ShowTitle']
+  props: ['students', 'show_id', 'ShowTitle']
 }
 </script>
 <style scoped>

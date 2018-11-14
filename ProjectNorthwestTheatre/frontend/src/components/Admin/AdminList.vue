@@ -222,8 +222,6 @@ div.tb {
   vertical-align: middle;
 } */
 
-
-
 table.table-bordered > tbody > tr > td, th{
     border:1px solid black;
     font-size: 25px;

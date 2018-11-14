@@ -162,7 +162,6 @@
                 <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Time:</label>
                  <input class="col-sm-2 form-control" type="time" :value="show.ShowTime" id="showtime" name="ShowTime" required>
                 <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Date:</label>
-                
                 <div class="col-sm-3" style="position: relative;">
                   <i class="fas fa-calendar-alt fa-2x" style="position: absolute; padding: 3px 20px; right: 0px;" aria-hidden="true"></i>
                   <input type="text" class="date form-control" name="ShowDate" id="datepicker-input" style="padding-right: 40px;"
@@ -245,116 +244,115 @@
 
 <script>
 export default {
-  name: "AdminShow",
-  data() {
+  name: 'AdminShow',
+  data () {
     return {
       /* global moment */
-      ShowDate: moment(this.show.ShowDate, "YYYY-MM-DD").format("MMMM Do YYYY"),
-      ShowTime: moment(this.show.ShowTime, "HH:mm").format("hh:mm a"),
-      token: window.localStorage.getItem("AccessToken"),
+      ShowDate: moment(this.show.ShowDate, 'YYYY-MM-DD').format('MMMM Do YYYY'),
+      ShowTime: moment(this.show.ShowTime, 'HH:mm').format('hh:mm a'),
+      token: window.localStorage.getItem('AccessToken'),
       showImg: true,
       time: Date()
     }
   },
-  props: ["show"],
+  props: ['show'],
   methods: {
     GenerateReport () {
       // var _this = this
       // axios.post(url + '/report', { show_id: this.show._id, show_name: this.show.title + '.xlsx' })
       // .then(res => {
-        
       // })
       // .catch(err => {
       //   console.log(err)
       // })
       axios({
-          url: url + '/report',
-          method: 'POST',
-          responseType: 'blob', // important
-        },{
-          show_id: this.show._id,
-          show_name: this.show.title + '.xlsx'
-        },
-         { 
-           'Accept': 'application/vnd.ms-excel'
-         }).then((response) => {
-          const url = window.URL.createObjectURL(new Blob([response.data]))
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', 'file.xlsx')
-          document.body.appendChild(link)
-          link.click()
-        })
+        url: url + '/report',
+        method: 'POST',
+        responseType: 'blob' // important
+      }, {
+        show_id: this.show._id,
+        show_name: this.show.title + '.xlsx'
+      },
+      {
+        'Accept': 'application/vnd.ms-excel'
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', 'file.xlsx')
+        document.body.appendChild(link)
+        link.click()
+      })
     },
-    unreservetickets() {
+    unreservetickets () {
       let _this = this
       axios
-        .post(url + "/students", { show_id: this.show._id })
+        .post(url + '/students', { show_id: this.show._id })
         .then(res => {
           console.log(_this)
           _this.$router.push({
-            name: "unreserve",
+            name: 'unreserve',
             params: { students: res.data, show_id: _this.show._id, ShowTitle: _this.show.ShowTitle }
           })
         })
         .catch(err => {
-          console.log(res)
+          console.log(err)
         })
     },
-    emitevent() {
+    emitevent () {
       console.log(this.show)
-      this.$emit("showmodal", this.show)
+      this.$emit('showmodal', this.show)
     },
-    emailevent() {
-      this.$emit("showemailmodal", this.show)
+    emailevent () {
+      this.$emit('showemailmodal', this.show)
     },
-    editevent() {
+    editevent () {
       /* global $ */
-      console.log("editclicked", this.show._id)
-      $("#editshow" + this.show._id).modal("show")
-      $("#editshow" + this.show._id).addClass("zoomIn")
+      console.log('editclicked', this.show._id)
+      $('#editshow' + this.show._id).modal('show')
+      $('#editshow' + this.show._id).addClass('zoomIn')
       this.showdatepicker()
     },
-    closeEditShowModal() {
+    closeEditShowModal () {
       var _this = this
-      $("#editshow" + this.show._id).removeClass("zoomIn")
-      $("#editshow" + this.show._id).addClass("zoomOut")
-      setTimeout(function() {
-        $("#editshow" + _this.show._id).modal("hide")
-        $("#editshow" + _this.show._id).removeClass("zoomOut")
+      $('#editshow' + this.show._id).removeClass('zoomIn')
+      $('#editshow' + this.show._id).addClass('zoomOut')
+      setTimeout(function () {
+        $('#editshow' + _this.show._id).modal('hide')
+        $('#editshow' + _this.show._id).removeClass('zoomOut')
       }, 100)
     },
-    editshow() {
+    editshow () {
       console.log(`editclicked ${JSON.stringify(this.show)} `)
       var formdata = new FormData(
-        document.querySelector("#editshowform" + this.show._id)
+        document.querySelector('#editshowform' + this.show._id)
       )
-      formdata.append("Ticketdetails", JSON.stringify(this.show.Ticketdetails))
-      formdata.append("isPublished", this.show.isPublished)
+      formdata.append('Ticketdetails', JSON.stringify(this.show.Ticketdetails))
+      formdata.append('isPublished', this.show.isPublished)
       // var _this = this
       axios
         .create({
           baseURL: url,
-          headers: { token: window.localStorage.getItem("AccessToken") }
+          headers: { token: window.localStorage.getItem('AccessToken') }
         })
-        .post("/updateshow", formdata)
+        .post('/updateshow', formdata)
         .then(
-          function(res) {
-            $("#editshow" + this.show._id).modal("hide")
-            swal("Updated!", "Show has been successfully updated.", "success")
+          function (res) {
+            $('#editshow' + this.show._id).modal('hide')
+            swal('Updated!', 'Show has been successfully updated.', 'success')
             this.time = Date()
             axios({
-              method: "get",
+              method: 'get',
               headers: {
-                token: window.localStorage.getItem("AccessToken")
+                token: window.localStorage.getItem('AccessToken')
               },
-              url: url + "/showlist"
+              url: url + '/showlist'
             })
               .then(response => {
-                this.$eventbus.$emit("refreshdata", response.data)
+                this.$eventbus.$emit('refreshdata', response.data)
               })
               .catch(err => {
-                console.log("error while getting show list", err)
+                console.log('error while getting show list', err)
               })
           }.bind(this)
         )
@@ -362,38 +360,38 @@ export default {
           console.log(error)
         })
     },
-    deleteshow() {
+    deleteshow () {
       /* global swal axios url _ */
       swal({
-        title: "Are you sure?",
-        text: "You wont be able to revert this!",
-        type: "warning",
+        title: 'Are you sure?',
+        text: 'You wont be able to revert this!',
+        type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
       }).then(result => {
         if (result.value) {
           axios
             .create({
               baseURL: url,
-              headers: { token: window.localStorage.getItem("AccessToken") }
+              headers: { token: window.localStorage.getItem('AccessToken') }
             })
-            .post("/deleteshow", { id: this.show._id })
+            .post('/deleteshow', { id: this.show._id })
             .then(res => {
-              swal("Deleted!", "Show has been deleted.", "success")
+              swal('Deleted!', 'Show has been deleted.', 'success')
               axios({
-                method: "get",
+                method: 'get',
                 headers: {
-                  token: window.localStorage.getItem("AccessToken")
+                  token: window.localStorage.getItem('AccessToken')
                 },
-                url: url + "/showlist"
+                url: url + '/showlist'
               })
                 .then(response => {
-                  this.$eventbus.$emit("refreshdata", response.data)
+                  this.$eventbus.$emit('refreshdata', response.data)
                 })
                 .catch(err => {
-                  console.log("error while getting show list", err)
+                  console.log('error while getting show list', err)
                 })
             })
             .catch(error => {
@@ -402,14 +400,14 @@ export default {
         }
       })
     },
-    showstatuschanged(isPublished) {
+    showstatuschanged (isPublished) {
       this.show.isPublished = isPublished
       axios
         .create({
           baseURL: url,
-          headers: { token: window.localStorage.getItem("AccessToken") }
+          headers: { token: window.localStorage.getItem('AccessToken') }
         })
-        .post("/ispublished", {
+        .post('/ispublished', {
           id: this.show._id,
           isPublished: isPublished
         })
@@ -420,28 +418,28 @@ export default {
           console.log(error)
         })
     },
-    emitshowdescription(showclicked) {
-      this.$eventbus.$emit("showdescription", showclicked)
+    emitshowdescription (showclicked) {
+      this.$eventbus.$emit('showdescription', showclicked)
     },
-    duplicateEvent(show) {
-      console.log("duplicate show clicked")
+    duplicateEvent (show) {
+      console.log('duplicate show clicked')
       swal({
-        title: "Duplicate Show",
-        text: "Do you want to duplicate the show!",
-        type: "warning",
+        title: 'Duplicate Show',
+        text: 'Do you want to duplicate the show!',
+        type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Sure!"
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Sure!'
       }).then(res => {
         console.log(res.value)
         if (res.value) {
           axios
             .create({
               baseURL: url,
-              headers: { token: window.localStorage.getItem("AccessToken") }
+              headers: { token: window.localStorage.getItem('AccessToken') }
             })
-            .post("/duplicateShow", show)
+            .post('/duplicateShow', show)
             .then(res => {
               console.log(res)
             })
@@ -451,28 +449,28 @@ export default {
         }
       })
     },
-    showdatepicker() {
-      console.log("date picker clicked")
-      let dates = this.show.ShowDate.split(",")
+    showdatepicker () {
+      console.log('date picker clicked')
+      let dates = this.show.ShowDate.split(',')
       _.each(dates, (element, index, list) => {
-        let date = element.replace(";", "")
+        let date = element.replace(';', '')
         list[index] = new Date(date)
       })
       console.log(dates)
-      $(`#editshowform${this.show._id} .row` + " .date").datepicker(
-        "setDates",
+      $(`#editshowform${this.show._id} .row` + ''.date).datepicker(
+        'setDates',
         dates
       )
       // $('.date').datepicker('show')
     },
-    deleteticket(TicketType) {
+    deleteticket (TicketType) {
       swal({
         title: `Do you want to delete ${TicketType} ?`,
-        text: "You wont be able to revert this!",
-        type: "warning",
+        text: 'You wont be able to revert this!',
+        type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
         confirmButtonText: `Yes, delete!`
       }).then(result => {
         if (result.value) {
@@ -483,32 +481,32 @@ export default {
             })
           )
           swal(
-            "Deleted!",
+            'Deleted!',
             `Ticket Type:  ${TicketType} has been deleted.`,
-            "success"
+            'success'
           )
         }
       })
     },
-    addticketpriceEditModal() {
+    addticketpriceEditModal () {
       this.show.Ticketdetails.push({
-        TicketType: $("#TicketTypeEditShow").val(),
-        TicketPrice: $("#TicketPriceEditShow").val()
+        TicketType: $('#TicketTypeEditShow').val(),
+        TicketPrice: $('#TicketPriceEditShow').val()
       })
-      document.getElementById("ticketformEdit").reset()
+      document.getElementById('ticketformEdit').reset()
     }
   },
-  mounted() {
+  mounted () {
     // $('.date').datepicker({
     //     container: '#editshow' + this.show._id
     //   })
   },
   watch: {
-    show: function(newVal, oldVal) {
-      this.ShowDate = moment(newVal.ShowDate, "YYYY-MM-DD").format(
-        "MMMM Do YYYY"
+    show: function (newVal, oldVal) {
+      this.ShowDate = moment(newVal.ShowDate, 'YYYY-MM-DD').format(
+        'MMMM Do YYYY'
       )
-      this.ShowTime = moment(newVal.ShowTime, "HH:mm").format("hh:mm a")
+      this.ShowTime = moment(newVal.ShowTime, 'HH:mm').format('hh:mm a')
     }
   }
 }

@@ -16,7 +16,7 @@
                         <button class="col-md-12 btn btn-success" type="button" data-toggle="modal" data-target="#ReserveTickets">
                           <strong><span class = "mr-2"><i class="fas fa-user"></i></span>Reserve</strong>
                         </button>
-                     </div>         
+                     </div>
                  </div>
               </div>
             </div>
@@ -165,42 +165,42 @@
 
 <script>
 export default {
-  name: "UserShow",
-  data() {
+  name: 'UserShow',
+  data () {
     return {
-      /* global moment */
-      ShowDate: moment(this.show.ShowDate, "YYYY-MM-DD").format("MMMM Do YYYY"),
-      ShowTime: moment(this.show.ShowTime, "HH:mm").format("hh:mm a"),
-      token: window.localStorage.getItem("AccessToken"),
+      /* $ global moment */
+      ShowDate: moment(this.show.ShowDate, 'YYYY-MM-DD').format('MMMM Do YYYY'),
+      ShowTime: moment(this.show.ShowTime, 'HH:mm').format('hh:mm a'),
+      token: window.localStorage.getItem('AccessToken'),
       showImg: true,
       time: Date(),
       isTheatreAppreciationStudent: '',
       sectionlist: ''
-    };
+    }
   },
-  props: ["show"],
+  props: ['show'],
   methods: {
-    emitshowdescription(showclicked) {
-      this.$eventbus.$emit("showdescription", showclicked);
+    emitshowdescription (showclicked) {
+      this.$eventbus.$emit('showdescription', showclicked)
     },
-    closeReserveTicketsModal() {
-      $("#ReserveTickets.modal").removeClass("zoomIn");
-      $("#ReserveTickets.modal").addClass("zoomOut");
-      setTimeout(function() {
-        $("#ReserveTickets").modal("hide");
-        $("#ReserveTickets.modal").removeClass("zoomOut");
-      }, 100);
+    closeReserveTicketsModal () {
+      $('#ReserveTickets.modal').removeClass('zoomIn')
+      $('#ReserveTickets.modal').addClass('zoomOut')
+      setTimeout(function () {
+        $('#ReserveTickets').modal('hide')
+        $('#ReserveTickets.modal').removeClass('zoomOut')
+      }, 100)
     }
   },
   watch: {
-    show: function(newVal, oldVal) {
-      this.ShowDate = moment(newVal.ShowDate, "YYYY-MM-DD").format(
-        "MMMM Do YYYY"
-      );
-      this.ShowTime = moment(newVal.ShowTime, "HH:mm").format("hh:mm a");
+    show: function (newVal, oldVal) {
+      this.ShowDate = moment(newVal.ShowDate, 'YYYY-MM-DD').format(
+        'MMMM Do YYYY'
+      )
+      this.ShowTime = moment(newVal.ShowTime, 'HH:mm').format('hh:mm a')
     }
   }
-};
+}
 </script>
 
 <style scoped>

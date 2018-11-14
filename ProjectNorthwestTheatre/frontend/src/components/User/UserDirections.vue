@@ -31,21 +31,20 @@
 </div>
   </div>
 </div>
-  
 </template>
 <script>
 export default {
-  name: "googlemaps",
-  data() {
+  name: 'googlemaps',
+  data () {
     return {
       markers: [
         {
           position: { lat: 40.35024, lng: -94.88756419999999 }
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 <style scoped>
 .mapDesign {

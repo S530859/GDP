@@ -119,7 +119,7 @@ export default {
 	}else{
       $("#cpSymbol").addClass("fa-times");
       $("#cpSymbol").removeClass("fa-check");
-      $("#cpSymbol").css("color","red");
+      $('#cpSymbol').css('color','red');
 	}
       }
 
