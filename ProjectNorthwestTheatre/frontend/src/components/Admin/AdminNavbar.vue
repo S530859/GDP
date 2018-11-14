@@ -209,20 +209,9 @@ export default {
         isPublished: data.get('isPublished'),
       */
       /* global $ axios url _ swal */
-      axios.create({
-        baseURL: url,
-        headers: { 'token': window.localStorage.getItem('AccessToken') }
-      }).post('/addshow',
-        data
-      )
+      axios.post(url + '/addshow', data)
         .then(res => {
-          axios({
-            method: 'get',
-            headers: {
-              token: window.localStorage.getItem('AccessToken')
-            },
-            url: url + '/showlist'
-          })
+          axios.get(url + '/showlist')
             .then(response => {
               this.$eventbus.$emit('refreshdata', response.data)
               $('#myModal').modal('hide')

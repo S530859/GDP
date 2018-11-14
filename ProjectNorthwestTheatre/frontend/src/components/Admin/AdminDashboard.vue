@@ -106,8 +106,9 @@
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'true' }">
                           <label class="col-sm-4 form-label">Section Number:</label>
-                          <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled" required>
-                              <option selected value="default">--Select--</option>
+                          <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled" pattern="[0-9]"
+                            oninvalid="this.setCustomValidity('Please Select')"  oninput="this.setCustomValidity('')" required>
+                            <option>--Select--</option>
                               <option v-for="ele of sectionlist" :key="ele._id" :value="ele.SectionNumber">
                                  {{ ele.ProfessorName }}:
                                  {{ ele.ClassTime12hrs }} -
@@ -321,29 +322,25 @@ export default {
       })
     },
     ReserveTickets () {
+      console.log($('#SectionEnrolled').val())
       var reserveticketdata = {
         'FirstName': $('#Firstname').val(),
         'LastName': $('#Lastname').val(),
         'EmailAddress': $('#EmailAddress').val(),
         'SectionEnrolled': $('#SectionEnrolled').val(),
         'NumberOfTicketsperPerson': $('#NumberOfTicketsperPerson').val() ? $('#NumberOfTicketsperPerson').val() : 1,
-        'isStudent': this.isTheatreAppreciationStudent,
+        'isStudent': JSON.parse(this.isTheatreAppreciationStudent),
         'show_id': this.reserveshow._id
       }
 
       axios
-        .create({
-          baseURL: url,
-          headers: {
-            token: window.localStorage.getItem('AccessToken')
-          }
-        })
-        .post('/reserveTicket', reserveticketdata)
+        .post(url + '/reserveTicket', reserveticketdata)
         .then(res => {
           this.closeReserveTicketsModal()
           this.refreshData()
           swal('Congratualtions!', 'You have reserved a Seat', 'success')
           $('#ReserveTicketsAdmin')[0].reset()
+          this.isTheatreAppreciationStudent = ''
         })
         .catch(err => {
           console.log('error in Reserving Ticket' + err)
