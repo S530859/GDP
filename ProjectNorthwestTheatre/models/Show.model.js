@@ -45,6 +45,10 @@ var ShowSchema = new mongoose.Schema({
     },
     Ticketdetails: {
         type: Array
+    },
+    ReminderEmail:{
+        type: String,
+        trim: true
     }
 })
 

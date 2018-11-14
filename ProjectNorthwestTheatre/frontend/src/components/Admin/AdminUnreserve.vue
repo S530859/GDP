@@ -168,7 +168,7 @@ export default {
     },
     unreserveTicket () {
       /* swal url axios _ */
-      console.log(this.show_id)
+      console.log(this.modalInfo.content.SectionEnrolled)
       axios.post(url + '/unreserve', {
         show_id: this.show_id,
         id: this.modalInfo.content._id,
@@ -178,8 +178,9 @@ export default {
         swal('Success', 'Unreserved a Seat', 'success')
         this.resetModal()
       }).catch(err => {
-        swal('Failure', 'Test', 'error')
-        console.log(err)
+        this.resetModal()
+        swal('Failure', err.response.data, 'error')
+        console.log(JSON.stringify(err))
       })
     }
   },

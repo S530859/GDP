@@ -1,6 +1,6 @@
 /* Author: santhosh Bonala */
 
-let mongoose = require('mongoose')
+//let mongoose = require('mongoose')
 let ShowModel = require('../../../models/Show.model')
 let fs = require('fs')
 let path = require('path')
@@ -136,10 +136,9 @@ let CheckForShowExistence = (req,res,next) => {
 module.exports.CheckForShowExistence = CheckForShowExistence
 
 let reserveTickets = (req,res,next) => {
-    let TheatreAppreciationStudent = req.body.isStudent
-    req.body.SectionEnrolled = parseInt(req.body.SectionEnrolled) 
-    req.body.NumberOfTicketsperPerson = parseInt(req.body.NumberOfTicketsperPerson) 
-      let model = TheatreAppreciationStudent ? StudentModel : GeneralAudienceModel
+    req.body.SectionEnrolled = req.body.SectionEnrolled ? parseInt(req.body.SectionEnrolled) : null
+    req.body.NumberOfTicketsperPerson = req.body.NumberOfTicketsperPerson ? parseInt(req.body.NumberOfTicketsperPerson) : null
+      let model = req.body.isStudent ? StudentModel : GeneralAudienceModel
         model.findOne({ "EmailAddress": req.body.EmailAddress }, (err,reserve) => {
             if(err) return res.send(400, "Student not found")
             if(reserve){

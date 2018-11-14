@@ -1,7 +1,7 @@
-// var expect = require('chai').expect
-// const request = require('supertest')('http://localhost:3000/Theatre')
+var expect = require('chai').expect
+const request = require('supertest')('http://localhost:3000/Theatre')
 // const app = require('../../app')
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 // describe('Testing Login', function(){
 
