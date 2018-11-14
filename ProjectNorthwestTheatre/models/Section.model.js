@@ -29,4 +29,11 @@ var SectionSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Section', SectionSchema)
+let model
+try{
+    model = mongoose.model('Section', SectionSchema)
+}catch{
+    model = mongoose.model('Section')
+}
+
+module.exports = model

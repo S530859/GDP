@@ -37,11 +37,15 @@
                   </li>
                   <li class="nav-item my-2">
                       <router-link to="/admin/addsection" class="btn white_green btn-block">
-                      <span class="mr-2"><i class="fas fa-plus"></i></span>Add Section</router-link>
+                      <span class="mr-2"><i class="fas fa-plus"></i></span>Add Sections</router-link>
                   </li>
                   <li class="nav-item my-2 ">
                     <router-link to="/admin/cancelticket" class="btn white_green btn-block">
                     <span class="mr-2"><i class="fas fa-ban"></i> CancelTicket</span></router-link>
+                </li>
+                 <li class="nav-item my-2 ">
+                    <router-link to="/user/userView" class="btn white_green btn-block">
+                    <span class="mr-2"><i class="fas fa-eye"></i> Audience View</span></router-link>
                 </li>
                 <li id="logS" class="nav-item my-2 d-md-none d-lg-none d-xl-none " @click="logout()" v-if="login">
                     <router-link to="" class="btn white_green btn-block">
@@ -395,6 +399,9 @@ export default {
   background-color: white;
    font-weight: bold;
 } */
+.bg-dark {
+    background-color: #025736!important;
+}
 
 .white_green {
   padding: 15px 5px;
@@ -416,12 +423,12 @@ export default {
   transform: translateY(2px);
 }
 .bor {
-    box-shadow: 4px 10px 2px -4px rgba(74, 243, 18, 0.172);
+    /* box-shadow: 4px 10px 2px -4px rgba(74, 243, 18, 0.172); */
 }
 
 .tex {
     color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172);
+    /* text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172); */
 }
 .required:after {
         content: '*';

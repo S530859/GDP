@@ -15,6 +15,7 @@ let GenerateReport = async (req, res, next) => {
         workbook.addWorksheet(category)
         let worksheet = workbook.getWorksheet(category)
         worksheet.columns = config.columns[category]
+        worksheet.getRow(1).font = { bold: true }
         promises.push(
             new Promise((resolve, reject) => {
                 model.find({ ShowID: req.body.show_id }, function (err, data) {
@@ -29,10 +30,17 @@ let GenerateReport = async (req, res, next) => {
     await Promise.all(promises).catch((err) => {
         res.send(400, 'show not found')
     })
-    workbook.xlsx.writeFile('./public/Reports/' + req.body.show_name).then(function () {
-        res.download(path.resolve( __dirname, '../../../public/Reports/', req.body.show_name))
-        // res.send('file ready')
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+	res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx")
+	workbook.xlsx.write(res)
+    .then(function (data) {
+        res.end()
     })
+    // workbook.xlsx.writeFile('./public/Reports/' + req.body.show_name).then(function () {
+    //     res.download(path.resolve( __dirname, '../../../public/Reports/', req.body.show_name))
+    //     // res.send('file ready')
+    // })
 }
 
 module.exports.GenerateReport = GenerateReport

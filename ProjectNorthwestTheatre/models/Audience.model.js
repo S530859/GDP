@@ -29,4 +29,11 @@ var AudienceSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Audience', AudienceSchema)
+let model
+try{
+    model = mongoose.model('Audience', AudienceSchema)
+}catch{
+    model = mongoose.model('Audience')
+}
+
+module.exports = model

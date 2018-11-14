@@ -21,11 +21,11 @@
                         <div class="btn-group rounded btn-width" id="status" data-toggle="buttons">
                           <label class="btn btn-default btn-on" style="border:2px solid white" :class="{ active: show.isPublished }" @click="showstatuschanged(true)">
                             <input class="d-none" type="radio" value="1">
-                            <strong>Publish</strong>
+                            <strong><span class = "mr-2"><i class="fa fa-check"></i></span>Publish</strong>
                           </label>
                           <label class="btn btn-default btn-off" style="border:2px solid white" :class="{ active: !show.isPublished }" @click="showstatuschanged(false)">
                             <input class="d-none" type="radio" value="0" >
-                            <strong>Unpublish</strong>
+                            <strong><span class = "mr-2"><i class="fa fa-ban"></i></span>Unpublish</strong>
                           </label>
                         </div>
                     <div class="btn-group rounded btn-width col-md-1 float-right">
@@ -41,7 +41,7 @@
 <!-- comment -->
         <div class="card-body green">
           <div class="content">
-            <div class="row justify-content-around m-3 mar rounded  bg-light">
+            <div class="row justify-content-around mx-1 mar rounded  bg-light">
               <!-- image column -->
               <div class="col-lg align-self-center" id="imagediv">
                 <img :src="'/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
@@ -202,7 +202,7 @@
                       <i class="fas fa-dollar-sign fa-lg" style="position: absolute; padding: 10px 20px; left: 0px;"></i>
                       <input class="form-control" style="padding-left: 20px;" type="number" placeholder="Ticket Price" id="TicketPriceEditShow" min="1" required>
                     </div>
-                    <button class="btn col-sm-1 mx-1 py-0 my-0" style="height: 38px;" type="submit">Add</button>
+                    <button class="btn btn1 col-sm-1 mx-1 py-0 my-0" style="height: 38px;" type="submit">Add</button>
                   </div>
                 </form>
 
@@ -258,31 +258,18 @@ export default {
   props: ['show'],
   methods: {
     GenerateReport () {
-      // var _this = this
-      // axios.post(url + '/report', { show_id: this.show._id, show_name: this.show.title + '.xlsx' })
-      // .then(res => {
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-      axios({
-        url: url + '/report',
-        method: 'POST',
-        responseType: 'blob' // important
-      }, {
-        show_id: this.show._id,
-        show_name: this.show.title + '.xlsx'
-      },
-      {
-        'Accept': 'application/vnd.ms-excel'
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'file.xlsx')
-        document.body.appendChild(link)
-        link.click()
-      })
+      let _this = this
+      axios.post(url + '/report', { show_id: this.show._id }, { responseType:'arraybuffer' })
+      .then(res => {
+          //console.log(res)
+          let blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+          filesaver.saveAs(blob, _this.show.ShowTitle + moment().format('MM/DD/YYYY')  + '.xlsx')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+      /* filesaver $ moment */
     },
     unreservetickets () {
       let _this = this
@@ -705,4 +692,17 @@ export default {
   max-height: calc(100% - 120px);
   overflow-y: scroll;
 }
+
+
+.btn1{
+  background-color: #D2DED8;
+  border: 1px solid #7CAB9B;
+  color: black
+}
+
+.btn1:hover {
+    background-color: #025736;
+    color: whitesmoke
+}
+
 </style>

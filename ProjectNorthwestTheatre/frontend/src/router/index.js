@@ -18,6 +18,7 @@ import CancelTicket from '../components/Admin/CancelTicket.vue'
 import UserDirections from '../components/User/UserDirections.vue'
 // import ResetPassword from '../components/Admin/ResetPassword.vue'
 import Unreserve from '../components/Admin/AdminUnreserve.vue'
+import UserView from '../components/Admin/UserView.vue'
 
 Vue.use(Router)
 
@@ -62,6 +63,12 @@ export default new Router({
           path: 'directions',
           name: 'UserDirections',
           component: UserDirections
+        },
+        {
+          path: 'userView',
+          name: 'userView',
+          beforeEnter: Guard.auth,
+          component: UserView
         }
       ]
     },

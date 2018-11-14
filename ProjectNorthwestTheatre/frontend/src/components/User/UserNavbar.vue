@@ -13,9 +13,9 @@
         </div>
         <div id="adminnavbar" class="row">
             <div class="col-sm-2 collapse d-sm-flex position-fixed" id="sidebar">
-                <div class="col-sm-10 bg-dark pt-2">
+                <div class="col-sm-10 bg-dark green pt-2">
                     <ul class="nav flex-column flex-nowrap ">
-                        <li class="nav-item my-2">
+                        <li class="nav-item  my-2">
                             <router-link to="/user/dashboard" class="btn white_green btn-block" >
                                 <span class="mr-2">
                               <i class="fas fa-home"></i>
@@ -195,13 +195,11 @@ export default {
     transform: translateY(2px);
 }
 
-.bor {
-    box-shadow: 4px 10px 2px -4px rgba(74, 243, 18, 0.172);
-}
+
 
 .tex {
     color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172);
+    /* text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172); */
 }
 
 .required:after {
@@ -217,6 +215,10 @@ export default {
 .btn{
     white-space: normal !important;
     word-wrap: break-word;
+}
+
+.navbar, .bg-dark{
+    background-color: #025736!important;
 }
 
 </style>
