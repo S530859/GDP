@@ -10,6 +10,11 @@ let ObjectId = require('mongoose').Types.ObjectId
 let _ = require('underscore')
 
 let addShow = (req, res, next) => {
+    _.each(req.body, function(value,key){
+        if(!value){
+           return res.send(400, `${key} cannot be empty`)
+        }
+    })
     req.body.Ticketdetails = JSON.parse(req.body.Ticketdetails)
     let Show = new ShowModel(req.body)
     buffer = req.file.buffer
