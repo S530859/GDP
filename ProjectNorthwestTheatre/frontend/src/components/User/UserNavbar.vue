@@ -16,21 +16,20 @@
                 <div class="col-sm-10 bg-dark green pt-2">
                     <ul class="nav flex-column flex-nowrap ">
                         <li class="nav-item  my-2">
-                            <router-link to="/user/dashboard" class="btn white_green btn-block" >
+                            <router-link to="dashboard" class="btn white_green btn-block" >
                                 <span class="mr-2">
                               <i class="fas fa-home"></i>
                              </span>Home
                             </router-link>
                         </li>
                         <li class="nav-item my-2">
-                            <router-link to="/user/cancelticket" class="btn white_green btn-block"
-                            >
-                                <span class="mr-2"><i class="fas fa-ban"></i>
+                            <router-link to="cancelticket" class="btn white_green btn-block" >
+                                <span class="mr-1"><i class="fas fa-ban"></i>
                              </span>CancelTicket
                             </router-link>
                         </li>
                         <li class="nav-item my-2">
-                            <router-link to="/user/directions" class="btn white_green btn-block"
+                            <router-link to="directions" class="btn white_green btn-block"
                             >
                                 <span class="mr-2"><i class="fas fa-directions"></i>
                              </span>Directions

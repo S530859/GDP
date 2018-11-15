@@ -162,7 +162,8 @@ module.exports.reserveTickets = reserveTickets
 
 
 let IncReserveTicketsCount = (req,res) => {
-    ShowModel.findOneAndUpdate({ _id: req.body.show_id }, { $inc: { ReservedSeats : 1 } }).exec((err,show) => {
+    let reservedseats = req.body.NumberOfTicketsperPerson ? req.body.NumberOfTicketsperPerson : 1 
+    ShowModel.findOneAndUpdate({ _id: req.body.show_id }, { $inc: { ReservedSeats : reservedseats } }).exec((err,show) => {
         if(err) console.log(`error when incrementing the count for show reserved seats`)
         return res.send(200, "Ticket reserved")
     })

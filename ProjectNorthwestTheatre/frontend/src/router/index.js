@@ -63,12 +63,6 @@ export default new Router({
           path: 'directions',
           name: 'UserDirections',
           component: UserDirections
-        },
-        {
-          path: 'userView',
-          name: 'userView',
-          beforeEnter: Guard.auth,
-          component: UserView
         }
       ]
     },
@@ -130,6 +124,46 @@ export default new Router({
           props: true,
           component: Unreserve
         }
+      ]
+    },
+    {
+      path: '/userView',
+      name: 'userView',
+      beforeEnter: Guard.auth,
+      component: UserView,
+      children: [
+        {
+          path: 'user',
+          name: 'User',
+          component: User,
+          children: [
+            {
+              path: 'dashboard',
+              name: 'Userdashboard',
+              component: UserDashboard
+            },
+            {
+              path: 'usershow',
+              name: 'UserShow',
+              component: UserShow
+            },
+            {
+              path: 'reservation',
+              name: 'UserReservation',
+              component: UserReservation
+            },
+            {
+              path: 'CancelTicket',
+              name: 'UserCancelTicket',
+              component: UserCancelTicket
+            },
+            {
+              path: 'directions',
+              name: 'UserDirections',
+              component: UserDirections
+            }
+          ]
+        },
       ]
     },
     {

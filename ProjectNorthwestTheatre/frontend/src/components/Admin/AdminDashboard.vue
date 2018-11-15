@@ -333,7 +333,6 @@ export default {
         'isStudent': JSON.parse(this.isTheatreAppreciationStudent),
         'show_id': this.reserveshow._id
       }
-
       axios
         .post(url + '/reserveTicket', reserveticketdata)
         .then(res => {

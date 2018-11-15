@@ -1,10 +1,10 @@
 <template>
 <div>
-      <div class="border_color" id="left"></div>
+    <div class="border_color" id="left"></div>
     <div class="border_color" id="right"></div>
     <div class="border_color" id="top"></div>
     <div>
-             <userDashboard style="padding-left:20px;"></userDashboard>
+        <router-view></router-view>
     </div>
     <div class="border_color" id="bottom">
         <div class="row">
@@ -22,15 +22,8 @@
 </div>
 </template>
 <script>
-import userDashboard from '../User/UserDashboard' 
-import userNavbar from '../User/UserNavbar' 
 export default {
   name: "userView",
-  components: {
-    userDashboard,
-    userNavbar
-  },
-
 };
 </script>
 
