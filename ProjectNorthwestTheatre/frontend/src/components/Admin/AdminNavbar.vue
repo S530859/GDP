@@ -106,8 +106,9 @@
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Rating:</label>
                   <select id="inputState" class="form-control col-sm-2" required name="ShowRating" >
                     <option selected>Choose...</option>
-                    <option>A</option>
-                    <option>U/A</option>
+                    <option>G</option>
+                    <option>PG</option>
+                    <option>PG13</option>
                     <option>R</option>
                   </select>
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Image:</label>
