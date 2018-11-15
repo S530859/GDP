@@ -43,7 +43,7 @@
                     <span class="mr-1"><i class="fas fa-ban"></i> CancelTicket</span></router-link>
                 </li>
                  <li class="nav-item my-2 ">
-                    <router-link to="/user/userView" class="btn white_green btn-block">
+                    <router-link to="/userView/user/dashboard" class="btn white_green btn-block">
                     <span class="mr-0"><i class="fas fa-eye"></i> AudienceVie</span></router-link>
                 </li>
                 <li id="logS" class="nav-item my-2 d-md-none d-lg-none d-xl-none " @click="logout()" v-if="login">
