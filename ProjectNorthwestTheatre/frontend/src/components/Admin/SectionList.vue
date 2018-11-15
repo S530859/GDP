@@ -1,5 +1,56 @@
 <template>
-   <div>
+   <b-container>
+        <b-row>
+          <b-col md="5" class="my-3">
+            <b-form-group horizontal label="Filter" class="mb-0">
+              <b-input-group>
+                <b-form-input v-model="filter" placeholder="Type to Search" />
+                <b-input-group-append>
+                  <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
+          <b-col md="4" class="my-3">
+            <b-form-group horizontal label="Per page" class="mb-0">
+              <b-form-select :options="pageOptions" v-model="perPage" />
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <!-- Main table element -->
+        <b-table show-empty
+                stacked="md"
+                :items="adminlist"
+                :fields="fields"
+                :current-page="currentPage"
+                :per-page="perPage"
+                :filter="filter"
+                :sort-by.sync="sortBy"
+                :sort-desc.sync="sortDesc"
+                :sort-direction="sortDirection"
+                @filtered="onFiltered"
+        >
+          <template slot="#" slot-scope="data"> {{data.index + 1}} </template>
+          <template slot="actions" slot-scope="row">
+            <!-- <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger" >
+            <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
+            </b-button> -->
+            <button type="button" class="btn rounded-circle btn-custom m-2" id="edit" @click="editadmin(row.item)">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button type="button" class="btn rounded-circle btn-custom m-2" id="delete" @click="deleteadmin(row.item._id)" v-if="row.item.Username !== 'admin'">
+                <i class="fas fa-trash"></i>
+            </button>
+          </template>
+
+        </b-table>
+
+        <b-row>
+          <b-col md="6" class="my-1">
+            <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
+          </b-col>
+        </b-row>
      <!-- Created by Supraja Kumbam -->
     <!-- Saivarun Illendula : Added Card to Section List -->
      <div class="tb">

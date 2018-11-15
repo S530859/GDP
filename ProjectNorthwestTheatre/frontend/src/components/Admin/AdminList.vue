@@ -37,11 +37,11 @@
             <!-- <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger" >
             <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
             </b-button> -->
-            <button type="button" class="btn rounded-circle btn-custom m-2" id="delete" @click="deleteadmin(row.item._id)" v-if="row.item.Username !== 'admin'">
-                <i class="fas fa-trash"></i>
-            </button>
             <button type="button" class="btn rounded-circle btn-custom m-2" id="edit" @click="editadmin(row.item)">
                 <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button type="button" class="btn rounded-circle btn-custom m-2" id="delete" @click="deleteadmin(row.item._id)" v-if="row.item.Username !== 'admin'">
+                <i class="fas fa-trash"></i>
             </button>
           </template>
 
@@ -262,10 +262,14 @@ export default {
 
 <style scoped>
 .btn-custom {
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
   padding-left: 6px;
   padding-right: 6px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 div.tb {
   margin-right: 50px;
