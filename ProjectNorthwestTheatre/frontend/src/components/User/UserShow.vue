@@ -13,7 +13,7 @@
               <div class="col-md-8 left my-auto p_u-mobile">
                   <div class="d-inline col-md-12">
                      <div class="btn-group rounded btn-width col-md-4 float-right">
-                        <button class="col-md-12 btn btn-success" type="button" data-toggle="modal" data-target="#ReserveTickets">
+                        <button class="col-md-12 btn btn-success" type="button" @click="emitreserve">
                           <strong><span class = "mr-2"><i class="fas fa-user"></i></span>Reserve</strong>
                         </button>
                      </div>
@@ -85,7 +85,7 @@
       <!-- card-body -->
       </div>
     <!-- card -->
-     <div class="modal animated zoomIn" id="ReserveTickets" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
+     <!-- <div class="modal animated zoomIn" id="ReserveTickets" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -95,7 +95,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="ReserveTickets()" id="ReserveTicketsUser">
+            <form @submit.prevent="ReserveTickets" id="ReserveTicketsUser">
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">First Name:</label>
                     <input class="col-sm-7 form-control" type="text" id="Firstname" name="Firstname" placeholder="Firstname">
@@ -106,26 +106,30 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">Email:</label>
-                    <input class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email">
+                    <input v-if="isTheatreAppreciationStudent === 'true'" class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress"
+                    placeholder="Email" pattern="[S|s]{1}[0-9]{6}@nwmissouri\.edu" oninvalid="this.setCustomValidity('expecting sXXXXXX@nwmissouri.edu')"
+                    oninput="this.setCustomValidity('')" required>
+                    <input class="col-sm-7 form-control" type="text"  v-else id="EmailAddress" name="EmailAddress" placeholder="Email" required>
                   </div>
                     <fieldset class="form-group">
                         <div class="row">
                           <legend class="col-form-label col-sm-8 pt-0">Are you a theatre appreciation student?</legend>
                           <div class="col-sm-4">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yes" value="true" v-model="isTheatreAppreciationStudent">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yes" value="true" v-model="isTheatreAppreciationStudent" required>
                               <label class="form-check-label" for="yes">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="no" value="false" v-model="isTheatreAppreciationStudent">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="no" value="false" v-model="isTheatreAppreciationStudent" required>
                               <label class="form-check-label" for="no">No</label>
                             </div>
                           </div>
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'true' }">
-                          <label class="col-sm-4 form-label">Section Number:</label>
-                          <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled">
-                              <option selected value="default">--Select--</option>
+                           <label class="col-sm-4 form-label">Section Number:</label>
+                           <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled" pattern="[0-9]"
+                            oninvalid="this.setCustomValidity('Please Select')"  oninput="this.setCustomValidity('')" required>
+                            <option>--Select--</option>
                               <option v-for="ele of sectionlist" :key="ele._id" :value="ele.SectionNumber">
                                  {{ ele.ProfessorName }}:
                                  {{ ele.ClassTime12hrs }} -
@@ -133,7 +137,6 @@
                                  {{ ele.Semester }} {{ ele.Year }}
                                 </option>
                             </select>
-                          <!-- <input class="col-sm-7 form-control" type="text" id="sectionnumber"> -->
                           <a tabindex="0"
                             id="pop"
                             class="btn col-sm-1"
@@ -159,7 +162,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -173,9 +176,7 @@ export default {
       ShowTime: moment(this.show.ShowTime, 'HH:mm').format('hh:mm a'),
       token: window.localStorage.getItem('AccessToken'),
       showImg: true,
-      time: Date(),
-      isTheatreAppreciationStudent: '',
-      sectionlist: ''
+      time: Date()
     }
   },
   props: ['show'],
@@ -183,13 +184,8 @@ export default {
     emitshowdescription (showclicked) {
       this.$eventbus.$emit('showdescription', showclicked)
     },
-    closeReserveTicketsModal () {
-      $('#ReserveTickets.modal').removeClass('zoomIn')
-      $('#ReserveTickets.modal').addClass('zoomOut')
-      setTimeout(function () {
-        $('#ReserveTickets').modal('hide')
-        $('#ReserveTickets.modal').removeClass('zoomOut')
-      }, 100)
+    emitreserve () {
+      this.$eventbus.$emit('reserve', this.show)
     }
   },
   watch: {

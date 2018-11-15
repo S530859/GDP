@@ -23,9 +23,8 @@
                             </router-link>
                         </li>
                         <li class="nav-item my-2">
-                            <router-link to="/user/cancelticket" class="btn white_green btn-block"
-                            >
-                                <span class="mr-2"><i class="fas fa-ban"></i>
+                            <router-link to="/user/cancelticket" class="btn white_green btn-block" >
+                                <span class="mr-1"><i class="fas fa-ban"></i>
                              </span>CancelTicket
                             </router-link>
                         </li>
