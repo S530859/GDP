@@ -3,7 +3,7 @@
 ## Introduction
 
 ## Pre-Requisites to run the project
- node - 8.12.0
+ node - 10.13.0
  
 ## Steps to run the project
 * change the directory to ProjectNorthwestThreatre
