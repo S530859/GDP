@@ -21,7 +21,7 @@
         <!-- Main table element -->
         <b-table show-empty
                 stacked="md"
-                :items="adminlist"
+                :items="sectionlist"
                 :fields="fields"
                 :current-page="currentPage"
                 :per-page="perPage"
@@ -31,15 +31,16 @@
                 :sort-direction="sortDirection"
                 @filtered="onFiltered"
         >
-          <template slot="#" slot-scope="data"> {{data.index + 1}} </template>
+          <template slot="#" slot-scope="data"> {{ data.index + 1 }} </template>
+          <template slot="Semester" slot-scope="data"> {{ data.item.Semester }} {{ data.item.Year }} </template>
           <template slot="actions" slot-scope="row">
             <!-- <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger" >
             <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
             </b-button> -->
-            <button type="button" class="btn rounded-circle btn-custom m-2" id="edit" @click="editadmin(row.item)">
+            <button type="button" class="btn rounded-circle btn-custom m-2" id="edit" @click="editsection(row.item)">
                 <i class="fas fa-pencil-alt"></i>
             </button>
-            <button type="button" class="btn rounded-circle btn-custom m-2" id="delete" @click="deleteadmin(row.item._id)" v-if="row.item.Username !== 'admin'">
+            <button type="button" class="btn rounded-circle btn-custom m-2" id="delete" @click="deletesection(row.item._id)" v-if="row.item.Username !== 'admin'">
                 <i class="fas fa-trash"></i>
             </button>
           </template>
@@ -53,7 +54,7 @@
         </b-row>
      <!-- Created by Supraja Kumbam -->
     <!-- Saivarun Illendula : Added Card to Section List -->
-     <div class="tb">
+     <!-- <div class="tb">
        <h1 class = "h2 mb-3 font-weight-normal mt-3">VIEW SECTIONS </h1>
         <table class="table table-striped table-bordered">
           <thead class="thead-dark">
@@ -98,7 +99,7 @@
             </tr>
           </tbody>
         </table>
-     </div>
+     </div> -->
       <div class="modal fade" id="editSectionadminmodal" role="dialog" aria-labelledby="editSectionadminmodal" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -179,7 +180,7 @@
         </div>
       </div>
     </div>
-  </div>
+   </b-container>
 </template>
 
 <script>
@@ -190,7 +191,49 @@ export default {
       sectionlist: [],
       section: {},
       /* global moment $ */
-      mindate: moment().format('YYYY')
+      mindate: moment().format('YYYY'),
+      fields: [
+        "#",
+        {
+          key: "Semester",
+          label: "Semester",
+          sortable: true,
+          class: "text-center"
+        },
+        {
+          key: "SectionNumber",
+          label: "Section No.",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "ProfessorName",
+          label: "Professor",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "ClassDay",
+          label: "Day",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "ClassTime12hrs",
+          label: "Time",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        { key: "actions", label: "Actions" }
+      ],
+      currentPage: 1,
+      perPage: 5,
+      totalRows: 0,// sectionlist.length,
+      pageOptions: [5, 10, 15],
+      sortBy: null,
+      sortDesc: false,
+      sortDirection: "asc",
+      filter: null
     }
   },
   methods: {
@@ -216,10 +259,7 @@ export default {
       }
       /* global axios url swal $ */
       var _this = this
-      axios.create({
-        baseURL: url,
-        headers: { 'token': window.localStorage.getItem('AccessToken') }
-      }).post('/updatesection', data)
+      axios.post( url + '/updatesection', data)
         .then(res => {
           $('#editSectionadminform')[0].reset()
           $('#editSectionadminmodal').modal('hide')
@@ -245,11 +285,7 @@ export default {
       })
         .then((result) => {
           if (result.value) {
-            axios.create({
-              baseURL: url,
-              timeout: 1000,
-              headers: { 'token': window.localStorage.getItem('AccessToken') }
-            }).post('/deletesection', { id: sectionid })
+            axios.post(url + '/deletesection', { id: sectionid })
               .then(res => {
                 swal(
                   'Deleted!',
@@ -267,13 +303,7 @@ export default {
     refreshData () {
       /* global axios moment _ */
       var _this = this
-      axios({
-        method: 'get',
-        headers: {
-          token: window.localStorage.getItem('AccessToken')
-        },
-        url: url + '/sectionlist'
-      })
+      axios.get(url + '/sectionlist')
         .then(function (response) {
           console.log(response.data)
           _this.sectionlist = response.data
@@ -284,15 +314,38 @@ export default {
         .catch(function (err) {
           console.log('error while getting section list', err)
         })
-    }
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
   },
   created () {
     this.refreshData()
+  },
+  computed: {
+    sortOptions() {
+      // Create an options list from our fields
+      return this.fields.filter(f => f.sortable).map(f => {
+        return { text: f.label, value: f.key };
+      });
+    }
   }
 }
 </script>
 
 <style scoped>
+.btn-custom {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
 div.tb {
   margin-right: 50px;
 }

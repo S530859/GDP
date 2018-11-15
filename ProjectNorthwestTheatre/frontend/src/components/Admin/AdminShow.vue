@@ -38,17 +38,17 @@
             </div>
           <!-- end show header -->
         </div>
-<!-- comment -->
         <div class="card-body green">
           <div class="content">
-            <div class="row justify-content-around mx-1 mar rounded  bg-light">
+            <div class="row justify-content-around mx-1 mar rounded bg-light">
               <!-- image column -->
-              <div class="col-lg align-self-center" id="imagediv">
-                <img :src="'/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
+              <div class="col-lg h-100 d-inline-block" style="border: 1px">
+                <img :src="'http://localhost:3000/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" 
+                 class="rounded mx-1 my-1 align-self-center " style="max-width: 100%;max-height: 100%;" alt="Image" id="imagesrc" />
               </div>
               <!-- image column end -->
               <!-- details of the show -->
-              <div class="col-lg lead text-left font" style="border:1px  ">
+              <div class="col-lg lead text-left font" style="border:1px">
                 <!-- Date -->
                 <span class="font-weight-bold">Date :
                   <span class="font-weight-normal">{{ show.ShowDate }}</span>
@@ -149,7 +149,7 @@
                 <label class="col-sm-2 offset-sm-1 form-label py-2">Show Name:</label>
                 <input class="col-sm-2 form-control" type="text" placeholder="Show Name" autofocus="autofocus" id="showname" :value="show.ShowTitle" name="ShowTitle" required>
                 <label class="col-sm-2 offset-sm-1 form-label py-2">Playwright:</label>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                   <input class="form-control" type="text" placeholder="Playwright" id="playwright" :value="show.ShowPlayWright" name="ShowPlayWright" required>
                 </div>
               </div>
@@ -160,15 +160,13 @@
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Time:</label>
-                 <input class="col-sm-2 form-control" type="time" :value="show.ShowTime" id="showtime" name="ShowTime" required>
+                <input class="col-sm-2 form-control" type="time" :value="show.ShowTime" id="showtime" name="ShowTime" required>
                 <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Date:</label>
                 <div class="col-sm-3" style="position: relative;">
                   <i class="fas fa-calendar-alt fa-2x" style="position: absolute; padding: 3px 20px; right: 0px;" aria-hidden="true"></i>
-                  <input type="text" class="date form-control" name="ShowDate" id="datepicker-input" style="padding-right: 40px;"
-                  data-date-multidate="true" data-date-multidateSeparator="; " :data-date-container=" '#editshow' + show._id"
-                  required>
+                  <input type="text" class="date form-control" name="ShowDate" :id="'datepicker' + show._id" style="padding-right: 40px;"
+                  data-date-multidate="true" data-date-multidateSeparator="; " :data-date-container="'#editshow' + show._id" required>
                 </div>
-
               </div>
                <div class="form-group row">
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Rating:</label>
@@ -179,8 +177,13 @@
                     <option>R</option>
                   </select>
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Image:</label>
-                    <input type="file" accept="image/*" class="form-control-file col-sm-4" id="InputFile" aria-describedby="fileHelp" :value="show.ShowImage" name="ShowImage" >
-                    <small id="fileHelp" class="form-text text-muted"></small>
+                  <input type="file" accept="image/*" class="form-control-file col-sm-2" :id="'InputFile' + show._id" aria-describedby="fileHelp" name="ShowImage">
+                  <small id="fileHelp" class="form-text text-muted"></small>
+                  <div class="col-sm-2" style=" padding-left: 0px; margin-top: -10px;">
+                    <img :src="'http://localhost:3000/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" 
+                        class="rounded mx-1 my-1 align-self-center " style="max-width: 100%;max-height: 70%;" alt="Image"
+                        :id="'imagesrcpreview' + show._id" />
+                  </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Total Seats:</label>
@@ -257,6 +260,18 @@ export default {
   },
   props: ['show'],
   methods: {
+    updateimage (input,vm) {
+      console.log('logged')
+      if (input.files && input.files[0]) {
+          var reader = new FileReader()
+          reader.onload = function (e) {
+            console.log(vm)
+              $(`#imagesrcpreview` + vm.show._id)
+                  .attr('src', e.target.result)
+          }
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
     GenerateReport () {
       let _this = this
       axios.post(url + '/report', { show_id: this.show._id }, { responseType:'arraybuffer' })
@@ -273,8 +288,7 @@ export default {
     },
     unreservetickets () {
       let _this = this
-      axios
-        .post(url + '/students', { show_id: this.show._id })
+      axios.post(url + '/students', { show_id: this.show._id })
         .then(res => {
           console.log(_this)
           _this.$router.push({
@@ -317,24 +331,13 @@ export default {
       formdata.append('Ticketdetails', JSON.stringify(this.show.Ticketdetails))
       formdata.append('isPublished', this.show.isPublished)
       // var _this = this
-      axios
-        .create({
-          baseURL: url,
-          headers: { token: window.localStorage.getItem('AccessToken') }
-        })
-        .post('/updateshow', formdata)
+      axios.post( url + '/updateshow', formdata)
         .then(
           function (res) {
             $('#editshow' + this.show._id).modal('hide')
             swal('Updated!', 'Show has been successfully updated.', 'success')
             this.time = Date()
-            axios({
-              method: 'get',
-              headers: {
-                token: window.localStorage.getItem('AccessToken')
-              },
-              url: url + '/showlist'
-            })
+            axios.get(url + '/showlist')
               .then(response => {
                 this.$eventbus.$emit('refreshdata', response.data)
               })
@@ -359,21 +362,10 @@ export default {
         confirmButtonText: 'Yes, delete it!'
       }).then(result => {
         if (result.value) {
-          axios
-            .create({
-              baseURL: url,
-              headers: { token: window.localStorage.getItem('AccessToken') }
-            })
-            .post('/deleteshow', { id: this.show._id })
+          axios.post(url + '/deleteshow', { id: this.show._id })
             .then(res => {
               swal('Deleted!', 'Show has been deleted.', 'success')
-              axios({
-                method: 'get',
-                headers: {
-                  token: window.localStorage.getItem('AccessToken')
-                },
-                url: url + '/showlist'
-              })
+              axios.get(url + '/showlist')
                 .then(response => {
                   this.$eventbus.$emit('refreshdata', response.data)
                 })
@@ -389,12 +381,7 @@ export default {
     },
     showstatuschanged (isPublished) {
       this.show.isPublished = isPublished
-      axios
-        .create({
-          baseURL: url,
-          headers: { token: window.localStorage.getItem('AccessToken') }
-        })
-        .post('/ispublished', {
+      axios.post(url + '/ispublished', {
           id: this.show._id,
           isPublished: isPublished
         })
@@ -421,12 +408,7 @@ export default {
       }).then(res => {
         console.log(res.value)
         if (res.value) {
-          axios
-            .create({
-              baseURL: url,
-              headers: { token: window.localStorage.getItem('AccessToken') }
-            })
-            .post('/duplicateShow', show)
+          axios.post(url + '/duplicateShow', show)
             .then(res => {
               console.log(res)
             })
@@ -437,17 +419,14 @@ export default {
       })
     },
     showdatepicker () {
-      console.log('date picker clicked')
+      // console.log('date picker clicked')
       let dates = this.show.ShowDate.split(',')
       _.each(dates, (element, index, list) => {
         let date = element.replace(';', '')
         list[index] = new Date(date)
       })
       console.log(dates)
-      $(`#editshowform${this.show._id} .row` + ''.date).datepicker(
-        'setDates',
-        dates
-      )
+      $(`#datepicker${this.show._id}`).datepicker('setDates', dates)
       // $('.date').datepicker('show')
     },
     deleteticket (TicketType) {
@@ -484,15 +463,18 @@ export default {
     }
   },
   mounted () {
+    let _this = this
+    $(`#InputFile` + this.show._id ).change(function(){
+      // console.log(this.files)
+        _this.updateimage(this, _this)
+    })
     // $('.date').datepicker({
     //     container: '#editshow' + this.show._id
     //   })
   },
   watch: {
     show: function (newVal, oldVal) {
-      this.ShowDate = moment(newVal.ShowDate, 'YYYY-MM-DD').format(
-        'MMMM Do YYYY'
-      )
+      this.ShowDate = moment(newVal.ShowDate, 'YYYY-MM-DD').format('MMMM Do YYYY')
       this.ShowTime = moment(newVal.ShowTime, 'HH:mm').format('hh:mm a')
     }
   }

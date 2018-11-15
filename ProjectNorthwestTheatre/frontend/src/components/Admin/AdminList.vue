@@ -18,8 +18,7 @@
             </b-form-group>
           </b-col>
         </b-row>
-
-        <!-- Main table element -->
+        
         <b-table show-empty
                 stacked="md"
                 :items="adminlist"
@@ -34,9 +33,6 @@
         >
           <template slot="#" slot-scope="data"> {{data.index + 1}} </template>
           <template slot="actions" slot-scope="row">
-            <!-- <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger" >
-            <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
-            </b-button> -->
             <button type="button" class="btn rounded-circle btn-custom m-2" id="edit" @click="editadmin(row.item)">
                 <i class="fas fa-pencil-alt"></i>
             </button>
@@ -84,39 +80,6 @@
         </div>
 
     </b-container>
-     <!-- <div class="tb">
-       <h1 class = "h2 mb-3 pt-4 font-weight-normal">ADMIN LIST </h1>
-        <table class="table table-striped table-bordered">
-          <thead class="bg-dark text-light">
-            <tr >
-              <th scope="col">SNO</th>
-              <th scope="col">Username</th>
-              <th scope="col">Email Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(ele,index) of adminlist" :key="ele._id">
-              <td scope="row">
-                {{ index + 1 }}
-              </td>
-              <td class="text-left">
-                {{ ele.Username }}
-              </td>
-              <td class="text-left" >
-                {{ ele.Email }}
-                <button type="button" class="btn rounded-circle float-right m-2" id="delete" @click="deleteadmin(ele._id)" v-if="index != 0">
-                    <i class="fas fa-trash"></i>
-                </button>
-                <button type="button" class="btn rounded-circle float-right m-2" id="edit" @click="editadmin(ele)">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-     </div> -->
-     <!-- Keerthi Chiduruppa: Created a modal for edit admin -->
-      <!-- Modal -->
 </template>
 
 <script>
