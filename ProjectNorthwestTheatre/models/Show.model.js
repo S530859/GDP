@@ -30,14 +30,6 @@ var ShowSchema = new mongoose.Schema({
     isPublished : {
         type : Boolean
     },
-    ShowPriceForAdult : {
-        type : Number,
-        min : [0, 'Price Cannot be negative']
-    },
-    ShowPriceForChildren: {
-        type: Number,
-        min: [0, 'Price Cannot be negative']
-    },
     ShowRating : {
         type : String,
         trim : true
@@ -53,7 +45,18 @@ var ShowSchema = new mongoose.Schema({
     },
     Ticketdetails: {
         type: Array
+    },
+    ReminderEmail:{
+        type: String,
+        trim: true
     }
 })
 
-module.exports = mongoose.model('Show',ShowSchema)
+let model
+try{
+    model = mongoose.model('Show',ShowSchema)
+}catch{
+    model = mongoose.model('Show')
+}
+
+module.exports = model

@@ -8,12 +8,12 @@ const show = require('../../../models/Show.model')
 const moment = require('moment')
 const theatreappreciationstudents = require('../../../models/TheatreAppreciationStudent.model')
 const audience = require('../../../models/Audience.model')
+let jwt = require('jsonwebtoken')
 let ObjectId = require('mongoose').Types.ObjectId
 let show_id
 
-
-let SendMail = async function (req,res,next) {
-    let transporter = nodemailer.createTransport({
+let MailServer = () => {
+   return nodemailer.createTransport({
         host: 'smtp.office365.com',
         port: 587,
         secure: false, // true for 465, false for other ports
@@ -22,6 +22,47 @@ let SendMail = async function (req,res,next) {
             pass: config.password // generated ethereal password
         }
     })
+}
+
+
+let SendResetEmail = (req,res) => {
+    let transporter = MailServer()
+    let admin = req.session.user
+    let data = {
+        Username: admin.Username
+    }
+    let token = jwt.sign(data, config.tokensecret, { expiresIn: '6h' })
+    let email_subject = "test"
+    let email_body = "http://localhost:3000/Theatre/admin/resetpassword?token=" + token
+    ejs.renderFile( path.join(__dirname, "../../../views/mail.ejs"),
+            { name: `${admin.Username}`, content: email_body },
+            function (err, data) {
+                if (err) {
+                    console.error(err)
+                } else {
+                    // setunpp email data with unicode symbols
+                    let mailOptions = {
+                        from: '"Northwest Theatre" <s530859@nwmissouri.edu>', // sender address
+                        to: admin.Email, // list of receivers
+                        subject: email_subject, // Subject line
+                        html: data
+                    }
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            console.error(error)
+                            return res.status(401).send("Unable to Send Email")
+                        }                         
+                        return res.status(200).send("Reset Link Sent")          
+                    })      
+                }
+            })
+    }
+
+module.exports.SendResetEmail = SendResetEmail
+
+let SendMail = async function (req,res,next) {
+    let transporter = MailServer()
     let promises = []
     show_id = ( req && req.body.show._id ) ? req.body.show._id : show_id
 

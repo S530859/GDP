@@ -60,3 +60,20 @@ let UpdateAdmin = (req,res,next) => {
 }
 
 module.exports.UpdateAdmin = UpdateAdmin
+
+let GetResetPasswordView = (req,res,next) => {
+    res.render('index')
+}
+module.exports.GetResetPasswordView = GetResetPasswordView
+
+let ResetPassword = (req,res,next) => {
+
+    AdminModel.findByIdAndUpdate( req.session.user.id,
+         { Password: req.body.Password},
+         function(err, admin) {
+            if (err || !admin) return res.status(400).send('User not found')
+            res.send("Password Updated Successfully")
+        })
+}
+
+module.exports.ResetPassword = ResetPassword

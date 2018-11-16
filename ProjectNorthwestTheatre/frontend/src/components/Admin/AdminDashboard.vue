@@ -1,31 +1,24 @@
 <template>
  <div>
-    <!-- <div class="row m-1 float-right">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        <i class="fas fa-plus"></i>
-      </button>
-    </div> -->
     <div class="row col-sm-12  wi">
-      <div class="fixed bg">
+      <div class="fixed bg"></div>
+    <div class=" offset-sm-6 col-sm-3 fixed">
+      <div class="input-group mt-3 ">
+          <input class="form-control py-2 border-right-0 border " type="search" v-model="search"  placeholder="Search" id="example-search-input">
+          <span class="input-group-append">
+              <div class="input-group-text green text-light "><i class="fa fa-search"></i></div>
+          </span>
       </div>
-               <div class=" offset-sm-6 col-sm-3 fixed">
-            <div class="input-group mt-3 ">
-                <input class="form-control py-2 border-right-0 border " type="search" v-model="search"  placeholder="Search" id="example-search-input">
-                <span class="input-group-append">
-                    <div class="input-group-text bg-dark text-light "><i class="fa fa-search"></i></div>
-                </span>
-            </div>
-
     </div>
-         <AdminShow class="down" v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
+    <AdminShow class='down' v-for="ele of updatedShowList" :key="ele._id"  :show="ele" @showmodal="showmodal" @showemailmodal="showemailmodal" >
       </AdminShow>
     </div>
-    <div class="modal" id="descriptionmodal" tabindex="-1" role="dialog">
+    <div class="modal animated" id="descriptionmodal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Playwright: {{ show.ShowPlayWright ? show.ShowPlayWright : '' }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" aria-label="Close" @click="closeDescriptionModal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -33,20 +26,20 @@
             <p>{{ show.ShowDescription ? show.ShowDescription : '' }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" @click="closeDescriptionModal">Close</button>
           </div>
         </div>
       </div>
     </div>
     <!--Saivarun Illendula - Added Email Model to Dashboard-->
     <!-- The Modal -->
-    <div class="modal fade" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
+    <div class="modal animated" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="emailmodal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">Email</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" @click="closeEmailModal">&times;</button>
           </div>
             <!-- Modal body -->
             <!-- Rahul Reddy Lankala - Added placeholders -->
@@ -64,54 +57,57 @@
             </div>
                 <!-- Modal footer -->
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" data-dismiss="modal" @click="saveEmailContent()">Save</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal" @click="sendMail()">Save &amp; Email</button>
+              <button type="button" class="btn btn-success"  @click="saveEmailContent()">Save</button>
+              <button type="button" class="btn btn-danger"  @click="sendMail()">Save &amp; Email</button>
             </div>
         </div>
       </div>
     </div>
     <!-- Keerthi Chiduruppa - Added ReserveTickets Model to Dashboard -->
-    <div class="modal fade" id="ReserveTickets" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
+    <div class="modal animated" id="ReserveTickets" tabindex="-1" role="dialog" aria-labelledby="ReserveTickets" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" >Enter Details</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close"  aria-label="Close" @click="closeReserveTicketsModal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="ReserveTickets()" id="ReserveTicketsAdmin">
+            <form @submit.prevent="ReserveTickets" id="ReserveTicketsAdmin">
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">First Name:</label>
-                    <input class="col-sm-7 form-control" type="text" id="Firstname" name="Firstname" placeholder="Firstname">
+                    <input class="col-sm-7 form-control" type="text" id="Firstname" name="Firstname" placeholder="Firstname" required>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">Last Name:</label>
-                    <input class="col-sm-7 form-control" type="text" id="Lastname" name="Lastname" placeholder="Lastname">
+                    <input class="col-sm-7 form-control" type="text" id="Lastname" name="Lastname" placeholder="Lastname" required>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">Email:</label>
-                    <input class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email">
+                    <input v-if="isTheatreAppreciationStudent === 'true'" class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email" pattern="[S|s]{1}[0-9]{6}@nwmissouri\.edu"
+                    oninvalid="this.setCustomValidity('expecting s530859@nwmissouri.edu')" oninput="this.setCustomValidity('')" required>
+                    <input class="col-sm-7 form-control" type="text"  v-else id="EmailAddress" name="EmailAddress" placeholder="Email" required>
                   </div>
                     <fieldset class="form-group">
                         <div class="row">
                           <legend class="col-form-label col-sm-8 pt-0">Are you a theatre appreciation student?</legend>
                           <div class="col-sm-4">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yes" value="true" v-model="isTheatreAppreciationStudent">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yes" value="true" v-model="isTheatreAppreciationStudent" required>
                               <label class="form-check-label" for="yes">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="no" value="false" v-model="isTheatreAppreciationStudent">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="no" value="false" v-model="isTheatreAppreciationStudent" required>
                               <label class="form-check-label" for="no">No</label>
                             </div>
                           </div>
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'true' }">
                           <label class="col-sm-4 form-label">Section Number:</label>
-                          <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled">
-                              <option selected value="default">--Select--</option>
+                          <select id="SectionEnrolled" class="form-control col-sm-7" name="SectionEnrolled" pattern="[0-9]"
+                            oninvalid="this.setCustomValidity('Please Select')"  oninput="this.setCustomValidity('')" required>
+                            <option>--Select--</option>
                               <option v-for="ele of sectionlist" :key="ele._id" :value="ele.SectionNumber">
                                  {{ ele.ProfessorName }}:
                                  {{ ele.ClassTime12hrs }} -
@@ -134,7 +130,7 @@
                         </div>
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'false' }">
                             <label class="col-sm-4 form-label">No. Of Tickets:</label>
-                            <select id="NumberOfTicketsperPerson" class="form-control col-sm-7" name="NumberOfTicketsperPerson">
+                            <select id="NumberOfTicketsperPerson" class="form-control col-sm-7" name="NumberOfTicketsperPerson" required>
                               <option selected v-for="ele of [1,2,3,4,5,6,7,8,9,10]" :key="ele" :value="ele">{{ele}}</option>
                             </select>
                         </div>
@@ -210,18 +206,44 @@ export default {
   methods: {
     showmodal (d) {
       $('#ReserveTickets').modal('show')
-      console.log(d)
+      $('#ReserveTickets.modal').addClass('zoomIn')
       this.reserveshow = d
     },
     showemailmodal (v) {
       this.show = v
       $('#emailmodal').modal('show')
+      $('#emailmodal.modal').addClass('zoomIn')
     },
     showdescriptionmodal () {
       $('#descriptionmodal').modal('show')
+      $('#descriptionmodal.modal').addClass('zoomIn')
+    },
+    closeDescriptionModal () {
+      $('#descriptionmodal.modal').removeClass('zoomIn')
+      $('#descriptionmodal.modal').addClass('zoomOut')
+      setTimeout(function () {
+        $('#descriptionmodal').modal('hide')
+        $('#descriptionmodal.modal').removeClass('zoomOut')
+      }, 100)
+    },
+    closeReserveTicketsModal () {
+      $('#ReserveTickets.modal').removeClass('zoomIn')
+      $('#ReserveTickets.modal').addClass('zoomOut')
+      setTimeout(function () {
+        $('#ReserveTickets').modal('hide')
+        $('#ReserveTickets.modal').removeClass('zoomOut')
+      }, 100)
+    },
+    closeEmailModal () {
+      $('#emailmodal.modal').removeClass('zoomIn')
+      $('#emailmodal.modal').addClass('zoomOut')
+      setTimeout(function () {
+        $('#emailmodal').modal('hide')
+        $('#emailmodal.modal').removeClass('zoomOut')
+      }, 100)
     },
     saveEmailContent () {
-
+      this.closeEmailModal()
     },
     sendMail () {
       this.email.subject = $('#subject').val()
@@ -238,7 +260,6 @@ export default {
       })
         .then(
           (result) => {
-            console.log(`send mail clicked ${JSON.stringify(result)}`)
             if (result.value) {
               axios.post(url + '/sendemail', {
                 show: this.show,
@@ -248,6 +269,7 @@ export default {
               })
                 .then(res => {
                   console.log('mail sent ' + res)
+                  this.closeEmailModal()
                   swal({
                     position: 'top-end',
                     type: 'success',
@@ -275,13 +297,9 @@ export default {
       /* global axios moment _ swal */
       axios({
         method: 'get',
-        headers: {
-          token: window.localStorage.getItem('AccessToken')
-        },
         url: url + '/sectionlist'
       })
         .then(function (response) {
-          console.log(response.data)
           _this.sectionlist = response.data
           _.each(_this.sectionlist, function (section) {
             section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
@@ -290,15 +308,12 @@ export default {
         .catch(function (err) {
           console.log('error while getting section list', err)
         })
+
       axios({
         method: 'get',
-        headers: {
-          token: window.localStorage.getItem('AccessToken')
-        },
         url: url + '/showlist'
       })
         .then(function (response) {
-          console.log(response.data)
           _this.showlist = response.data
         })
         .catch(function (err) {
@@ -306,31 +321,24 @@ export default {
         })
     },
     ReserveTickets () {
+      console.log($('#SectionEnrolled').val())
       var reserveticketdata = {
         'FirstName': $('#Firstname').val(),
         'LastName': $('#Lastname').val(),
         'EmailAddress': $('#EmailAddress').val(),
         'SectionEnrolled': $('#SectionEnrolled').val(),
         'NumberOfTicketsperPerson': $('#NumberOfTicketsperPerson').val() ? $('#NumberOfTicketsperPerson').val() : 1,
-        'isStudent': this.isTheatreAppreciationStudent,
-        'ShowID': this.reserveshow._id
+        'isStudent': JSON.parse(this.isTheatreAppreciationStudent),
+        'show_id': this.reserveshow._id
       }
-
-      // axios.post( url + '/reserveTicket',reserveticketdata, {
-      //     headers: { token: window.localStorage.getItem('AccessToken') }
-      //   })
       axios
-        .create({
-          baseURL: url,
-          headers: {
-            token: window.localStorage.getItem('AccessToken')
-          }
-        })
-        .post('/reserveTicket', reserveticketdata)
+        .post(url + '/reserveTicket', reserveticketdata)
         .then(res => {
+          this.closeReserveTicketsModal()
+          this.refreshData()
           swal('Congratualtions!', 'You have reserved a Seat', 'success')
           $('#ReserveTicketsAdmin')[0].reset()
-          console.log('Ticket Reserved ' + res)
+          this.isTheatreAppreciationStudent = ''
         })
         .catch(err => {
           console.log('error in Reserving Ticket' + err)
@@ -338,35 +346,26 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted')
+    console.log(`mounted ${this.showlist}`)
     this.check = true
     $('[data-toggle=popover]').popover()
-    // console.log($('table')[0].outerHTML)
-    // $('#pop').popover({
-    //   content: $('table')[0].outerHTML
-    // })
   },
   created () {
     this.refreshData()
     this.$eventbus.$on('refreshdata', function (data) {
       this.showlist = data
-      console.log(data, this.showlist)
+      // console.log(data, this.showlist)
     }.bind(this))
 
     this.$eventbus.$on('showdescription', function (showclicked) {
       this.show = showclicked
-      console.log('show description', this.show)
+      //  console.log('show description', this.show)
       this.showdescriptionmodal()
     }.bind(this))
   },
-  watch: {
-    showlist: function () {
-      console.log('changed')
-    }
-  },
-
   computed: {
     updatedShowList: function () {
+    // console.log(this.showlist)
       return this.showlist.filter(show => {
         return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
       })
@@ -376,6 +375,9 @@ export default {
 </script>
 
 <style scoped>
+.animated{
+  animation-duration: 0.7s
+}
 .fixed{
     position: fixed;
     z-index: 2;
@@ -419,13 +421,17 @@ export default {
   width: 400px;
   /* padding-left: -50px; */
   margin-left:-40px;
- 
+
   /* margin-right:-40px; */
 }
 
 .m-3{
   margin: 10px;
 }
+}
+
+.green{
+  background-color: #025736
 }
 
 </style>

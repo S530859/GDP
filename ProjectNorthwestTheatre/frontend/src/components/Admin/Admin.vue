@@ -1,5 +1,5 @@
 <template>
-  <Navbar :login="login" class="container-fluid">
+  <Navbar :login="login"  class="container-fluid">
        <router-view></router-view>
   </Navbar>
 </template>
@@ -9,7 +9,8 @@ export default {
   name: 'Admin',
   data () {
     return {
-      login: false
+      login: false,
+      userView: false
     }
   },
   components: {
@@ -45,5 +46,12 @@ export default {
 }
 </script>
 <style>
+
+.color{
+  color:#025736;
+  color:#7CAB9B;
+  color: #D2DED8;
+  color: #FDFDFD;
+}
 
 </style>

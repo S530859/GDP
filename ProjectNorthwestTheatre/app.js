@@ -13,7 +13,7 @@ var app = express();
 var config = require('./config/config')
 var session = require('express-session')
 var cors = require('cors')
-let mongoose = require('mongoose')
+// let mongoose = require('mongoose')
 
 // view engine setup
 app.use(express.static(path.join(__dirname, 'frontend/dist/')));

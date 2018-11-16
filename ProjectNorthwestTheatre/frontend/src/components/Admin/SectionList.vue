@@ -1,10 +1,60 @@
 <template>
-   <div>
+   <b-container>
+        <b-row>
+          <b-col md="5" class="my-3">
+            <b-form-group horizontal label="Filter" class="mb-0">
+              <b-input-group>
+                <b-form-input v-model="filter" placeholder="Type to Search" />
+                <b-input-group-append>
+                  <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
+          <b-col md="4" class="my-3">
+            <b-form-group horizontal label="Per page" class="mb-0">
+              <b-form-select :options="pageOptions" v-model="perPage" />
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <!-- Main table element -->
+        <b-table show-empty
+                hover
+                stacked="md"
+                :items="sectionlist"
+                :fields="fields"
+                :current-page="currentPage"
+                :per-page="perPage"
+                :filter="filter"
+                :sort-by.sync="sortBy"
+                :sort-desc.sync="sortDesc"
+                :sort-direction="sortDirection"
+                @filtered="onFiltered"
+        >
+          <template slot="#" slot-scope="data"> {{ data.index + 1 }} </template>
+          <template slot="Semester" slot-scope="data"> {{ data.item.Semester }} {{ data.item.Year }} </template>
+          <template slot="actions" slot-scope="row">
+            <button type="button" class="btn rounded-circle btn-custom m-2" id="edit" @click="editsection(row.item)">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button type="button" class="btn rounded-circle btn-custom m-2" id="delete" @click="deletesection(row.item._id)" v-if="row.item.Username !== 'admin'">
+                <i class="fas fa-trash"></i>
+            </button>
+          </template>
+
+        </b-table>
+
+        <b-row>
+          <b-col md="6" class="my-1">
+            <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
+          </b-col>
+        </b-row>
      <!-- Created by Supraja Kumbam -->
     <!-- Saivarun Illendula : Added Card to Section List -->
-     <div class="tb">
-       <h1 class = "h2 mb-3 font-weight-normal">View Section </h1>
-        <table class="table table-bordered">
+     <!-- <div class="tb">
+       <h1 class = "h2 mb-3 font-weight-normal mt-3">VIEW SECTIONS </h1>
+        <table class="table table-striped table-bordered">
           <thead class="thead-dark">
             <tr>
               <th scope="col">S.NO</th>
@@ -21,13 +71,13 @@
               <th scope="row">
                 {{ index + 1 }}
               </th>
-              <td>
+              <td class="text-left">
                 {{ ele.Semester }} {{ ele.Year }}
               </td>
               <td>
                 {{ ele.SectionNumber }}
               </td>
-              <td>
+              <td class="text-left">
                 {{ ele.ProfessorName }}
               </td>
               <td>
@@ -47,7 +97,7 @@
             </tr>
           </tbody>
         </table>
-     </div>
+     </div> -->
       <div class="modal fade" id="editSectionadminmodal" role="dialog" aria-labelledby="editSectionadminmodal" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -128,7 +178,7 @@
         </div>
       </div>
     </div>
-  </div>
+   </b-container>
 </template>
 
 <script>
@@ -139,7 +189,49 @@ export default {
       sectionlist: [],
       section: {},
       /* global moment $ */
-      mindate: moment().format('YYYY')
+      mindate: moment().format('YYYY'),
+      fields: [
+        '#',
+        {
+          key: 'Semester',
+          label: 'Semester',
+          sortable: true,
+          class: 'text-center'
+        },
+        {
+          key: 'SectionNumber',
+          label: 'Section No.',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'ProfessorName',
+          label: 'Professor',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'ClassDay',
+          label: 'Day',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'ClassTime12hrs',
+          label: 'Time',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        { key: 'actions', label: 'Actions' }
+      ],
+      currentPage: 1,
+      perPage: 5,
+      totalRows: 0, // sectionlist.length,
+      pageOptions: [5, 10, 15],
+      sortBy: null,
+      sortDesc: false,
+      sortDirection: 'asc',
+      filter: null
     }
   },
   methods: {
@@ -165,10 +257,7 @@ export default {
       }
       /* global axios url swal $ */
       var _this = this
-      axios.create({
-        baseURL: url,
-        headers: { 'token': window.localStorage.getItem('AccessToken') }
-      }).post('/updatesection', data)
+      axios.post(url + '/updatesection', data)
         .then(res => {
           $('#editSectionadminform')[0].reset()
           $('#editSectionadminmodal').modal('hide')
@@ -194,11 +283,7 @@ export default {
       })
         .then((result) => {
           if (result.value) {
-            axios.create({
-              baseURL: url,
-              timeout: 1000,
-              headers: { 'token': window.localStorage.getItem('AccessToken') }
-            }).post('/deletesection', { id: sectionid })
+            axios.post(url + '/deletesection', { id: sectionid })
               .then(res => {
                 swal(
                   'Deleted!',
@@ -216,13 +301,7 @@ export default {
     refreshData () {
       /* global axios moment _ */
       var _this = this
-      axios({
-        method: 'get',
-        headers: {
-          token: window.localStorage.getItem('AccessToken')
-        },
-        url: url + '/sectionlist'
-      })
+      axios.get(url + '/sectionlist')
         .then(function (response) {
           console.log(response.data)
           _this.sectionlist = response.data
@@ -233,15 +312,38 @@ export default {
         .catch(function (err) {
           console.log('error while getting section list', err)
         })
+    },
+    onFiltered (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     }
   },
   created () {
     this.refreshData()
+  },
+  computed: {
+    sortOptions () {
+      // Create an options list from our fields
+      return this.fields.filter(f => f.sortable).map(f => {
+        return { text: f.label, value: f.key }
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
+.btn-custom {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
 div.tb {
   margin-right: 50px;
 }
@@ -254,15 +356,37 @@ div.tb {
   background-color: #DA7A7A
 }
 #delete {
-  color: #D14F4F;
-  background-color: none
+  color: #ffffff;
+  background-color: #910000
 }
 #edit:hover {
   color: #1A1818;
-  background-color: #AB9898
+  background-color: rgb(160, 235, 153)
 }
 #edit {
-  color: #746967;
-  background-color: none
+  color: #ffffff;
+  background-color: #585958
+}
+
+table.table-bordered > tbody > tr > td, th{
+    border:1px solid black;
+    font-size: 25px;
+    vertical-align: middle;
+}
+
+table.table-bordered > tbody > tr > td, th{
+    border:1px solid black;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+@media only screen and (max-width: 800px) {
+table.table-bordered > tbody > tr > td, th{
+    font-size: 15px;
+}
+}
+
+.table-striped> tbody> tr:nth-child(odd){
+   background-color: rgba(128, 128, 128, 0.248);
 }
 </style>

@@ -12,6 +12,11 @@ const config = {
         url: 'mongodb+srv://admin:admin@cluster0-tyjvv.mongodb.net/Production?retryWrites=true',
         tokensecret: 'NorthwestTheatre',
         sessionsecret: 'NorthwestTheatre'
+    },
+    testing:{
+        url: 'mongodb+srv://admin:admin@cluster0-tyjvv.mongodb.net/testing?retryWrites=true',
+        tokensecret: 'NorthwestTheatre',
+        sessionsecret: 'NorthwestTheatre'
     }
 }
 

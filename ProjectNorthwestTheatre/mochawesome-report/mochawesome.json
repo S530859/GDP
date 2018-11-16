@@ -1,0 +1,312 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 12,
+    "passes": 3,
+    "pending": 0,
+    "failures": 9,
+    "start": "2018-11-14T05:37:31.403Z",
+    "end": "2018-11-14T05:37:31.934Z",
+    "duration": 531,
+    "testsRegistered": 12,
+    "passPercent": 25,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "passPercentClass": "danger",
+    "pendingPercentClass": "danger"
+  },
+  "suites": {
+    "uuid": "ac207367-39a8-437d-9322-f89fcce44c9e",
+    "title": "",
+    "fullFile": "",
+    "file": "",
+    "beforeHooks": [],
+    "afterHooks": [],
+    "tests": [],
+    "suites": [
+      {
+        "uuid": "92ff7823-d069-49fe-97d5-69a27400fdae",
+        "title": "Testing AddShow",
+        "fullFile": "C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\test\\Admin\\show.Spec.js",
+        "file": "\\test\\Admin\\show.Spec.js",
+        "beforeHooks": [],
+        "afterHooks": [
+          {
+            "title": "\"after all\" hook",
+            "fullTitle": "Testing AddShow \"after all\" hook",
+            "timedOut": false,
+            "duration": 1,
+            "pass": false,
+            "fail": false,
+            "pending": false,
+            "code": "mongoose.connection.close()\ndone()",
+            "err": {},
+            "isRoot": false,
+            "uuid": "82e3e0e1-2a48-4bf4-968c-74fcbb6ae4bf",
+            "isHook": true,
+            "skipped": false
+          }
+        ],
+        "tests": [
+          {
+            "title": "Entered all the fields except the image",
+            "fullTitle": "Testing AddShow Entered all the fields except the image",
+            "timedOut": false,
+            "duration": 101,
+            "state": "passed",
+            "speed": "slow",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422,done)",
+            "err": {},
+            "isRoot": false,
+            "uuid": "3b9acce3-cd99-44d2-9fab-321ea97cdce7",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Show Title",
+            "fullTitle": "Testing AddShow Entered all the fields except the Show Title",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422,(err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field Show Title\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field Show Title'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field Show Title'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:28:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "12e6ad4d-eb5e-47a8-8088-baa15748f1ee",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Show Description",
+            "fullTitle": "Testing AddShow Entered all the fields except the Show Description",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, (err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field Show Description\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field Show Description'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field Show Description'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:40:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "297f6ff2-bd5e-4c2e-a5ed-c657828f2766",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Show Date",
+            "fullTitle": "Testing AddShow Entered all the fields except the Show Date",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\",\"ShowTime\":\"01:00:00\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, (err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field Show Date\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field Show Date'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field Show Date'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:52:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "801ca075-7ff1-4d62-a3e0-7f97b76ceead",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Show Time",
+            "fullTitle": "Testing AddShow Entered all the fields except the Show Time",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, (err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field Show Time\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field Show Time'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field Show Time'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:64:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "4dc76729-98be-4727-90fb-f5d62471ad7a",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Show Date",
+            "fullTitle": "Testing AddShow Entered all the fields except the Show Date",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, (err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field Show Date\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field Show Date'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field Show Date'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:76:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "893bf717-6aef-4ac3-bb81-3552ced2e8e3",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Number of Tickets",
+            "fullTitle": "Testing AddShow Entered all the fields except the Number of Tickets",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"07/01/2018\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, (err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field NumberOfTickets\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field NumberOfTickets'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field NumberOfTickets'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:88:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "15e1676a-4f7e-4e08-92d2-577a498ecc54",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Ticket Details",
+            "fullTitle": "Testing AddShow Entered all the fields except the Ticket Details",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, (err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field TicketDetails\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field TicketDetails'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field TicketDetails'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:100:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "5c95f46f-5300-4059-ad92-e401c896b9db",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered all the fields except the Show Venue",
+            "fullTitle": "Testing AddShow Entered all the fields except the Show Venue",
+            "timedOut": false,
+            "duration": 0,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\" })\n.set('Accept', 'application/json')\n.expect(422, (err,response) => {\n    if(err) done(err)\n    expect(response.body.message).to.equal(\"Missing the field ShowVenue\")\n    done()\n})",
+            "err": {
+              "message": "AssertionError: expected undefined to equal 'Missing the field ShowVenue'",
+              "estack": "AssertionError: expected undefined to equal 'Missing the field ShowVenue'\n    at Test.request.post.send.set.expect (test\\Admin\\show.Spec.js:124:46)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:181:6)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "b40b8487-0657-47db-9e56-4094e2c0102f",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered invalid inputs to the Show Time field",
+            "fullTitle": "Testing AddShow Entered invalid inputs to the Show Time field",
+            "timedOut": false,
+            "duration": 45,
+            "state": "passed",
+            "speed": "medium",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"I am entering text\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, done)",
+            "err": {},
+            "isRoot": false,
+            "uuid": "1a822912-ea69-48ea-b89a-249b650b6622",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered invalid inputs to the Show Date field",
+            "fullTitle": "Testing AddShow Entered invalid inputs to the Show Date field",
+            "timedOut": false,
+            "duration": 39,
+            "state": "passed",
+            "speed": "medium",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"I am entering text\", \"NumberOfTickets\":\"100\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, done)",
+            "err": {},
+            "isRoot": false,
+            "uuid": "45a86c6b-f6b3-4aeb-a06a-b67cbaade419",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "Entered invalid inputs to the Number of Tickets field",
+            "fullTitle": "Testing AddShow Entered invalid inputs to the Number of Tickets field",
+            "timedOut": false,
+            "duration": 6,
+            "state": "failed",
+            "pass": false,
+            "fail": true,
+            "pending": false,
+            "code": "request\n.post('/admin/addshow')\n.send({ \"isPublished\": \"false\", \"ShowTitle\": \"Test\", \"ShowDescription\":\"It should work\", \"ShowTime\":\"01:00:00\", \"ShowDate\":\"07/01/2018\", \"NumberOfTickets\":\"I am entering text\", \"Ticketdetails\":\"100\", \"ShowRating\":\"U/A\", \"ShowVenue\":\"Ron Houston\" })\n.set('Accept', 'application/json')\n.expect(422, done)",
+            "err": {
+              "message": "Error: expected 422 \"Unprocessable Entity\", got 400 \"Bad Request\"",
+              "estack": "Error: expected 422 \"Unprocessable Entity\", got 400 \"Bad Request\"\n    at Test._assertStatus (node_modules\\supertest\\lib\\test.js:268:12)\n    at Test._assertFunction (node_modules\\supertest\\lib\\test.js:283:11)\n    at Test.assert (node_modules\\supertest\\lib\\test.js:173:18)\n    at localAssert (node_modules\\supertest\\lib\\test.js:131:12)\n    at C:\\Users\\S530464\\Desktop\\New folder\\GDP\\ProjectNorthwestTheatre\\node_modules\\supertest\\lib\\test.js:128:5\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:728:3)\n    at IncomingMessage.parser (node_modules\\superagent\\lib\\node\\index.js:916:18)\n    at endReadableNT (_stream_readable.js:1094:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"
+            },
+            "isRoot": false,
+            "uuid": "f80ca305-49ff-47a2-ad0a-a4bb40237562",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "3b9acce3-cd99-44d2-9fab-321ea97cdce7",
+          "1a822912-ea69-48ea-b89a-249b650b6622",
+          "45a86c6b-f6b3-4aeb-a06a-b67cbaade419"
+        ],
+        "failures": [
+          "12e6ad4d-eb5e-47a8-8088-baa15748f1ee",
+          "297f6ff2-bd5e-4c2e-a5ed-c657828f2766",
+          "801ca075-7ff1-4d62-a3e0-7f97b76ceead",
+          "4dc76729-98be-4727-90fb-f5d62471ad7a",
+          "893bf717-6aef-4ac3-bb81-3552ced2e8e3",
+          "15e1676a-4f7e-4e08-92d2-577a498ecc54",
+          "5c95f46f-5300-4059-ad92-e401c896b9db",
+          "b40b8487-0657-47db-9e56-4094e2c0102f",
+          "f80ca305-49ff-47a2-ad0a-a4bb40237562"
+        ],
+        "pending": [],
+        "skipped": [],
+        "duration": null,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 2000
+      }
+    ],
+    "passes": [],
+    "failures": [],
+    "pending": [],
+    "skipped": [],
+    "duration": 0,
+    "root": true,
+    "rootEmpty": true,
+    "_timeout": 2000
+  },
+  "copyrightYear": 2018
+}

@@ -8,7 +8,8 @@ let AdminController = require('./controllers/CRUDadmin.controller')
 let ShowController = require('./controllers/show.controller')
 let SectionController = require('./controllers/section.controller')
 let MailController = require('./controllers/mail.controller')
-
+let ReportGenerator = require('./core/file.operation')
+let CancelTicket = require('./controllers/CancelTicketContact')
 
 MailController.startjob()
 
@@ -40,7 +41,11 @@ router.post('/ispublished', ShowController.isPublished)
 
 router.post('/duplicateShow', ShowController.GetduplicateShow, ShowController.GetShowList)
 
-router.post('/reserveTicket', ShowController.reserveTickets)
+router.post('/reserveTicket', ShowController.CheckForShowExistence, ShowController.reserveTickets, ShowController.IncReserveTicketsCount)
+
+router.post('/students', ShowController.CheckForShowExistence,ShowController.getAllStudentsForAShow)
+
+router.post('/unreserve', ShowController.CheckForShowExistence,ShowController.unreserve,ShowController.DecReserveTicketsCount, ShowController.getAllStudentsForAShow)
 
 /* section CRUD operations */
 router.post('/addsection', SectionController.addSection)
@@ -55,5 +60,26 @@ router.post('/deletesection', SectionController.deleteSection)
  */
 
 router.post('/sendemail', MailController.SendMail)
+
+router.post('/resetpassword', MailController.SendResetEmail)
+
+router.get('/resetpassword', AdminController.GetResetPasswordView)
+
+router.post('/confirmresetpassword', AdminController.ResetPassword)
+
+
+/* Reports */
+
+router.post('/report', ReportGenerator.GenerateReport)
+
+/* Cancel Ticket Contact */
+
+router.get('/getpersonslist', CancelTicket.getpersonlist)
+
+router.post('/deleteperson', CancelTicket.deleteperson)
+
+router.post('/updateperson', CancelTicket.editperson)
+
+router.post('/addperson', CancelTicket.addPerson)
 
 module.exports = router

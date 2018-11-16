@@ -13,29 +13,30 @@
         </div>
         <div id="adminnavbar" class="row">
             <div class="col-sm-2 collapse d-sm-flex position-fixed" id="sidebar">
-                <div class="col-sm-10 bg-dark pt-2">
+                <div class="col-sm-10 bg-dark green pt-2">
                     <ul class="nav flex-column flex-nowrap ">
-                        <li class="nav-item my-2">
-                            <router-link to="/user/dashboard" class="btn white_green btn-block">
+                        <li class="nav-item  my-2">
+                            <router-link to="dashboard" class="btn white_green btn-block" >
                                 <span class="mr-2">
                               <i class="fas fa-home"></i>
                              </span>Home
                             </router-link>
                         </li>
                         <li class="nav-item my-2">
-                            <router-link to="/user/cancelticket" class="btn white_green btn-block">
-                                <span class="mr-2"><i class="fas fa-ban"></i>
+                            <router-link to="cancelticket" class="btn white_green btn-block" >
+                                <span class="mr-1"><i class="fas fa-ban"></i>
                              </span>CancelTicket
                             </router-link>
                         </li>
                         <li class="nav-item my-2">
-                            <router-link to="/user/directions" class="btn white_green btn-block">
+                            <router-link to="directions" class="btn white_green btn-block"
+                            >
                                 <span class="mr-2"><i class="fas fa-directions"></i>
                              </span>Directions
                             </router-link>
                         </li>
                         <li class="nav-item my-2">
-                            <router-link to="/admin/login" class="btn white_green btn-block">
+                            <router-link to="/admin/login" class="btn white_green btn-block" >
                                 <span class="mr-2"><i class="fas fa-directions"></i>
                              </span>AsAdmin
                             </router-link>
@@ -59,8 +60,9 @@ export default {
       formdata: {
         isPublished: false
       },
-      /* global moment  */
-      showtime: moment().format('HH:mm')
+      /* global moment $ */
+      showtime: moment().format('HH:mm'),
+      selected: ''
     }
   },
   props: ['login'],
@@ -89,21 +91,7 @@ export default {
     })
   }
 }
-/* global $ */
-/* $(function () {
-  function myFunction1 () {
-    console.log('myfunction1 show content')
-    $('#sidebar').toggle()
-  }
-  function myFunction () {
-    console.log('myfunction remainig content')
-    $('#sidebar').hide()
-  }
-  if (document.getElementById('rem_content')) {
-    document.getElementById('rem_content').addEventListener('click', myFunction)
-  }
-  document.getElementById('show_content').addEventListener('click', myFunction1)
-}) */
+
 </script>
 
 <style scoped>
@@ -200,23 +188,34 @@ export default {
     background-color: #aae8aa
 }
 
-.white_green:active {
+.btn.router-link-active {
     background-color: #7fe682;
     box-shadow: 0 2px #666;
     transform: translateY(2px);
 }
 
-.bor {
-    box-shadow: 4px 10px 2px -4px rgba(74, 243, 18, 0.172);
-}
-
 .tex {
     color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172);
+    /* text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172); */
 }
 
 .required:after {
     content: '*';
     color: red;
 }
+
+.wrap{
+  overflow-wrap: break-word;
+   word-break: break-all;
+}
+
+.btn{
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+
+.navbar, .bg-dark{
+    background-color: #025736!important;
+}
+
 </style>

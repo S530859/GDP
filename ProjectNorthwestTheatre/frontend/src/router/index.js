@@ -16,13 +16,21 @@ import UserShow from '../components/User/UserShow.vue'
 import User from '../components/User/User.vue'
 import CancelTicket from '../components/Admin/CancelTicket.vue'
 import UserDirections from '../components/User/UserDirections.vue'
+// import ResetPassword from '../components/Admin/ResetPassword.vue'
+import Unreserve from '../components/Admin/AdminUnreserve.vue'
+import UserView from '../components/Admin/UserView.vue'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/Theatre/admin/resetpassword',
+      redirect: { name: 'ResetPassword' }
+    },
+    {
+      path: '/Theatre',
       name: 'HomePage',
       redirect: { name: 'Userdashboard' }
     },
@@ -103,6 +111,58 @@ export default new Router({
           name: 'cancelticket',
           beforeEnter: Guard.auth,
           component: CancelTicket
+        },
+        {
+          path: 'resetpassword',
+          name: 'ResetPassword',
+          component: AdminLogin
+        },
+        {
+          path: 'unreserve',
+          name: 'unreserve',
+          beforeEnter: Guard.auth,
+          props: true,
+          component: Unreserve
+        }
+      ]
+    },
+    {
+      path: '/userView',
+      name: 'userView',
+      beforeEnter: Guard.auth,
+      component: UserView,
+      children: [
+        {
+          path: 'user',
+          name: 'User',
+          component: User,
+          children: [
+            {
+              path: 'dashboard',
+              name: 'Userdashboard',
+              component: UserDashboard
+            },
+            {
+              path: 'usershow',
+              name: 'UserShow',
+              component: UserShow
+            },
+            {
+              path: 'reservation',
+              name: 'UserReservation',
+              component: UserReservation
+            },
+            {
+              path: 'CancelTicket',
+              name: 'UserCancelTicket',
+              component: UserCancelTicket
+            },
+            {
+              path: 'directions',
+              name: 'UserDirections',
+              component: UserDirections
+            }
+          ]
         }
       ]
     },
