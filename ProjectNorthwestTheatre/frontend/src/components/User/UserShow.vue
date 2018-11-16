@@ -27,7 +27,7 @@
             <div class="row justify-content-around m-3 rounded  bg-light">
               <!-- image column -->
               <div class="col-lg align-self-center" id="imagediv">
-                <img :src="'http://localhost:3000/user/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
+                <img :src="'https://northwesttheatre.tk/user/image?_id=' + show._id + '&token=' + token + '&time=' + time" class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" />
                 <!-- <img class="rounded mx-1 my-1 w-100" alt="Image" id="imagesrc" /> -->
               </div>
               <!-- image column end -->
@@ -55,7 +55,7 @@
                 <br>
                 <!-- Description -->
                 <span>
-                  <button type="button" class="btn btn-light font-weight-bold" @click="emitshowdescription(show)">
+                  <button type="button" class="btn btn-light font-weight-bold" @click.stop="emitshowdescription(show)">
                     Description
                   </button>
                 </span>

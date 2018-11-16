@@ -86,7 +86,7 @@
                   <div class="form-group row">
                     <label class="col-sm-4 form-label">Email:</label>
                     <input v-if="isTheatreAppreciationStudent === 'true'" class="col-sm-7 form-control" type="text" id="EmailAddress" name="EmailAddress" placeholder="Email" pattern="[S|s]{1}[0-9]{6}@nwmissouri\.edu"
-                    oninvalid="this.setCustomValidity('expecting s530859@nwmissouri.edu')" oninput="this.setCustomValidity('')" required>
+                    oninvalid="this.setCustomValidity('expecting sXXXXXX@nwmissouri.edu')" oninput="this.setCustomValidity('')" required>
                     <input class="col-sm-7 form-control" type="text"  v-else id="EmailAddress" name="EmailAddress" placeholder="Email" required>
                   </div>
                     <fieldset class="form-group">
@@ -131,7 +131,7 @@
                         <div class="form-group row" :class="{'d-none': isTheatreAppreciationStudent !== 'false' }">
                             <label class="col-sm-4 form-label">No. Of Tickets:</label>
                             <select id="NumberOfTicketsperPerson" class="form-control col-sm-7" name="NumberOfTicketsperPerson" required>
-                              <option selected v-for="ele of [1,2,3,4,5,6,7,8,9,10]" :key="ele" :value="ele">{{ele}}</option>
+                              <option v-for="ele of [1,2,3,4,5,6,7,8,9,10]" :key="ele" :value="ele">{{ele}}</option>
                             </select>
                         </div>
                     </fieldset>
