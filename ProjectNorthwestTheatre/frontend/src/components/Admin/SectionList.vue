@@ -20,6 +20,7 @@
 
         <!-- Main table element -->
         <b-table show-empty
+                hover
                 stacked="md"
                 :items="sectionlist"
                 :fields="fields"
@@ -34,9 +35,6 @@
           <template slot="#" slot-scope="data"> {{ data.index + 1 }} </template>
           <template slot="Semester" slot-scope="data"> {{ data.item.Semester }} {{ data.item.Year }} </template>
           <template slot="actions" slot-scope="row">
-            <!-- <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1" variant="danger" >
-            <strong><span class = "mr-2"><i class="fas fa-user-slash"></i></span>Unreserve</strong>
-            </b-button> -->
             <button type="button" class="btn rounded-circle btn-custom m-2" id="edit" @click="editsection(row.item)">
                 <i class="fas fa-pencil-alt"></i>
             </button>

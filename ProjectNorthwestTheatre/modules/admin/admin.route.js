@@ -9,6 +9,7 @@ let ShowController = require('./controllers/show.controller')
 let SectionController = require('./controllers/section.controller')
 let MailController = require('./controllers/mail.controller')
 let ReportGenerator = require('./core/file.operation')
+let CancelTicket = require('./controllers/CancelTicketContact')
 
 MailController.startjob()
 
@@ -70,5 +71,15 @@ router.post('/confirmresetpassword', AdminController.ResetPassword)
 /* Reports */
 
 router.post('/report', ReportGenerator.GenerateReport)
+
+/* Cancel Ticket Contact */
+
+router.get('/getpersonslist', CancelTicket.getpersonlist)
+
+router.post('/deleteperson', CancelTicket.deleteperson)
+
+router.post('/updateperson', CancelTicket.editperson)
+
+router.post('/addperson', CancelTicket.addPerson)
 
 module.exports = router

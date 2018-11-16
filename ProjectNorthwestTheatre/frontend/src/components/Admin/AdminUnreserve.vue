@@ -29,6 +29,7 @@
 
     <!-- Main table element -->
     <b-table show-empty
+             hover
              stacked="md"
              :items="items"
              :fields="fields"

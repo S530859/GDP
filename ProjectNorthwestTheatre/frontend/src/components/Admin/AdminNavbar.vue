@@ -44,7 +44,7 @@
                 </li>
                  <li class="nav-item my-2 ">
                     <router-link to="/userView/user/dashboard" class="btn white_green btn-block">
-                    <span class="mr-0"><i class="fas fa-eye"></i> AudienceVie</span></router-link>
+                    <span class="mr-0"><i class="fas fa-eye"></i> Audience</span></router-link>
                 </li>
                 <li id="logS" class="nav-item my-2 d-md-none d-lg-none d-xl-none " @click="logout()" v-if="login">
                     <router-link to="" class="btn white_green btn-block">

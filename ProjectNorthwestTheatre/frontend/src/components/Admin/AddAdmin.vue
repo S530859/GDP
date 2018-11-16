@@ -48,98 +48,116 @@
 
 <script>
 export default {
-  name: 'AddAdmin',
-  data () {
+  name: "AddAdmin",
+  data() {
     return {
-        message:       '',
-        has_number:    false,
-        has_lowercase: false,
-        has_uppercase: false,
-        has_special:   false,
-        pmatch: false,
-        message2: '',
-        seen: false,
-        seen2: false
-    }
+      message: "",
+      has_number: false,
+      has_lowercase: false,
+      has_uppercase: false,
+      has_special: false,
+      pmatch: false,
+      message2: "",
+      seen: false,
+      seen2: false
+    };
   },
   methods: {
-    AddAdmin () {
-      var formdata = new FormData(document.querySelector('#addadmin'))
+    AddAdmin() {
+      var formdata = new FormData(document.querySelector("#addadmin"));
       var data = {
-        RegEmail: formdata.get('RegEmail'),
-        RegUsername: formdata.get('RegUsername'),
-        RegPassword: formdata.get('RegPassword')
-      }
+        RegEmail: formdata.get("RegEmail"),
+        RegUsername: formdata.get("RegUsername"),
+        RegPassword: formdata.get("RegPassword")
+      };
       /* global axios url swal */
-      axios.create({
-        baseURL: url,
-        timeout: 1000,
-        headers: { 'token': window.localStorage.getItem('AccessToken') }
-      }).post('/addadmin', data)
+      axios
+        .create({
+          baseURL: url,
+          timeout: 1000,
+          headers: { token: window.localStorage.getItem("AccessToken") }
+        })
+        .post("/addadmin", data)
         .then(res => {
           axios({
-            method: 'get',
+            method: "get",
             headers: {
-              token: window.localStorage.getItem('AccessToken')
+              token: window.localStorage.getItem("AccessToken")
             },
-            url: url + '/all'
+            url: url + "/all"
           })
             .then(response => {
-              this.$eventbus.$emit('admindata', response.data)
-              this.alert('Admin Added Successfully!', ' ', 'success')
+              this.$eventbus.$emit("admindata", response.data);
+              this.alert("Admin Added Successfully!", " ", "success");
             })
             .catch(err => {
-              console.log('error while getting admin list', err)
-            })
+              console.log("error while getting admin list", err);
+            });
         })
         .catch(error => {
-          this.alert(error.response.data, 'Please try again', 'error')
-          console.log(error)
-        })
+          this.alert(error.response.data, "Please try again", "error");
+          console.log(error);
+        });
     },
-    alert (header, msg, type) {
-      swal(
-        header,
-        msg,
-        type
-      )
+    alert(header, msg, type) {
+      swal(header, msg, type);
     },
     password_check() {
-            this.has_number    = /\d/.test(this.message);
-            this.has_lowercase = /[a-z]/.test(this.message);
-            this.has_uppercase = /[A-Z]/.test(this.message);
-            this.has_special   = /[!@#\$%\^\&*\)\(+=._-]/.test(this.message);
-        },
-
-      password_match(){
-        if($("#Password").val() === $("#confirmpassword").val()){
-    $("#cpSymbol").addClass("fa-check");
-    $("#cpSymbol").removeClass("fa-times")
-    $("#cpSymbol").css("color","#00A41E");
-	}else{
-      $("#cpSymbol").addClass("fa-times");
-      $("#cpSymbol").removeClass("fa-check");
-      $('#cpSymbol').css('color','red');
-	}
+      this.has_number = /\d/.test(this.message);
+      this.has_lowercase = /[a-z]/.test(this.message);
+      this.has_uppercase = /[A-Z]/.test(this.message);
+      this.has_special = /[!@#\$%\^\&*\)\(+=._-]/.test(this.message);
+    },
+    password_match() {
+      if ($("#Password").val() === $("#confirmpassword").val()) {
+        $("#cpSymbol").addClass("fa-check");
+        $("#cpSymbol").removeClass("fa-times");
+        $("#cpSymbol").css("color", "#00A41E");
+      } else {
+        $("#cpSymbol").addClass("fa-times");
+        $("#cpSymbol").removeClass("fa-check");
+        $("#cpSymbol").css("color", "red");
       }
-
+    }
   }
-}
+};
 
 // Regular Expression
 </script>
 
 <style scoped>
 .required:after {
-        content: '*';
-        color: red;
-    }
+  content: "*";
+  color: red;
+}
 
-.frmField{background-color:white; color:#495057; line-height: 1.25; font-size: 16px; font-family: 'Roboto', sans-serif; border:0; padding: 10px; border:1px solid #dbdbdb;  border-radius: 3px; width:90%;}
-.frmLabel{display: block; margin-bottom: 10px; font-weight: bold;}
-.frmValidation{font-size: 13px; }
-.frmValidation--passed{color:#717b85;}
-.frmIcon{color:#EB0029;}
-    .frmValidation--passed .frmIcon{color:#0fa140;}
-
+.frmField {
+  background-color: white;
+  color: #495057;
+  line-height: 1.25;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  border: 0;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  width: 90%;
+}
+.frmLabel {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.frmValidation {
+  font-size: 13px;
+}
+.frmValidation--passed {
+  color: #717b85;
+}
+.frmIcon {
+  color: #eb0029;
+}
+.frmValidation--passed .frmIcon {
+  color: #0fa140;
+}
 </style>
