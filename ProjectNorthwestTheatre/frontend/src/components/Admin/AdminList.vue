@@ -18,7 +18,6 @@
             </b-form-group>
           </b-col>
         </b-row>
-        
         <b-table show-empty
                 hover
                 stacked="md"
@@ -85,143 +84,143 @@
 
 <script>
 export default {
-  name: "AdminList",
-  data() {
+  name: 'AdminList',
+  data () {
     return {
       adminlist: [],
       count: 0,
       admin: {},
       fields: [
-        "#",
+        '#',
         {
-          key: "Username",
-          label: "Username",
+          key: 'Username',
+          label: 'Username',
           sortable: true,
-          class: "text-center"
+          class: 'text-center'
         },
         {
-          key: "Email",
-          label: "EmailAddress",
+          key: 'Email',
+          label: 'EmailAddress',
           sortable: true,
-          sortDirection: "desc"
+          sortDirection: 'desc'
         },
-        { key: "actions", label: "Actions" }
+        { key: 'actions', label: 'Actions' }
       ],
       currentPage: 1,
       perPage: 5,
-      totalRows: 0,// adminlist.length,
+      totalRows: 0, // adminlist.length,
       pageOptions: [5, 10, 15],
       sortBy: null,
       sortDesc: false,
-      sortDirection: "asc",
+      sortDirection: 'asc',
       filter: null
-    };
+    }
   },
   methods: {
-    resetModal() {
-      $("#modalInfo").removeClass("zoomIn");
-      $("#modalInfo").addClass("zoomOut");
-      setTimeout(function() {
-        $("#modalInfo").modal("hide");
-        $("#modalInfo").removeClass("animated zoomOut");
-      }, 100);
+    resetModal () {
+      $('#modalInfo').removeClass('zoomIn')
+      $('#modalInfo').addClass('zoomOut')
+      setTimeout(function () {
+        $('#modalInfo').modal('hide')
+        $('#modalInfo').removeClass('animated zoomOut')
+      }, 100)
       // this.modalInfo.title = ''
       // this.modalInfo.content = ''
     },
-    onFiltered(filteredItems) {
+    onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     },
-    editadmin(admin) {
-      this.admin = admin;
+    editadmin (admin) {
+      this.admin = admin
       /* global $ */
-      $("#editModaladmin").modal("show");
+      $('#editModaladmin').modal('show')
     },
-    editadminform() {
-      console.log("edit form clicked");
+    editadminform () {
+      console.log('edit form clicked')
       var formdata = new FormData(
-        document.querySelector("#editModaladminform")
-      );
+        document.querySelector('#editModaladminform')
+      )
       var data = {
-        updateusername: formdata.get("username"),
+        updateusername: formdata.get('username'),
         id: this.admin._id,
-        updateemail: formdata.get("email")
-      };
+        updateemail: formdata.get('email')
+      }
       /* global axios url swal */
-      axios.post(url + "/updateadmin", data)
+      axios.post(url + '/updateadmin', data)
         .then(
-          function(res) {
-            $("#editModaladmin").modal("hide");
-            swal("Updated!", "Admin has been successfully updated.", "success");
-            axios.get(url + "/all")
+          function (res) {
+            $('#editModaladmin').modal('hide')
+            swal('Updated!', 'Admin has been successfully updated.', 'success')
+            axios.get(url + '/all')
               .then(response => {
-                this.adminlist = response.data;
-                console.log(this.adminlist);
+                this.adminlist = response.data
+                console.log(this.adminlist)
               })
               .catch(err => {
-                console.log("error while getting admin list", err);
-              });
+                console.log('error while getting admin list', err)
+              })
           }.bind(this)
         )
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     },
-    getlist() {
+    getlist () {
       /* global axios */
-      axios.get(url + "/all")
+      axios.get(url + '/all')
         .then(response => {
-          this.adminlist = response.data;
-          console.log(this.adminlist);
+          this.adminlist = response.data
+          console.log(this.adminlist)
         })
         .catch(err => {
-          console.log("error while getting admin list", err);
-        });
+          console.log('error while getting admin list', err)
+        })
     },
-    storelist(data) {
-      this.adminlist = data;
-      console.log(this.adminlist);
+    storelist (data) {
+      this.adminlist = data
+      console.log(this.adminlist)
     },
-    deleteadmin(adminid) {
+    deleteadmin (adminid) {
       /* global swal axios url */
       swal({
-        title: "Are you sure?",
+        title: 'Are you sure?',
         text: "You won't be able to revert this!",
-        type: "warning",
+        type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
       }).then(result => {
         if (result.value) {
-          axios.post(url + "/deleteadmin", { id: adminid })
+          axios.post(url + '/deleteadmin', { id: adminid })
             .then(res => {
-              swal("Deleted!", "Selected Admin has been deleted.", "success");
-              this.getlist();
+              swal('Deleted!', 'Selected Admin has been deleted.', 'success')
+              this.getlist()
             })
             .catch(error => {
-              console.log(error);
-            });
+              console.log(error)
+            })
         }
-      });
+      })
     }
   },
-  created() {
-    this.getlist();
-    this.$eventbus.$on("admindata", data => {
-      this.storelist(data);
-    });
+  created () {
+    this.getlist()
+    this.$eventbus.$on('admindata', data => {
+      this.storelist(data)
+    })
   },
   computed: {
-    sortOptions() {
+    sortOptions () {
       // Create an options list from our fields
       return this.fields.filter(f => f.sortable).map(f => {
-        return { text: f.label, value: f.key };
-      });
+        return { text: f.label, value: f.key }
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

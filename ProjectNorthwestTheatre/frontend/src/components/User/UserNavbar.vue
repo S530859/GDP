@@ -194,8 +194,6 @@ export default {
     transform: translateY(2px);
 }
 
-
-
 .tex {
     color: white;
     /* text-shadow: 1px 1px 2px black, 0 0 25px #7fe682, 0 0 5px rgba(74, 243, 18, 0.172); */

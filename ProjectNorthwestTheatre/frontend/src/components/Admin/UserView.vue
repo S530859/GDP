@@ -17,14 +17,12 @@
             </div>
         </div>
     </div>
-  
-
 </div>
 </template>
 <script>
 export default {
-  name: "userView",
-};
+  name: 'userView'
+}
 </script>
 
 <style>

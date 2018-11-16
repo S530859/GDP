@@ -163,7 +163,7 @@ export default new Router({
               component: UserDirections
             }
           ]
-        },
+        }
       ]
     },
     {

@@ -43,7 +43,7 @@
             <div class="row justify-content-around mx-1 mar rounded bg-light">
               <!-- image column -->
               <div class="col-lg h-100 d-inline-block" style="border: 1px">
-                <img :src="'http://localhost:3000/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" 
+                <img :src="'http://localhost:3000/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time"
                  class="rounded mx-1 my-1 align-self-center " style="max-width: 100%;max-height: 100%;" alt="Image" id="imagesrc" />
               </div>
               <!-- image column end -->
@@ -172,15 +172,16 @@
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Show Rating:</label>
                   <select id="inputState" class="form-control col-sm-2" required :value="show.ShowRating" name="ShowRating" >
                     <option selected>Choose...</option>
-                    <option>A</option>
-                    <option>U/A</option>
+                    <option>G</option>
+                    <option>PG</option>
+                    <option>PG13</option>
                     <option>R</option>
                   </select>
                   <label class="col-sm-2 py-2 offset-sm-1 form-label">Image:</label>
                   <input type="file" accept="image/*" class="form-control-file col-sm-2" :id="'InputFile' + show._id" aria-describedby="fileHelp" name="ShowImage">
                   <small id="fileHelp" class="form-text text-muted"></small>
                   <div class="col-sm-2" style=" padding-left: 0px; margin-top: -10px;">
-                    <img :src="'http://localhost:3000/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time" 
+                    <img :src="'http://localhost:3000/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time"
                         class="rounded mx-1 my-1 align-self-center " style="max-width: 100%;max-height: 70%;" alt="Image"
                         :id="'imagesrcpreview' + show._id" />
                   </div>
@@ -260,31 +261,31 @@ export default {
   },
   props: ['show'],
   methods: {
-    updateimage (input,vm) {
+    updateimage (input, vm) {
       console.log('logged')
       if (input.files && input.files[0]) {
-          var reader = new FileReader()
-          reader.onload = function (e) {
-            console.log(vm)
-              $(`#imagesrcpreview` + vm.show._id)
-                  .attr('src', e.target.result)
-          }
-        reader.readAsDataURL(input.files[0]);
+        var reader = new FileReader()
+        reader.onload = function (e) {
+          console.log(vm)
+          $(`#imagesrcpreview` + vm.show._id)
+            .attr('src', e.target.result)
+        }
+        reader.readAsDataURL(input.files[0])
       }
     },
     GenerateReport () {
       let _this = this
-      axios.post(url + '/report', { show_id: this.show._id }, { responseType:'arraybuffer' })
-      .then(res => {
-          //console.log(res)
+      axios.post(url + '/report', { show_id: this.show._id }, { responseType: 'arraybuffer' })
+        .then(res => {
+          // console.log(res)
           let blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
-          filesaver.saveAs(blob, _this.show.ShowTitle + moment().format('MM/DD/YYYY')  + '.xlsx')
+          filesaver.saveAs(blob, _this.show.ShowTitle + moment().format('MM/DD/YYYY') + '.xlsx')
         })
         .catch(err => {
           console.log(err)
         })
 
-      /* filesaver $ moment */
+      /* global filesaver $ moment */
     },
     unreservetickets () {
       let _this = this
@@ -331,7 +332,7 @@ export default {
       formdata.append('Ticketdetails', JSON.stringify(this.show.Ticketdetails))
       formdata.append('isPublished', this.show.isPublished)
       // var _this = this
-      axios.post( url + '/updateshow', formdata)
+      axios.post(url + '/updateshow', formdata)
         .then(
           function (res) {
             $('#editshow' + this.show._id).modal('hide')
@@ -382,9 +383,9 @@ export default {
     showstatuschanged (isPublished) {
       this.show.isPublished = isPublished
       axios.post(url + '/ispublished', {
-          id: this.show._id,
-          isPublished: isPublished
-        })
+        id: this.show._id,
+        isPublished: isPublished
+      })
         .then(res => {
           console.log(res)
         })
@@ -464,9 +465,9 @@ export default {
   },
   mounted () {
     let _this = this
-    $(`#InputFile` + this.show._id ).change(function(){
+    $(`#InputFile` + this.show._id).change(function () {
       // console.log(this.files)
-        _this.updateimage(this, _this)
+      _this.updateimage(this, _this)
     })
     // $('.date').datepicker({
     //     container: '#editshow' + this.show._id
@@ -674,7 +675,6 @@ export default {
   max-height: calc(100% - 120px);
   overflow-y: scroll;
 }
-
 
 .btn1{
   background-color: #D2DED8;

@@ -51,33 +51,31 @@ export default {
   name: "AddAdmin",
   data() {
     return {
-      message: "",
+      message: '',
       has_number: false,
       has_lowercase: false,
       has_uppercase: false,
       has_special: false,
       pmatch: false,
-      message2: "",
+      message2: '',
       seen: false,
       seen2: false
-    };
+    }
   },
   methods: {
     AddAdmin() {
       var formdata = new FormData(document.querySelector("#addadmin"));
       var data = {
-        RegEmail: formdata.get("RegEmail"),
-        RegUsername: formdata.get("RegUsername"),
-        RegPassword: formdata.get("RegPassword")
-      };
-      /* global axios url swal */
-      axios
-        .create({
-          baseURL: url,
-          timeout: 1000,
-          headers: { token: window.localStorage.getItem("AccessToken") }
-        })
-        .post("/addadmin", data)
+        RegEmail: formdata.get('RegEmail'),
+        RegUsername: formdata.get('RegUsername'),
+        RegPassword: formdata.get('RegPassword')
+      }
+      /* global axios url swal $ */
+      axios.create({
+        baseURL: url,
+        timeout: 1000,
+        headers: { 'token': window.localStorage.getItem('AccessToken') }
+      }).post('/addadmin', data)
         .then(res => {
           axios({
             method: "get",
@@ -102,23 +100,25 @@ export default {
     alert(header, msg, type) {
       swal(header, msg, type);
     },
-    password_check() {
-      this.has_number = /\d/.test(this.message);
-      this.has_lowercase = /[a-z]/.test(this.message);
-      this.has_uppercase = /[A-Z]/.test(this.message);
-      this.has_special = /[!@#\$%\^\&*\)\(+=._-]/.test(this.message);
+    password_check () {
+      this.has_number = /\d/.test(this.message)
+      this.has_lowercase = /[a-z]/.test(this.message)
+      this.has_uppercase = /[A-Z]/.test(this.message)
+      this.has_special = /[!@#$%^&*)(+=._-]/.test(this.message)
     },
-    password_match() {
-      if ($("#Password").val() === $("#confirmpassword").val()) {
-        $("#cpSymbol").addClass("fa-check");
-        $("#cpSymbol").removeClass("fa-times");
-        $("#cpSymbol").css("color", "#00A41E");
+
+    password_match () {
+      if ($('#Password').val() === $('#confirmpassword').val()) {
+        $('#cpSymbol').addClass('fa-check')
+        $('#cpSymbol').removeClass('fa-times')
+        $('#cpSymbol').css('color', '#00A41E')
       } else {
-        $("#cpSymbol").addClass("fa-times");
-        $("#cpSymbol").removeClass("fa-check");
-        $("#cpSymbol").css("color", "red");
+        $('#cpSymbol').addClass('fa-times')
+        $('#cpSymbol').removeClass('fa-check')
+        $('#cpSymbol').css('color', 'red')
       }
     }
+
   }
 };
 

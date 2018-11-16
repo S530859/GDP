@@ -115,80 +115,80 @@
 </template>
 
 <script>
-import UserShow from "./UserShow.vue";
+import UserShow from './UserShow.vue'
 /* Saivarun Illendula - Added API Calls */
 export default {
-  name: "AdminDashboard",
-  data() {
+  name: 'AdminDashboard',
+  data () {
     return {
       /* global $ axios */
       sectionlist: [],
       showlist: [],
-      show: "",
-      search: "",
-      isTheatreAppreciationStudent: '',
-    };
+      show: '',
+      search: '',
+      isTheatreAppreciationStudent: ''
+    }
   },
   components: {
     UserShow
   },
   methods: {
-    closeReserveTicketsModal() {
-      $("#ReserveTickets.modal").removeClass("zoomIn");
-      $("#ReserveTickets.modal").addClass("zoomOut");
-      setTimeout(function() {
-        $("#ReserveTickets").modal("hide");
-        $("#ReserveTickets.modal").removeClass("zoomOut");
-      }, 100);
+    closeReserveTicketsModal () {
+      $('#ReserveTickets.modal').removeClass('zoomIn')
+      $('#ReserveTickets.modal').addClass('zoomOut')
+      setTimeout(function () {
+        $('#ReserveTickets').modal('hide')
+        $('#ReserveTickets.modal').removeClass('zoomOut')
+      }, 100)
     },
-    ReserveTickets() {
+    ReserveTickets () {
       let reserveticketdata = {
-        FirstName: $("#Firstname").val(),
-        LastName: $("#Lastname").val(),
-        EmailAddress: $("#EmailAddress").val(),
-        SectionEnrolled: $("#SectionEnrolled").val(),
-        NumberOfTicketsperPerson: $("#NumberOfTicketsperPerson").val() ? $("#NumberOfTicketsperPerson").val() : 1,
+        FirstName: $('#Firstname').val(),
+        LastName: $('#Lastname').val(),
+        EmailAddress: $('#EmailAddress').val(),
+        SectionEnrolled: $('#SectionEnrolled').val(),
+        NumberOfTicketsperPerson: $('#NumberOfTicketsperPerson').val() ? $('#NumberOfTicketsperPerson').val() : 1,
         isStudent: JSON.parse(this.isTheatreAppreciationStudent),
         show_id: this.show._id
-      };
-      /* userurl */
+      }
+      /* global userurl swal */
       axios
-        .post(userurl + "/reserve", reserveticketdata)
+        .post(userurl + '/reserve', reserveticketdata)
         .then(res => {
-          this.closeReserveTicketsModal();
-          swal("Congratualtions!", "You have reserved a Seat", "success");
-          $("#ReserveTicketsUser")[0].reset();
-          this.isTheatreAppreciationStudent = "";
+          this.closeReserveTicketsModal()
+          swal('Congratualtions!', 'You have reserved a Seat', 'success')
+          $('#ReserveTicketsUser')[0].reset()
+          this.isTheatreAppreciationStudent = ''
         })
         .catch(err => {
-          console.log("error in Reserving Ticket" + err);
-        });
+          console.log('error in Reserving Ticket' + err)
+        })
     },
-    showdescriptionmodal() {
-      $("#descriptionmodal").modal("show");
+    showdescriptionmodal () {
+      $('#descriptionmodal').modal('show')
     },
-    refreshData() {
+    refreshData () {
       var _this = this
-      /* global axios userurl */
-       axios.get(userurl + "/sectionlist")
-        .then(function(response) {
+      /* global axios userurl moment _ */
+      axios.get(userurl + '/sectionlist')
+        .then(function (response) {
           console.log(`sectionlist ${response.data}`)
           _this.sectionlist = response.data
-          _.each(_this.sectionlist, function(section) {
-            section.ClassTime12hrs = moment(section.ClassTime, "HH:mm").format("hh:mm a")
+          _.each(_this.sectionlist, function (section) {
+            section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
           })
         })
-        .catch(function(err) {
-          console.log("error while getting section list", err)
+        .catch(function (err) {
+          console.log('error while getting section list', err)
         })
 
-      axios.get(userurl + "/showlist")
-        .then(function(response) {
+      axios.get(userurl + '/showlist')
+        .then(function (response) {
           console.log(response.data)
           _this.showlist = response.data
         })
-        .catch(function(err) {
-          console.log("error while getting show list", err)
+        .catch(function (err) {
+          console.log('error while getting show list', err)
         })
     },
     showreservationmodal (show) {
@@ -198,37 +198,37 @@ export default {
       $('#ReserveTickets').addClass('zoomIn')
     }
   },
-  created() {
+  created () {
     this.refreshData()
     this.$eventbus.$on(
-      "refreshdata",
-      function(data) {
+      'refreshdata',
+      function (data) {
         this.showlist = data
         console.log(data, this.showlist)
       }.bind(this)
     )
     this.$eventbus.$on(
-      "showdescription",
-      function(showclicked) {
+      'showdescription',
+      function (showclicked) {
         this.show = showclicked
-        console.log("show description", this.show)
+        console.log('show description', this.show)
         this.showdescriptionmodal()
       }.bind(this)
     )
-    this.$eventbus.$on( "reserve", function(show) {
-        this.showreservationmodal()       
-      }.bind(this)
+    this.$eventbus.$on('reserve', function (show) {
+      this.showreservationmodal()
+    }.bind(this)
     )
   },
 
   computed: {
-    updatedshowlist() {
+    updatedshowlist () {
       return this.showlist.filter(show => {
-        return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase());
-      });
+        return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>
