@@ -240,12 +240,12 @@ export default {
   props: ['login'],
   methods: {
     closeAddShowModal () {
-      var _this = this
-      $("#myModal").removeClass('zoomIn')
-      $("#myModal").addClass('zoomOut')
+    // var _this = this
+      $('#myModal').removeClass('zoomIn')
+      $('#myModal').addClass('zoomOut')
       setTimeout(function () {
-        $("#myModal").modal('hide')
-        $("#myModal").removeClass('zoomOut')
+        $('#myModal').modal('hide')
+        $('#myModal').removeClass('zoomOut')
       }, 100)
     },
     showdatepicker () {

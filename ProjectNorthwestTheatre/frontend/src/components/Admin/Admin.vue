@@ -49,7 +49,7 @@ export default {
 
 .color{
   color:#025736;
-  color: 	#7CAB9B;
+  color:#7CAB9B;
   color: #D2DED8;
   color: #FDFDFD;
 }

@@ -171,7 +171,7 @@ export default {
   name: 'UserShow',
   data () {
     return {
-      /* $ global moment */
+      /* global moment */
       ShowDate: moment(this.show.ShowDate, 'YYYY-MM-DD').format('MMMM Do YYYY'),
       ShowTime: moment(this.show.ShowTime, 'HH:mm').format('hh:mm a'),
       token: window.localStorage.getItem('AccessToken'),

@@ -51,15 +51,15 @@ export default {
   name: 'AddAdmin',
   data () {
     return {
-        message:       '',
-        has_number:    false,
-        has_lowercase: false,
-        has_uppercase: false,
-        has_special:   false,
-        pmatch: false,
-        message2: '',
-        seen: false,
-        seen2: false
+      message: '',
+      has_number: false,
+      has_lowercase: false,
+      has_uppercase: false,
+      has_special: false,
+      pmatch: false,
+      message2: '',
+      seen: false,
+      seen2: false
     }
   },
   methods: {
@@ -70,7 +70,7 @@ export default {
         RegUsername: formdata.get('RegUsername'),
         RegPassword: formdata.get('RegPassword')
       }
-      /* global axios url swal */
+      /* global axios url swal $ */
       axios.create({
         baseURL: url,
         timeout: 1000,
@@ -104,24 +104,24 @@ export default {
         type
       )
     },
-    password_check() {
-            this.has_number    = /\d/.test(this.message);
-            this.has_lowercase = /[a-z]/.test(this.message);
-            this.has_uppercase = /[A-Z]/.test(this.message);
-            this.has_special   = /[!@#\$%\^\&*\)\(+=._-]/.test(this.message);
-        },
+    password_check () {
+      this.has_number = /\d/.test(this.message)
+      this.has_lowercase = /[a-z]/.test(this.message)
+      this.has_uppercase = /[A-Z]/.test(this.message)
+      this.has_special = /[!@#$%^&*)(+=._-]/.test(this.message)
+    },
 
-      password_match(){
-        if($("#Password").val() === $("#confirmpassword").val()){
-    $("#cpSymbol").addClass("fa-check");
-    $("#cpSymbol").removeClass("fa-times")
-    $("#cpSymbol").css("color","#00A41E");
-	}else{
-      $("#cpSymbol").addClass("fa-times");
-      $("#cpSymbol").removeClass("fa-check");
-      $('#cpSymbol').css('color','red');
-	}
+    password_match () {
+      if ($('#Password').val() === $('#confirmpassword').val()) {
+        $('#cpSymbol').addClass('fa-check')
+        $('#cpSymbol').removeClass('fa-times')
+        $('#cpSymbol').css('color', '#00A41E')
+      } else {
+        $('#cpSymbol').addClass('fa-times')
+        $('#cpSymbol').removeClass('fa-check')
+        $('#cpSymbol').css('color', 'red')
       }
+    }
 
   }
 }

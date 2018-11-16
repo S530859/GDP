@@ -193,46 +193,46 @@ export default {
       /* global moment $ */
       mindate: moment().format('YYYY'),
       fields: [
-        "#",
+        '#',
         {
-          key: "Semester",
-          label: "Semester",
+          key: 'Semester',
+          label: 'Semester',
           sortable: true,
-          class: "text-center"
+          class: 'text-center'
         },
         {
-          key: "SectionNumber",
-          label: "Section No.",
+          key: 'SectionNumber',
+          label: 'Section No.',
           sortable: true,
-          sortDirection: "desc"
+          sortDirection: 'desc'
         },
         {
-          key: "ProfessorName",
-          label: "Professor",
+          key: 'ProfessorName',
+          label: 'Professor',
           sortable: true,
-          sortDirection: "desc"
+          sortDirection: 'desc'
         },
         {
-          key: "ClassDay",
-          label: "Day",
+          key: 'ClassDay',
+          label: 'Day',
           sortable: true,
-          sortDirection: "desc"
+          sortDirection: 'desc'
         },
         {
-          key: "ClassTime12hrs",
-          label: "Time",
+          key: 'ClassTime12hrs',
+          label: 'Time',
           sortable: true,
-          sortDirection: "desc"
+          sortDirection: 'desc'
         },
-        { key: "actions", label: "Actions" }
+        { key: 'actions', label: 'Actions' }
       ],
       currentPage: 1,
       perPage: 5,
-      totalRows: 0,// sectionlist.length,
+      totalRows: 0, // sectionlist.length,
       pageOptions: [5, 10, 15],
       sortBy: null,
       sortDesc: false,
-      sortDirection: "asc",
+      sortDirection: 'asc',
       filter: null
     }
   },
@@ -259,7 +259,7 @@ export default {
       }
       /* global axios url swal $ */
       var _this = this
-      axios.post( url + '/updatesection', data)
+      axios.post(url + '/updatesection', data)
         .then(res => {
           $('#editSectionadminform')[0].reset()
           $('#editSectionadminmodal').modal('hide')
@@ -315,21 +315,21 @@ export default {
           console.log('error while getting section list', err)
         })
     },
-    onFiltered(filteredItems) {
+    onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
-    },
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
+    }
   },
   created () {
     this.refreshData()
   },
   computed: {
-    sortOptions() {
+    sortOptions () {
       // Create an options list from our fields
       return this.fields.filter(f => f.sortable).map(f => {
-        return { text: f.label, value: f.key };
-      });
+        return { text: f.label, value: f.key }
+      })
     }
   }
 }

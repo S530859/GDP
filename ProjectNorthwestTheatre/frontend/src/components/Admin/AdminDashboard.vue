@@ -221,12 +221,12 @@ export default {
       $('#descriptionmodal.modal').addClass('zoomIn')
     },
     closeDescriptionModal () {
-       $('#descriptionmodal.modal').removeClass('zoomIn')
+      $('#descriptionmodal.modal').removeClass('zoomIn')
       $('#descriptionmodal.modal').addClass('zoomOut')
-      setTimeout(function(){ 
-        $("#descriptionmodal").modal("hide")    
+      setTimeout(function () {
+        $('#descriptionmodal').modal('hide')
         $('#descriptionmodal.modal').removeClass('zoomOut')
-        }, 100)
+      }, 100)
     },
     closeReserveTicketsModal () {
       $('#ReserveTickets.modal').removeClass('zoomIn')
@@ -236,13 +236,13 @@ export default {
         $('#ReserveTickets.modal').removeClass('zoomOut')
       }, 100)
     },
-    closeEmailModal(){
+    closeEmailModal () {
       $('#emailmodal.modal').removeClass('zoomIn')
       $('#emailmodal.modal').addClass('zoomOut')
-      setTimeout(function(){ 
-        $("#emailmodal").modal("hide")    
+      setTimeout(function () {
+        $('#emailmodal').modal('hide')
         $('#emailmodal.modal').removeClass('zoomOut')
-        }, 100)
+      }, 100)
     },
     saveEmailContent () {
       this.closeEmailModal()
@@ -301,26 +301,26 @@ export default {
         method: 'get',
         url: url + '/sectionlist'
       })
-      .then(function (response) {
-        _this.sectionlist = response.data
-        _.each(_this.sectionlist, function (section) {
-          section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
+        .then(function (response) {
+          _this.sectionlist = response.data
+          _.each(_this.sectionlist, function (section) {
+            section.ClassTime12hrs = moment(section.ClassTime, 'HH:mm').format('hh:mm a')
+          })
         })
-      })
-      .catch(function (err) {
-        console.log('error while getting section list', err)
-      })
+        .catch(function (err) {
+          console.log('error while getting section list', err)
+        })
 
       axios({
         method: 'get',
         url: url + '/showlist'
       })
-      .then(function (response) {
-        _this.showlist = response.data
-      })
-      .catch(function (err) {
-        console.log('error while getting show list', err)
-      })
+        .then(function (response) {
+          _this.showlist = response.data
+        })
+        .catch(function (err) {
+          console.log('error while getting show list', err)
+        })
     },
     ReserveTickets () {
       console.log($('#SectionEnrolled').val())
@@ -345,7 +345,7 @@ export default {
         .catch(err => {
           console.log('error in Reserving Ticket' + err)
         })
-      }
+    }
   },
   mounted () {
     console.log(`mounted ${this.showlist}`)
@@ -356,18 +356,18 @@ export default {
     this.refreshData()
     this.$eventbus.$on('refreshdata', function (data) {
       this.showlist = data
-   //   console.log(data, this.showlist)
+      // console.log(data, this.showlist)
     }.bind(this))
 
     this.$eventbus.$on('showdescription', function (showclicked) {
       this.show = showclicked
-    //  console.log('show description', this.show)
+      //  console.log('show description', this.show)
       this.showdescriptionmodal()
     }.bind(this))
   },
   computed: {
     updatedShowList: function () {
-     // console.log(this.showlist)
+    // console.log(this.showlist)
       return this.showlist.filter(show => {
         return show.ShowTitle.toLowerCase().includes(this.search.toLowerCase())
       })

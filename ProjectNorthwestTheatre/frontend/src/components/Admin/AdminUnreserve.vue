@@ -167,7 +167,7 @@ export default {
       return true
     },
     unreserveTicket () {
-      /* swal url axios _ */
+      /* global swal url axios $ */
       console.log(this.modalInfo.content.SectionEnrolled)
       axios.post(url + '/unreserve', {
         show_id: this.show_id,
