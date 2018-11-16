@@ -55,7 +55,7 @@
                 <br>
                 <!-- Description -->
                 <span>
-                  <button type="button" class="btn btn-light font-weight-bold" @click="emitshowdescription(show)">
+                  <button type="button" class="btn btn-light font-weight-bold" @click.stop="emitshowdescription(show)">
                     Description
                   </button>
                 </span>
