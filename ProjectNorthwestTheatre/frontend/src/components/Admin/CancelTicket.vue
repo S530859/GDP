@@ -46,7 +46,6 @@
             </button>
           </template>
 
-
     </b-table>
 
     <b-row>
@@ -95,89 +94,87 @@
 
 <script>
 export default {
-    name: 'cancelticket',
-    data () {
-       return {
-        items: [],
-        fields: [
-            '#',
-            {
-            key: 'email',
-            label: 'EmailAddress',
-            sortable: true,
-            sortDirection: 'desc'
-            },
-            {
-            key: 'name',
-            label: 'DisplayName',
-            sortable: true,
-            class: 'text-center'
-            },
-            { key: 'actions', label: 'Actions' }
-        ],
-        currentPage: 1,
-        perPage: 5,
-        totalRows: 0,
-        pageOptions: [5, 10, 15],
-        sortBy: null,
-        sortDesc: false,
-        sortDirection: 'asc',
-        filter: null,
-        modalInfo: { title: '', content: '' },
-        addpersonmodaldata: { title: '', content: { FirstName: '', LastName: '', email: '' } }
-       }
-    },
-    methods: {
-        deleteperson(id){
-
+  name: 'cancelticket',
+  data () {
+    return {
+      items: [],
+      fields: [
+        '#',
+        {
+          key: 'email',
+          label: 'EmailAddress',
+          sortable: true,
+          sortDirection: 'desc'
         },
-        editperson () {
-            
+        {
+          key: 'name',
+          label: 'DisplayName',
+          sortable: true,
+          class: 'text-center'
         },
-        addpersonmodal () {
-            this.addpersonmodaldata.title = `Please Check Details`
-            this.addanimation('addperson')
-        },
-        info (item, index, button) {
-            console.log(`This is item = ${JSON.stringify(item)}`)
-            this.modalInfo.title = `Please Check Details`
-            this.modalInfo.content = item
-            this.addanimation()
-        },
-        resetModal (modal = 'modalInfo') {
-            $('#' + modal).removeClass('zoomIn')
-            $('#' + modal).addClass('zoomOut')
-            setTimeout(function () {
-                $('#' + modal).modal('hide')
-                $('#' + modal).removeClass('animated zoomOut')
-            }, 100)
-        // this.modalInfo.title = ''
-        // this.modalInfo.content = ''
-        },
-        onFiltered (filteredItems) {
-            this.totalRows = filteredItems.length
-            this.currentPage = 1
-        },
-        addanimation (modal = 'modalInfo') {
-            $('#' + modal).addClass('animated zoomIn')
-            $('#' + modal).modal('show')
-        }
-    },
-     computed: {
-        sortOptions () {
-        // Create an options list from our fields
-        return this.fields.filter(f => f.sortable).map(f => {
-            return { text: f.label, value: f.key }
-            })
-        }
-    },
-    created () {
-        /* $ axios url */
-        axios
-        .get( url + '/getpersonslist')
-        .then(res => this.items = res.data)
-        .catch(err => console.log(err))    
+        { key: 'actions', label: 'Actions' }
+      ],
+      currentPage: 1,
+      perPage: 5,
+      totalRows: 0,
+      pageOptions: [5, 10, 15],
+      sortBy: null,
+      sortDesc: false,
+      sortDirection: 'asc',
+      filter: null,
+      modalInfo: { title: '', content: '' },
+      addpersonmodaldata: { title: '', content: { FirstName: '', LastName: '', email: '' } }
     }
+  },
+  methods: {
+    deleteperson (id) {
+    },
+    editperson () {
+    },
+    addpersonmodal () {
+      this.addpersonmodaldata.title = `Please Check Details`
+      this.addanimation('addperson')
+    },
+    info (item, index, button) {
+      console.log(`This is item = ${JSON.stringify(item)}`)
+      this.modalInfo.title = `Please Check Details`
+      this.modalInfo.content = item
+      this.addanimation()
+    },
+    resetModal (modal = 'modalInfo') {
+      $('#' + modal).removeClass('zoomIn')
+      $('#' + modal).addClass('zoomOut')
+      setTimeout(function () {
+        $('#' + modal).modal('hide')
+        $('#' + modal).removeClass('animated zoomOut')
+      }, 100)
+      // this.modalInfo.title = ''
+      // this.modalInfo.content = ''
+    },
+    onFiltered (filteredItems) {
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
+    },
+    addanimation (modal = 'modalInfo') {
+      $('#' + modal).addClass('animated zoomIn')
+      $('#' + modal).modal('show')
+    }
+  },
+  computed: {
+    sortOptions () {
+      // Create an options list from our fields
+      return this.fields.filter(f => f.sortable).map(f => {
+        return { text: f.label, value: f.key }
+      })
+    }
+  },
+  created () {
+    /* global $ axios url */
+    axios
+      .get(url + '/getpersonslist')
+      .then(res => this.items = res.data)
+      .catch(err => console.log(err))
+  }
 }
 </script>
 
