@@ -22,10 +22,10 @@ let addShow = (req, res, next) => {
     Show.save()
         .then(function (Show) {
             fs.open('images/' + Show.id, 'w', function (err, fd) {
-                if (err) return res.status(422).send('error opening file: ' + err)
-                if(!buffer) return res.status(422).send('error opening file: ' + err)
+                if (err) return res.status(422).send('error opening file')
+                if(!buffer) return res.status(422).send('error opening file')
                 fs.write(fd, buffer, 0, buffer.length, null, function (err) {
-                    if (err) return res.status(422).send('error writing file: ' + err)
+                    if (err) return res.status(422).send('error writing file')
                     fs.close(fd, function () {
                         console.log('file written')
                     })
@@ -34,7 +34,7 @@ let addShow = (req, res, next) => {
             })
         })
         .catch(function (err) {
-            return res.status(400).send('error while adding a show' + err)
+            return res.status(400).send('error while adding a show')
         })
 }
 
