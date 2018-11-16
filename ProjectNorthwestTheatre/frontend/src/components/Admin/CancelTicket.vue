@@ -172,7 +172,9 @@ export default {
     /* global $ axios url */
     axios
       .get(url + '/getpersonslist')
-      .then(res => this.items = res.data)
+      .then(res => {
+        this.items = res.data
+      })
       .catch(err => console.log(err))
   }
 }
