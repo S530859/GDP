@@ -46,7 +46,6 @@
             </button>
           </template>
 
-
     </b-table>
 
     <b-row>
@@ -226,10 +225,6 @@ export default {
         // this.modalInfo.title = ''
         // this.modalInfo.content = ''
         },
-        onFiltered (filteredItems) {
-            this.totalRows = filteredItems.length
-            this.currentPage = 1
-        },
         addanimation (modal = 'modalInfo') {
             $('#' + modal).addClass('animated zoomIn')
             $('#' + modal).modal('show')
@@ -242,14 +237,6 @@ export default {
             })
             .catch(err => {
                 console.log(err)
-            })
-        }
-    },
-     computed: {
-        sortOptions () {
-        // Create an options list from our fields
-        return this.fields.filter(f => f.sortable).map(f => {
-            return { text: f.label, value: f.key }
             })
         }
     },

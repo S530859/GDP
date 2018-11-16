@@ -48,8 +48,8 @@
 
 <script>
 export default {
-  name: "AddAdmin",
-  data() {
+  name: 'AddAdmin',
+  data () {
     return {
       message: '',
       has_number: false,
@@ -63,8 +63,8 @@ export default {
     }
   },
   methods: {
-    AddAdmin() {
-      var formdata = new FormData(document.querySelector("#addadmin"));
+    AddAdmin () {
+      var formdata = new FormData(document.querySelector('#addadmin'))
       var data = {
         RegEmail: formdata.get('RegEmail'),
         RegUsername: formdata.get('RegUsername'),
@@ -78,27 +78,27 @@ export default {
       }).post('/addadmin', data)
         .then(res => {
           axios({
-            method: "get",
+            method: 'get',
             headers: {
-              token: window.localStorage.getItem("AccessToken")
+              token: window.localStorage.getItem('AccessToken')
             },
-            url: url + "/all"
+            url: url + '/all'
           })
             .then(response => {
-              this.$eventbus.$emit("admindata", response.data);
-              this.alert("Admin Added Successfully!", " ", "success");
+              this.$eventbus.$emit('admindata', response.data)
+              this.alert('Admin Added Successfully!', ' ', 'success')
             })
             .catch(err => {
-              console.log("error while getting admin list", err);
-            });
+              console.log('error while getting admin list', err)
+            })
         })
         .catch(error => {
-          this.alert(error.response.data, "Please try again", "error");
-          console.log(error);
-        });
+          this.alert(error.response.data, 'Please try again', 'error')
+          console.log(error)
+        })
     },
-    alert(header, msg, type) {
-      swal(header, msg, type);
+    alert (header, msg, type) {
+      swal(header, msg, type)
     },
     password_check () {
       this.has_number = /\d/.test(this.message)
@@ -120,7 +120,7 @@ export default {
     }
 
   }
-};
+}
 
 // Regular Expression
 </script>
