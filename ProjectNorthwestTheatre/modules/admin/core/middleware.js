@@ -56,8 +56,8 @@ let tokenAuthentication = (req, res, next) => {
                   return req.path === "/resetpassword" && req.method === "POST" ? next() : res.status(401).send("Unauthorized")
             })
       }else{
-       next()
-       // res.status(401).send("Unauthorized")
+       //next()
+       res.status(401).send("Unauthorized")
       }
     }
   }

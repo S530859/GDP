@@ -181,7 +181,7 @@
                   <input type="file" accept="image/*" class="form-control-file col-sm-2" :id="'InputFile' + show._id" aria-describedby="fileHelp" name="ShowImage">
                   <small id="fileHelp" class="form-text text-muted"></small>
                   <div class="col-sm-2" style=" padding-left: 0px; margin-top: -10px;">
-                    <img :src="'http://localhost:3000/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time"
+                    <img :src="'https://northwesttheatre.tk/Theatre/admin/image?_id=' + show._id + '&token=' + token + '&time=' + time"
                         class="rounded mx-1 my-1 align-self-center " style="max-width: 100%;max-height: 70%;" alt="Image"
                         :id="'imagesrcpreview' + show._id" />
                   </div>
