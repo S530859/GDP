@@ -15,7 +15,7 @@
 * start the application using npm start
 
 ## Deployed website can be found at
-http://theatrenorthwest.s3-website.us-east-2.amazonaws.com/Theare
+http://theatrenorthwest.s3-website.us-east-2.amazonaws.com/Theatre
 
 ## Developed By
 1. Santhosh Bonala
